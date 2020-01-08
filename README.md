@@ -98,8 +98,8 @@ You can now access the server at http://localhost:8000
 
 **Command list**
 
-    git clone https://github.com/solani/laravel-adminpanel.git
-    cd laravel-adminpanel
+    git clone https://github.com/vaibhav140494/Laravel-Admin-Panel.git
+    cd Laravel-Admin-Panel
     cp .env.example .env
     composer install
     npm install
@@ -151,7 +151,3 @@ If you come across any issues please report them [here](https://github.com/solan
 Feel free to create any pull requests for the project. For proposing any new changes or features you want to add to the project, you can send us an email at following addresses.
 
     (1) Vaibhav Mehta - vaibhavmht225@gmail.com
-
-## License
-
-[MIT LICENSE](https://github.com/solani/laravel-adminpanel/blob/master/LICENSE.txt)
