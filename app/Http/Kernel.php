@@ -76,3 +76,4 @@ class Kernel extends HttpKernel
         'access.routeNeedsPermission' => \App\Http\Middleware\RouteNeedsPermission::class,
     ];
 }
+
