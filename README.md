@@ -42,7 +42,7 @@ Please check the official laravel installation guide for server requirements bef
 
 Clone the repository
 
-    git clone https://github.com/solani/laravel-adminpanel.git
+    git clone https://github.com/vaibhav140494/Laravel-Admin-Panel.git
 
 Switch to the repo folder
 
