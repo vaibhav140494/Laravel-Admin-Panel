@@ -16,3 +16,6 @@ require __DIR__.'/Blog_Management.php';
 require __DIR__.'/Faqs.php';
 require __DIR__.'/Menu.php';
 require __DIR__.'/LogViewer.php';
+
+require __DIR__.'/Category.php';
+require __DIR__.'/Subcategory.php';
