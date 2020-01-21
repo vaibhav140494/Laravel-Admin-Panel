@@ -10,8 +10,8 @@
 @endsection
 
 @section('content')
-    {{ Form::model($categories, ['route' => ['admin.categories.update', $category], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-category']) }}
-
+    {{ Form::model($categories, ['route' => ['admin.categories.update',$categories->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-category','enctype'=>'multipart/form-data']) }}
+  
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('labels.backend.categories.edit') }}</h3>
@@ -25,6 +25,7 @@
                 <div class="form-group">
                     {{-- Including Form blade file --}}
                     @include("backend.categories.form")
+                    
                     <div class="edit-form-btn">
                         {{ link_to_route('admin.categories.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-md']) }}
                         {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-primary btn-md']) }}

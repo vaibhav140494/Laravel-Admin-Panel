@@ -17,8 +17,16 @@ trait CategoryAttribute
      */
     public function getActionButtonsAttribute()
     {
-        return '<div class="btn-group action-btn"> {$this->getEditButtonAttribute("edit-category", "admin.categories.edit")}
-                {$this->getDeleteButtonAttribute("delete-category", "admin.categories.destroy")}
+        return '<div class="btn-group action-btn"> '.$this->getEditButtonAttribute("edit-category", "admin.categories.edit").'
+                            
+
+                '.$this->getDeleteButtonAttribute("delete-category", "admin.categories.destroy").'
                 </div>';
     }
+    // public function getViewButtonAttribute()
+    // {
+    //     return '<a target="_blank" href="'.route('frontend.pages.show', $this->page_slug).'" class="btn btn-flat btn-default">
+    //                 <i data-toggle="tooltip" data-placement="top" title="View Page" class="fa fa-eye"></i>
+    //             </a>';
+    // }
 }

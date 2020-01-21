@@ -116,12 +116,18 @@ return [
 	"main" => "Categories",
 	],
 	"products" => [
-	"all" => "All Products",
-	"create" => "Create Product",
-	"edit" => "Edit Product",
-	"management" => "Product Management",
-	"main" => "Products",
+		"all" => "All Products",
+		"create" => "Create Product",
+		"edit" => "Edit Product",
+		"management" => "Product Management",
+		"main" => "Products",
 	],
+	"subcategories" => [
+		"all" => "All SubCategories",
+		"create" => "Create SubCategory",
+		"edit" => "Edit SubCategory",
+		"management" => "SubCategory Management",
+		"main" => "SubCategories",
 	],
 	"language-picker" => [
 	"language" => "Language",
@@ -142,4 +148,4 @@ return [
 	"th" => "Thai",
 	],
 	],
-];
+]];

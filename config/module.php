@@ -25,5 +25,7 @@ return [
 	],
 	"products" => [
 	"table" => "products",
+	"subcategories" => [
+	"table" => "subcategories",
 	],
-];
+]];

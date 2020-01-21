@@ -30,6 +30,9 @@ class CategoryRepository extends BaseRepository
         return $this->query()
             ->select([
                 config('module.categories.table').'.id',
+                config('module.cagegories.table').'.category_name',
+                config('module.cagegories.table').'.category_desc',
+                config('module.cagegories.table').'.category_image',
                 config('module.categories.table').'.created_at',
                 config('module.categories.table').'.updated_at',
             ]);

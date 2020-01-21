@@ -35,28 +35,7 @@
                         </tr>
                     </thead>
                     <thead class="transparent-bg">
-                        <tr>
-                            <th>
-                                {!! Form::text('first_name', null, ["class" => "search-input-text form-control", "data-column" => 0, "placeholder" => trans('labels.backend.access.users.table.first_name')]) !!}
-                                    <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
-                                </th>
-                            <th>
-                                {!! Form::text('last_name', null, ["class" => "search-input-text form-control", "data-column" => 1, "placeholder" => trans('labels.backend.access.users.table.last_name')]) !!}
-                                    <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
-                            </th>
-                            <th>
-                                {!! Form::text('email', null, ["class" => "search-input-text form-control", "data-column" => 2, "placeholder" => trans('labels.backend.access.users.table.email')]) !!}
-                                    <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
-                            </th>
-                            <th></th>
-                            <th>
-                            {!! Form::text('roles', null, ["class" => "search-input-text form-control", "data-column" => 4, "placeholder" => trans('labels.backend.access.users.table.roles')]) !!}
-                                <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
-                            </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    
                     </thead>
                 </table>
             </div><!--table-responsive-->
@@ -68,7 +47,7 @@
             <h3 class="box-title">{{ trans('history.backend.recent_history') }}</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div><!-- /.box tools -->
+            </div>/.box tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
             {{-- {!! history()->renderType('User') !!} --}}

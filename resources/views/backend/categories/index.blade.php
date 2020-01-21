@@ -21,13 +21,19 @@
                 <table id="categories-table" class="table table-condensed table-hover table-bordered">
                     <thead>
                         <tr>
+                        <th>{{ trans('labels.backend.categories.table.image') }}</th>
                             <th>{{ trans('labels.backend.categories.table.id') }}</th>
+                            <th>{{ trans('labels.backend.categories.table.name') }}</th>
+                            <th>{{ trans('labels.backend.categories.table.desc') }}</th>
                             <th>{{ trans('labels.backend.categories.table.createdat') }}</th>
                             <th>{{ trans('labels.general.actions') }}</th>
                         </tr>
                     </thead>
                     <thead class="transparent-bg">
                         <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -60,7 +66,19 @@
                     type: 'post'
                 },
                 columns: [
+                    {
+                        data: 'category_image', 
+                        
+                        name: '{{config('module.categories.table')}}.category_image',
+                        "render": function (name, type, full, meta) {
+                            return  "<img src=\"{{url('storage/app/category')}}" + name + "\" height=\"100\"/>";
+                           
+                        },
+                    
+                    },
                     {data: 'id', name: '{{config('module.categories.table')}}.id'},
+                    {data: 'category_name', name: '{{config('module.categories.table')}}.category_name'},
+                    {data: 'category_desc', name: '{{config('module.categories.table')}}.category_desc'},
                     {data: 'created_at', name: '{{config('module.categories.table')}}.created_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
@@ -69,11 +87,7 @@
                 dom: 'lBfrtip',
                 buttons: {
                     buttons: [
-                        { extend: 'copy', className: 'copyButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'pdf', className: 'pdfButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'print', className: 'printButton',  exportOptions: {columns: [ 0, 1 ]  }}
+                        
                     ]
                 }
             });

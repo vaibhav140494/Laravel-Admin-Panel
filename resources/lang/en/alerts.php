@@ -64,5 +64,9 @@ return [
 	"deleted" => "The Product was successfully deleted.",
 	"updated" => "The Product was successfully updated.",
 	],
+	"subcategories" => [
+	"created" => "The SubCategory was successfully created.",
+	"deleted" => "The SubCategory was successfully deleted.",
+	"updated" => "The SubCategory was successfully updated.",
 	],
-];
+]];

@@ -11,8 +11,9 @@ class Category extends Model
 {
     use ModelTrait,
         CategoryAttribute,
-    	CategoryRelationship {
-            // CategoryAttribute::getEditButtonAttribute insteadof ModelTrait;
+        CategoryRelationship
+
+{        // CategoryAttribute::getEditButtonAttribute insteadof ModelTrait;
         }
 
     /**
@@ -30,8 +31,8 @@ class Category extends Model
      * Mass Assignable fields of model
      * @var array
      */
-    protected $fillable = ['category_name','category_desc','category_image','is_active'
-
+    protected $fillable = [
+        'category_name','category_desc','category_image'
     ];
 
     /**

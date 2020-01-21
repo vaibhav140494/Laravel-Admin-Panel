@@ -18,4 +18,4 @@ require __DIR__.'/Menu.php';
 require __DIR__.'/LogViewer.php';
 
 require __DIR__.'/Category.php';
-require __DIR__.'/Product.php';
+require __DIR__.'/Subcategory.php';
