@@ -5,7 +5,6 @@ namespace App\Models\Category;
 use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category\Traits\CategoryAttribute;
-
 use App\Models\Category\Traits\CategoryRelationship;
 
 class Category extends Model

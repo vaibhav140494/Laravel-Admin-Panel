@@ -33,7 +33,6 @@ class CategoryRepository extends BaseRepository
                 config('module.cagegories.table').'.category_name',
                 config('module.cagegories.table').'.category_desc',
                 config('module.cagegories.table').'.category_image',
-
                 config('module.categories.table').'.created_at',
                 config('module.categories.table').'.updated_at',
             ]);
@@ -48,7 +47,6 @@ class CategoryRepository extends BaseRepository
      */
     public function create(array $input)
     {
-
         if (Category::create($input)) {
             return true;
         }

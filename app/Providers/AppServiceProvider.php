@@ -58,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
          * Sets third party service providers that are only needed on local/testing environments
          */
         if ($this->app->environment() != 'production') {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 }
