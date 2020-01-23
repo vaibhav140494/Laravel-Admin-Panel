@@ -15,11 +15,11 @@ class CreateVariationvaluesTable extends Migration
     {
         Schema::create('variationvalues', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('variation_value',50);
             $table->bigInteger('variation_id')->unsigned();
             $table->foreign('variation_id')
             ->references('id')->on('variationmaster')
             ->onDelete('cascade');
+            $table->string('variation_value',50);
             $table->timestamps();
         });
     }

@@ -28,4 +28,14 @@ return [
 	"subcategories" => [
 	"table" => "subcategories",
 	],
-]];
+	],
+	"offers" => [
+	"table" => "offers",
+	],
+	"orders" => [
+	"table" => "orders",
+	],
+	"supporttickets" => [
+	"table" => "supporttickets",
+	],
+];
