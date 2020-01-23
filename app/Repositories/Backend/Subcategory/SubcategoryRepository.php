@@ -25,9 +25,9 @@ class SubcategoryRepository extends BaseRepository
      * the grid
      * @return mixed
      */
-    public function getForDataTable()
+    public function getForDataTable($id)
     {
-        return $this->query()
+        return $this->query()->where('category_id',$id)
             ->select([
                 config('module.subcategories.table').'.id',
                 config('module.subcategories.table').'.subcategory_name',
@@ -48,9 +48,13 @@ class SubcategoryRepository extends BaseRepository
      */
     public function create(array $input)
     {
+        
+        // dd($input);
         if (Subcategory::create($input)) {
+            
             return true;
         }
+
         throw new GeneralException(trans('exceptions.backend.subcategories.create_error'));
     }
 

@@ -1,5 +1,7 @@
 <!--Action Button-->
-@if( Active::checkUriPattern( 'admin/subcategories' ) )
+
+{{--@if( Active::checkUriPattern( 'admin/subcategories' ) )--}}
+
     <div class="btn-group">
         <button type="button" class="btn btn-warning btn-flat dropdown-toggle" data-toggle="dropdown">Export
             <span class="caret"></span>
@@ -13,22 +15,25 @@
             <li id="printButton"><a href="#"><i class="fa fa-print"></i> Print</a></li>
         </ul>
     </div>
-@endif
+{{--@endif--}}
 <!--Action Button-->
 <div class="btn-group">
+
     <button type="button" class="btn btn-primary btn-flat dropdown-toggle" data-toggle="dropdown">Action
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
     </button>
+    
     <ul class="dropdown-menu" role="menu">
         <li>
-            <a href="{{ route( 'admin.subcategories.index' ) }}">
+            <a href="#">
                 <i class="fa fa-list-ul"></i> {{ trans( 'menus.backend.subcategories.all' ) }}
             </a>
         </li>
         @permission( 'create-subcategory' )
             <li>
-                <a href="{{ route( 'admin.subcategories.create' ) }}">
+
+                <a href="{{ url('/admin/subcategories/'.$category->id.'/create') }}">
                     <i class="fa fa-plus"></i> {{ trans( 'menus.backend.subcategories.create' ) }}
                 </a>
             </li>

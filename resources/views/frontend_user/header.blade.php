@@ -7,23 +7,8 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title> E-commerce </title>
-		<link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,800" rel="stylesheet" >
-		<link href="http://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet" type="text/css" >		 
-        <link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
         
-        {{ Html::style('frontend/css/themify-icons.css') }}
-        {{ Html::style('frontend/css/animate.css') }}
-        {{ Html::style('frontend/css/font-awesome.css') }}
-        {{ Html::style('frontend/css/owl.theme.default.min.css') }}
-        {{ Html::style('frontend/css/owl.carousel.min.css') }}
-        {{ Html::style('frontend/css/meanmenu.min.css') }}
-        {{ Html::style('frontend/css/remodal.css') }}
-        {{ Html::style('frontend/css/remodal-default-theme.css') }}
-        {{ Html::style('frontend/css/venobox.css') }}
-        {{ Html::style('frontend/css/bootstrap.min.css') }}
-        {{ Html::style('frontend/css/style.css') }}
-		{{ Html::style('frontend/css/responsive.css') }}
-		
+        @include('frontend_user.css')
 		
     </head>	
     <body>
@@ -45,7 +30,7 @@
 						<div class="col-xs-12 col-sm-6">
 							<div class="hdr_tp_left">
 								<div class="call_area">
-									<span class="single_con_add"><i class="ti-mobile"></i> +0123456789</span>
+									<span class="single_con_add"><i class="ti-mobile"></i> +0123>456789</span>
 									<span class="single_con_add"><i class="ti-email"></i> example@gmail.com</span>
 								</div>
 							</div>
@@ -53,13 +38,22 @@
 						
 						<div class="col-xs-12 col-sm-6">
 						<div class="form-group ">
-										<input type="text" class="form-control header-search-bar" placeholder="Type here">
+										<input type="text" class="form-control header-search-bar" placeholder="Search for Products">
 									</div>
 							<ul class="hdr_tp_right text-right">
 								<!-- <li>
 									
 								</li> -->
-								<li class="account_area"><a href="#"><i class="ti-user"></i> My Account</a></li>
+								<!-- <li class="account_area"><a href="#"><i class="ti-user"></i> My Account</a></li> -->
+								
+								@if (session()->get('username'))
+								<li class="account_area"><a href="#"> My Orders</a></li>
+								<li class="account_area"><a href="{{url('frontend/logout')}}"> SignOut</a></li>
+
+								@else
+								<li class="account_area"><a href="{{url('frontend/login')}}"> <i class="ti-user"></i>Log In</a></li>
+								<li class="account_area"><a href="#"><i class="ti-user"></i> Sign Up</a></li>
+								@endif
 							</ul>
 						</div>
 					</div>
@@ -81,96 +75,6 @@
 											<li><a href="#">home</a>					
 											</li>									
 											
-											<li><a href="#">Shop <i class="fa fa-angle-down"></i></a>
-												
-												<ul class="sub-menu">
-													<li><a href="#">Product Details</a></li>
-													<li><a href="#">Cart</a></li>
-													<li><a href="#">Checkout</a></li>
-													<li><a href="#">Wishlist</a></li>
-													<li><a href="#">Account</a></li>
-												</ul>
-											</li>
-											<!-- <li><a href="#">Men <i class="fa fa-angle-down"></i></a>
-												
-												<div class="mega-menu mm-4-column mm-left">
-													<div class="mm-column mm-column-link float-left">
-														<h3>Men</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>												
-													</div>
-													
-													<div class="mm-column mm-column-link float-left">
-														<h3>Women</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>												
-													</div>
-													
-													<div class="mm-column mm-column-link float-left">
-														<h3>Jackets</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>	
-													</div>						
-
-													<div class="mm-column mm-column-link float-left">
-														<h3>jens pant’s</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>	
-													</div>
-
-												</div>
-											</li>
-											<li><a href="#">Women <i class="fa fa-angle-down"></i></a>
-												
-												<div class="mega-menu mm-3-column mm-left">
-													<div class="mm-column mm-column-link float-left">
-														<h3>Woment</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>	
-													</div>
-													
-													<div class="mm-column mm-column-link float-left">
-														<h3>T-Shirts</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>	
-													</div>					
-
-													<div class="mm-column mm-column-link float-left">
-														<h3>Jackets</h3>
-														<a href="#">Blazers</a>
-														<a href="#">Jackets</a>
-														<a href="#">Collections</a>
-														<a href="#">T-Shirts</a>
-														<a href="#">jens pant’s</a>
-														<a href="#">sports shoes</a>	
-													</div>												
-				
-												</div>
-											</li> -->
 											<li><a href="#">Categories <i class="fa fa-angle-down"></i></a>
 												
 												<div class="mega-menu mm-3-column mm-left">
@@ -200,10 +104,21 @@
 														<a href="#">T-Shirts</a>
 														<a href="#">sports shoes</a>	
 													</div>												
-				
+													<button class="btn btn-outline-danger pull-right header-category-btn">
+														See All
+													</button>
 												</div>
 											</li> 
-
+											<li><a href="#">Products <i class="fa fa-angle-down"></i></a>
+												
+												<ul class="sub-menu">
+													<li><a href="#">Laptops</a></li>
+													<li><a href="#">Moiles</a></li>
+													<li><a href="#">Shirts</a></li>
+													<li><a href="#">Jeans</a></li>
+													<li><a href="#">Washing Machine</a></li>
+												</ul>
+											</li>
 											<!-- <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
 												
 												<ul class="sub-menu">
@@ -292,7 +207,7 @@ x										</ul>
 											</div>
 										</div>
 									</li> -->
-									
+									@if(session()->get('username'))
 									<li>
 										<div class="cart_menu_area">
 											<div class="cart_icon">
@@ -334,6 +249,7 @@ x										</ul>
 										</div>	
 										
 									</li>
+									@endif
 								</ul>
 							</div>	
 						</div><!--  End Col -->	

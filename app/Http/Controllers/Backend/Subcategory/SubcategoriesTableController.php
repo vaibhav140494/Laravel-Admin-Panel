@@ -34,9 +34,10 @@ class SubcategoriesTableController extends Controller
      *
      * @return mixed
      */
-    public function __invoke(ManageSubcategoryRequest $request)
+    public function __invoke(ManageSubcategoryRequest $request,$id)
     {
-        return Datatables::of($this->subcategory->getForDataTable())
+        // echo $id; exit;
+        return Datatables::of($this->subcategory->getForDataTable($id))
             ->escapeColumns(['id'])
             ->addColumn('subcategory_name', function ($subcategory) {
                 return $subcategory->subcategory_name;

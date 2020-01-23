@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Repositories\Backend\Category\CategoryRepository;
 use App\Http\Requests\Backend\Category\ManageCategoryRequest;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class CategoriesTableController.
@@ -38,14 +39,20 @@ class CategoriesTableController extends Controller
     {
         return Datatables::of($this->category->getForDataTable())
             ->escapeColumns(['id'])
-            ->addColumn('category_name', function ($category) {
-                return $category->category_name;
-            })
-            ->addColumn('category_desc', function ($category) {
-                return $category->category_desc;
-            })
             ->addColumn('category_image', function ($category) {
-                return $category->category_image;
+                // dd(url('/'));
+                
+                $url=url('storage/category/'.$category->category_image);
+                // dd($url);
+                // dd();
+                return '<img src="'.$url.'" border="0" width="70" height="70" class="img-thumbnail" align="center" />';
+                
+            })
+            ->addColumn('category_name', function ($category) {
+                // echo $category->id;
+                // $path="http://127.0.0.1:8000/admin/categories/".$category->id."/get";
+                $path=url('/admin/categories/'.$category->id.'/get');
+                return '<a href="'.$path.'" style="color:#000;">'.$category->category_name. '</a> ';
             })
             ->addColumn('created_at', function ($category) {
                 return Carbon::parse($category->created_at)->toDateString();
@@ -54,5 +61,19 @@ class CategoriesTableController extends Controller
                 return $category->action_buttons;
             })
             ->make(true);
+
+
+        // return Datatables::of($this->category->getForDataTable())
+        //     ->escapeColumns(['id'])
+        //     ->addColumn('category_image', function ($category) {
+        //         return echo '<img src="{{ public_path(\'/storage/category\'.$category->category_image)}}">';
+        //     })
+        //     ->addColumn('created_at', function ($category) {
+        //         return Carbon::parse($category->created_at)->toDateString();
+        //     })
+        //     ->addColumn('actions', function ($category) {
+        //         return $category->action_buttons;
+        //     })
+        //     ->make(true);
     }
 }

@@ -28,6 +28,8 @@ class SubcategoriesController extends Controller
      * @var SubcategoryRepository
      */
     protected $repository;
+    public $category;
+    public $catid;
 
     /**
      * contructor to initialize repository object
@@ -44,9 +46,21 @@ class SubcategoriesController extends Controller
      * @param  App\Http\Requests\Backend\Subcategory\ManageSubcategoryRequest  $request
      * @return \App\Http\Responses\ViewResponse
      */
-    public function index(ManageSubcategoryRequest $request)
+    public function index(ManageSubcategoryRequest $request )
     {
+
         return new ViewResponse('backend.subcategories.index');
+    }
+    public function get($id)
+    {
+
+        // dd("hello");
+        
+        $this->category=Category::find($id);
+        $category=$this->category;
+        $subcategories=Subcategory::where('category_id',$category->id)->get();
+        // dd($subcategory[1]->subcategory_name);
+        return new ViewResponse('backend.subcategories.index',compact('category','subcategories'));
     }
     /**
      * Show the form for creating a new resource.
@@ -54,9 +68,14 @@ class SubcategoriesController extends Controller
      * @param  CreateSubcategoryRequestNamespace  $request
      * @return \App\Http\Responses\Backend\Subcategory\CreateResponse
      */
-    public function create(CreateSubcategoryRequest $request)
+    public function create(CreateSubcategoryRequest $request,$id)
     {
-        return new CreateResponse('backend.subcategories.create');
+
+        $category=Category::find($id);
+        // dd($this->catid);
+        // dd($category->idate);
+        // dd($cid);
+        return  view('backend.subcategories.create',compact('category'));
     }
     /**
      * Store a newly created resource in storage.
@@ -68,10 +87,20 @@ class SubcategoriesController extends Controller
     {
         //Input received from the request
         $input = $request->except(['_token']);
+        // dd($request->get('id'));
         //Create the model using repository create method
+        if ($request->get('active')=="on")
+        {
+            $input['is_active']=1;
+        }
+        else
+            $input['is_active']=0;
+            // dd($input['is_active']);
         $this->repository->create($input);
+        // dd($input['category_id']);
+
         //return with successfull message
-        return new RedirectResponse(route('admin.subcategories.index'), ['flash_success' => trans('alerts.backend.subcategories.created')]);
+        return new RedirectResponse(url('/admin/categories/'.$input['category_id'].'/get'), ['flash_success' => trans('alerts.backend.subcategories.created')]);
     }
     /**
      * Show the form for editing the specified resource.

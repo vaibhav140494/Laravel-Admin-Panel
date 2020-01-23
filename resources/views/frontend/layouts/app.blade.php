@@ -22,7 +22,7 @@
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         @langrtl
-            {{ Html::style(getRtlCss(mix('css/frontend.css'))) }}
+            {{ Html::style(mix('css/frontend.css')) }}
         @else
             {{ Html::style(mix('css/frontend.css')) }}
         @endlangrtl

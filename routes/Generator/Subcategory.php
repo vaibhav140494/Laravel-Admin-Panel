@@ -8,7 +8,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
     Route::group( ['namespace' => 'Subcategory'], function () {
         Route::resource('subcategories', 'SubcategoriesController');
         //For Datatable
-        Route::post('subcategories/get', 'SubcategoriesTableController')->name('subcategories.get');
+        Route::get('subcategories/get/{id}', 'SubcategoriesTableController')->name('subcategories.get');
+        Route::get('categories/{id}/get','SubcategoriesController@get')->name('categories.id.get');
+
+        Route::get('subcategories/{id}/create','SubcategoriesController@create')->name('categories.id.create');
+
     });
     
 });

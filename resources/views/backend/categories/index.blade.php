@@ -10,7 +10,6 @@
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('labels.backend.categories.management') }}</h3>
-
             <div class="box-tools pull-right">
                 @include('backend.categories.partials.categories-header-buttons')
             </div>
@@ -52,7 +51,6 @@
     <script>
         //Below written line is short form of writing $(document).ready(function() { })
         $(function() {
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -71,10 +69,6 @@
                         data: 'category_image', 
                         
                         name: '{{config('module.categories.table')}}.category_image',
-                        "render": function (name, type, full, meta) {
-                            return  "<img src=\"{{url('storage/app/category')}}" + name + "\" height=\"100\"/>";
-                           
-                        },
                     
                     },
                     {data: 'id', name: '{{config('module.categories.table')}}.id'},

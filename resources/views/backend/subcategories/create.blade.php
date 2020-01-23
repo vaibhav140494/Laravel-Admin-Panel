@@ -12,6 +12,7 @@
 @section('content')
     {{ Form::open(['route' => 'admin.subcategories.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-subcategory']) }}
         <div class="box box-info">
+        {{--{{ dd($cid ?? '') }}--}}
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('labels.backend.subcategories.create') }}</h3>
 
@@ -19,13 +20,13 @@
                     @include('backend.subcategories.partials.subcategories-header-buttons')
                 </div><!--box-tools pull-right-->
             </div><!--box-header with-border-->
-
+            
             <div class="box-body">
                 <div class="form-group">
                     {{-- Including Form blade file --}}
                     @include("backend.subcategories.form")
                     <div class="edit-form-btn">
-                        {{ link_to_route('admin.subcategories.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-md']) }}
+                        {{ link_to_route('admin.categories.id.get', trans('buttons.general.cancel'), ['id'=>$category->id], ['class' => 'btn btn-danger btn-md']) }}
                         {{ Form::submit(trans('buttons.general.crud.create'), ['class' => 'btn btn-primary btn-md']) }}
                         <div class="clearfix"></div>
                     </div><!--edit-form-btn-->

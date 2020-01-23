@@ -72,9 +72,12 @@ class CategoriesController extends Controller
         //return with successfull message
         if ($request->hasFile('category_image')) {
             
-            $destinationPath = public_path('storage/category');
-            // dd($destinationPath);
-            $path = $request->file('category_image')->store('category');
+             $destinationPath = public_path('storage/category');
+            //  dd($destinationPath);
+            //The [public/storage] directory has been linked.
+            
+            $path = $request->file('category_image')->store($destinationPath);
+            // dd($path);
             $split=explode("/",$path);
             $input['category_image']=end($split);
             $this->repository->create($input);

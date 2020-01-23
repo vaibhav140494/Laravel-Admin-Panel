@@ -14,12 +14,13 @@
 							</div>
 						</div> <!--  End Col -->
 						
-						<div class="col-lg-2 col-sm-6">
-							<div class="single_ftr">
+						<div class="  col-lg-4 col-sm-6">
+							<div class="single_ftr" style="margin-left:100px;">
 								<h4 class="sf_title">Information</h4>
 								<ul>
+									<!-- display when user logged in -->
+									<!-- <li><a href="#">My Orders</a></li> -->
 									<li><a href="#">About Us</a></li>
-									<li><a href="#">Delivery Information</a></li>
 									<li><a href="#">Privacy Policy</a></li>
 									<li><a href="#">Terms & Conditions</a></li>
 									<li><a href="#">Contact Us</a></li>
@@ -27,10 +28,11 @@
 							</div>
 						</div> <!--  End Col -->
 						
-						<div class="col-lg-2 col-sm-6">
-							<div class="single_ftr">
-								<h4 class="sf_title">Services</h4>
-								<ul>
+						<div class=" offset-lg-1 col-lg-3 col-sm-6">
+							<div class="single_ftr" >
+								<h4 class="sf_title">Featured Categories</h4>
+								<ul> 
+								<!-- print top 5 category of products which sold most frequently -->
 									<li><a href="#">Returns</a></li>
 									<li><a href="#">Site Map</a></li>
 									<li><a href="#">Wish List</a></li>
@@ -40,7 +42,7 @@
 							</div>
 						</div> <!--  End Col -->	
 						
-						<div class="col-lg-4 col-sm-6">
+						<!-- <div class="col-lg-4 col-sm-6">
 							<div class="single_ftr">
 								<h4 class="sf_title">Join Us Newsletter</h4>
 								<div class="newsletter_form">
@@ -51,7 +53,7 @@
 									</form>
 								</div>
 							</div>
-						</div> <!--  End Col -->
+						</div>  End Col -->
 						
 					</div>
 				</div>
@@ -61,7 +63,7 @@
 			<div class="ftr_btm_area">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div class="ftr_social_icon">
 								<ul>
 									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -73,37 +75,18 @@
 							</div>
 						</div>
 						
-						<div class="col-sm-5">
+						<div class="col-sm-6">
 							<p class="copyright_text text-center">Copyright &copy; 2020 E-commerce,All rights Reserved.</p>
 						</div>
 						
-						<div class="col-sm-3">
-							<div class="payment_mthd_icon text-right">
-								<img src=" {{url('/frontend/img/card.png')}}" alt="Card">
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
 		</footer>
 		<!--  FOOTER END  -->
 
-        {{ Html::script('frontend/js/vendor/jquery-1.12.4.min.js') }}
-        {{ HTML::script('frontend/js/popper.min.js') }}
-        {{ HTML::script('frontend/js/bootstrap.min.js') }}
-        {{ HTML::script('frontend/js/jquery.meanmenu.min.js') }}
-        {{ HTML::script('frontend/js/jquery.mixitup.js') }}
-        {{ HTML::script('frontend/js/jquery.counterup.min.js') }}
-        {{ HTML::script('frontend/js/remodal.js') }}
-        {{ HTML::script('frontend/js/waypoints.min.js') }}
-        {{ HTML::script('frontend/js/wow.min.js') }}
-        {{ HTML::script('frontend/js/jquery.countdown.js') }}
-        {{ HTML::script('frontend/js/venobox.min.js') }}
-        {{ HTML::script('frontend/js/owl.carousel.min.js') }}
-        {{ HTML::script('frontend/js/simplePlayer.js') }}
-        {{ HTML::script('frontend/js/scrolltopcontrol.js') }}
-        {{ HTML::script('frontend/js/main.js') }}        
-
+	@include('frontend_user.script')
 		
 	</body>
 

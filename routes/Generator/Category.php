@@ -9,6 +9,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::resource('categories', 'CategoriesController');
         //For Datatable
         Route::post('categories/get', 'CategoriesTableController')->name('categories.get');
+
     });
-    
+
 });

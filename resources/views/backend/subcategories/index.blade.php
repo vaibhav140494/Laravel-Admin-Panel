@@ -9,13 +9,14 @@
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('labels.backend.subcategories.management') }}</h3>
-
+        @if(isset($category))
+            <h3 class="box-title">{{ ' Category = ' .$category->category_name }}</h3>
+        @endif
             <div class="box-tools pull-right">
                 @include('backend.subcategories.partials.subcategories-header-buttons')
             </div>
         </div><!--box-header with-border-->
-
+        
         <div class="box-body">
             <div class="table-responsive data-table-wrapper">
                 <table id="subcategories-table" class="table table-condensed table-hover table-bordered">
@@ -49,7 +50,7 @@
 
 @section('after-scripts')
     {{-- For DataTables --}}
-    {{ Html::script(mix('js/dataTable.js')) }}
+    {{ Html::script(asset('js/dataTable.js')) }}
 
     <script>
         //Below written line is short form of writing $(document).ready(function() { })
@@ -64,8 +65,8 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route("admin.subcategories.get") }}',
-                    type: 'post'
+                    url: '{{ route("admin.subcategories.get",["id"=>$category->id]) }}',
+                    type: 'get'
                 },
                 columns: [
                     {data: 'id', name: '{{config('module.subcategories.table')}}.id'},
@@ -81,11 +82,7 @@
                 dom: 'lBfrtip',
                 buttons: {
                     buttons: [
-                        { extend: 'copy', className: 'copyButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'pdf', className: 'pdfButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'print', className: 'printButton',  exportOptions: {columns: [ 0, 1 ]  }}
+                        
                     ]
                 }
             });

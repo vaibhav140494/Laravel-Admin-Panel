@@ -671,6 +671,15 @@ input:focus, textarea:focus {
 	color: #fff;
 	text-decoration: none;
 }
+.header-category-btn{
+	margin-top:20px; 
+	color:#ff546e;
+	border-color: #ff546e;
+}
+.header-category-btn:hover{
+	color:#fff;
+}
+
 
 /* Menu CSS */
 
@@ -2001,6 +2010,7 @@ input:focus, textarea:focus {
 .copyright_text{
     margin: 10px 0 0;
 	font-size: 15px;
+	float: right;
 }
 
 .payment_mthd_icon{

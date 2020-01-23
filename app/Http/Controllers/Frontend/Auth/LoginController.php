@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Events\Frontend\Auth\UserLoggedIn;
 use App\Events\Frontend\Auth\UserLoggedOut;
 use App\Exceptions\GeneralException;
+// use App\Helpers\Auth\Auth;
 use App\Helpers\Auth\Auth;
+
+// use Illuminate\Support\Facads\Auth;
 use App\Helpers\Frontend\Auth\Socialite;
 use App\Http\Controllers\Controller;
 use App\Http\Utilities\NotificationIos;
@@ -102,6 +105,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        
         /*
          * Boilerplate needed logic
          */

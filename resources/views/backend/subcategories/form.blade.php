@@ -1,21 +1,24 @@
 <div class="box-body">
-<div class="form-group">
+
+@if(isset($category))
+    <div class="form-group">
         <!-- Create Your Field Label Here -->
         <!-- Look Below Example for reference -->
         {{ Form::label('name', trans('labels.backend.categories.table.name'), ['class' => 'col-lg-2 control-label required']) }}
         <div class="col-lg-10">
         <div class="form-group-a">
             
-            <select class="form-control" name="category_dropdown">
-            @foreach($categories as $category)
+            <select class="form-control" name="category_id">
+           
             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-            @endforeach
+           
             </select>
 
         </div>        
 
         </div><!--col-lg-10-->
     </div><!--form-group-->
+    @endif
     <div class="form-group">
         <!-- Create Your Field Label Here -->
         <!-- Look Below Example for reference -->
@@ -47,7 +50,7 @@
         <div class="col-lg-10">
             <!-- Create Your Input Field Here -->
             <!-- Look Below Example for reference -->
-            {{ Form::checkbox('active','active',true) }} 
+            {{ Form::checkbox('active',null,true) }} 
 
         </div><!--col-lg-10-->
     </div><!--form-group-->

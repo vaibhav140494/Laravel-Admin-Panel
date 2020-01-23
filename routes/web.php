@@ -7,7 +7,17 @@
 
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
-
+Route::any('/', function () {
+	$user = \Auth::user();
+	if ($user[0]['role_id'] == 1) {
+		return redirect('/admin/universities');
+	} else if ($user[0]['role_id'] == 2) {
+		return redirect('/supervisor');
+	
+	} else {
+		return redirect('/client');
+	}
+})->middleware('auth');
 /* ----------------------------------------------------------------------- */
 
 /*
@@ -42,3 +52,17 @@ includeRouteFiles(__DIR__.'/Generator/');
 Route::get('/front',function(){
 return view('frontend_user.index');
 });
+
+// includeRouteFiles(__DIR__.'/frontend_user/');
+
+// Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
