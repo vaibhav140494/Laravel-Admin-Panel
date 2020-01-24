@@ -49,11 +49,12 @@
     <body class="skin-{{ config('backend.theme') }} {{ config('backend.layout') }}">
         <div class="loading" style="display:none"></div>
         @include('includes.partials.logged-in-as')
-
+            
         <div class="wrapper" id="app">
             @include('backend.includes.header')
-            @include('backend.includes.sidebar-dynamic')
 
+
+            @include('backend.includes.sidebar-dynamic')
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->

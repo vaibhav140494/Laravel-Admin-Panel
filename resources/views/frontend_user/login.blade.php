@@ -34,7 +34,7 @@
                                 </button>
                             </div> 
                             @endif
-                            <form action="{{url('frontend/login/store')}}" method="post" id="login-form" name="login-form">
+                            <form action="{{route('frontend.login.store')}}" method="post" id="login-form" name="login-form">
                             @csrf
                                 <div class="create_account_area">
                                     <h2 class="caa_heading">Log In</h2>

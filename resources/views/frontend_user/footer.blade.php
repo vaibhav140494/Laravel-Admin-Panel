@@ -19,7 +19,7 @@
 								<h4 class="sf_title">Information</h4>
 								<ul>
 									<!-- display when user logged in -->
-									@if(session()->get('username'))
+									@if(\Auth::user()!='')
 									<li><a href="#">My Orders</a></li>
 									@endif
 									<li><a href="#">About Us</a></li>

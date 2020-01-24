@@ -46,7 +46,7 @@
 								</li> -->
 								<!-- <li class="account_area"><a href="#"><i class="ti-user"></i> My Account</a></li> -->
 								
-								@if (session()->get('username'))
+								@if (\Auth::user()!='')
 								<li class="account_area"><a href="#"> My Orders</a></li>
 								<li class="account_area"><a href="{{url('frontend/logout')}}"> SignOut</a></li>
 
