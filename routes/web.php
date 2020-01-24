@@ -7,17 +7,6 @@
 
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
-Route::any('/', function () {
-	$user = \Auth::user();
-	if ($user[0]['role_id'] == 1) {
-		return redirect('/admin/universities');
-	} else if ($user[0]['role_id'] == 2) {
-		return redirect('/supervisor');
-	
-	} else {
-		return redirect('/client');
-	}
-})->middleware('auth');
 /* ----------------------------------------------------------------------- */
 
 /*
@@ -66,3 +55,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Route::any('/', function () {
+    $user = \Auth::user();
+	if ($user->role == 1) {
+		return redirect('/admin/dashboard');
+	} else if ($user->role == 2) {
+		return redirect('/');
+	}
+})->middleware('auth');

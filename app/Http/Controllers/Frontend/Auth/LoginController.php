@@ -106,6 +106,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         
+        $id=\Auth::user()->role;
+
         /*
          * Boilerplate needed logic
          */
@@ -133,8 +135,12 @@ class LoginController extends Controller
         $this->guard()->logout();
         $request->session()->flush();
         $request->session()->regenerate();
-
-        return redirect('/');
+        if($id==1)
+        {
+            return redirect('/login');   
+        }
+        else
+        return redirect('/front');
     }
 
     /**

@@ -14,7 +14,7 @@
             @if($settings->logo)
                 <img height="48" width="226" class="navbar-brand" src="{{route('frontend.index')}}/img/site_logo/{{$settings->logo}}">
             @else --}}
-                {{ app_name() }}
+                {{ 'E-commerce' }}
            {{--  @endif --}}
         </span>
     </a>
@@ -27,14 +27,14 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
-                @if (config('locale.status') && count(config('locale.languages')) > 1)
+               {{-- @if (config('locale.status') && count(config('locale.languages')) > 1)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <i class="fa fa-language"></i> {{ trans('menus.language-picker.language') }} <span class="caret"></span>
                         </a>
                         @include('includes.partials.lang')
                     </li>
-                @endif
+                @endif --}}
 
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -106,7 +106,7 @@
 
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{!! route('frontend.index') !!}" class="btn btn-default btn-flat">
+                                <a href="{!! route('admin.dashboard') !!}" class="btn btn-default btn-flat">
                                     <i class="fa fa-home"></i>
                                     {{ trans('navs.general.home') }}
                                 </a>
