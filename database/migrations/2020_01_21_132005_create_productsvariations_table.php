@@ -17,16 +17,16 @@ class CreateProductsvariationsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')
-            ->references('id')->on('products')
-            ->onDelete('cascade');
+                  ->references('id')->on('products')
+                  ->onDelete('cascade');
             $table->bigInteger('variation_id')->unsigned();
             $table->foreign('variation_id')
-            ->references('id')->on('variationmaster')
-            ->onDelete('cascade');
+                  ->references('id')->on('variationmaster')
+                  ->onDelete('cascade');
             $table->bigInteger('variation_values_id')->unsigned();
             $table->foreign('variation_values_id')
-            ->references('id')->on('variationvalues')
-            ->onDelete('cascade');
+                  ->references('id')->on('variationvalues')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

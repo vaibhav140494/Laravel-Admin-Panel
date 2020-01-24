@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend\Product;
 
 use App\Models\Product\Product;
+use App\Models\Category\Category;
+use App\Models\Subcategory\Subcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
@@ -16,6 +18,7 @@ use App\Http\Requests\Backend\Product\StoreProductRequest;
 use App\Http\Requests\Backend\Product\EditProductRequest;
 use App\Http\Requests\Backend\Product\UpdateProductRequest;
 use App\Http\Requests\Backend\Product\DeleteProductRequest;
+use DB;
 
 /**
  * ProductsController
@@ -55,6 +58,7 @@ class ProductsController extends Controller
      */
     public function create(CreateProductRequest $request)
     {
+        
         return new CreateResponse('backend.products.create');
     }
     /**
@@ -113,5 +117,16 @@ class ProductsController extends Controller
         //returning with successfull message
         return new RedirectResponse(route('admin.products.index'), ['flash_success' => trans('alerts.backend.products.deleted')]);
     }
-    
+    public function getSubCategories(Request $request)
+    {
+        if($request->ajax())
+        {
+            $category_id=$request->input('id');
+            $subcategories=DB::table('subcategories')
+                               ->where('category_id',$category_id)
+                               ->get();
+            $subcat = json_encode($subcategories);
+            return $subcat;                   
+        }
+    }
 }

@@ -37,7 +37,7 @@ class ProductRepository extends BaseRepository
                 config('module.products.table').'.type',
                 config('module.products.table').'.price',
                 config('module.products.table').'.discouted_price',
-                config('module.products.table').'.category_desc',
+                config('module.products.table').'.image',
                 config('module.products.table').'.specification',
                 config('module.products.table').'.created_at',
                 config('module.products.table').'.updated_at',

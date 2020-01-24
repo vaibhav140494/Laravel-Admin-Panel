@@ -22,7 +22,13 @@
                     <thead>
                         <tr>
                             <th>{{ trans('labels.backend.supporttickets.table.id') }}</th>
+                            <th>{{ trans('labels.backend.supporttickets.table.user_id') }}</th>
+                            <th>{{ trans('labels.backend.supporttickets.table.topic_id') }}</th>
+                            <th>{{ trans('labels.backend.supporttickets.table.discription') }}</th>
+                            <th>{{ trans('labels.backend.supporttickets.table.admin_comment') }}</th>
+                            <th>{{ trans('labels.backend.supporttickets.table.status') }}</th>
                             <th>{{ trans('labels.backend.supporttickets.table.createdat') }}</th>
+                            <th>{{ trans('labels.backend.supporttickets.table.updatedat') }}</th>
                             <th>{{ trans('labels.general.actions') }}</th>
                         </tr>
                     </thead>
@@ -61,7 +67,13 @@
                 },
                 columns: [
                     {data: 'id', name: '{{config('module.supporttickets.table')}}.id'},
+                    {data: 'user_id', name: '{{config('module.supporttickets.table')}}.user_id'},
+                    {data: 'topic_id', name: '{{config('module.supporttickets.table')}}.topic_id'},
+                    {data: 'discription', name: '{{config('module.supporttickets.table')}}.discription'},
+                    {data: 'admin_comment', name: '{{config('module.supporttickets.table')}}.admin_comment'},
+                    {data: 'status', name: '{{config('module.supporttickets.table')}}.status'},
                     {data: 'created_at', name: '{{config('module.supporttickets.table')}}.created_at'},
+                    {data: 'updated_at', name: '{{config('module.supporttickets.table')}}.updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],

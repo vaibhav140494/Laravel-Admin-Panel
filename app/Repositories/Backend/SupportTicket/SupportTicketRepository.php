@@ -30,6 +30,11 @@ class SupportTicketRepository extends BaseRepository
         return $this->query()
             ->select([
                 config('module.supporttickets.table').'.id',
+                config('module.supporttickets.table').'.user_id',
+                config('module.supporttickets.table').'.topic_id',
+                config('module.supporttickets.table').'.discription',
+                config('module.supporttickets.table').'.admin_comment',
+                config('module.supporttickets.table').'.status',
                 config('module.supporttickets.table').'.created_at',
                 config('module.supporttickets.table').'.updated_at',
             ]);

@@ -17,8 +17,8 @@ trait SupportTicketAttribute
      */
     public function getActionButtonsAttribute()
     {
-        return '<div class="btn-group action-btn"> {$this->getEditButtonAttribute("edit-supportticket", "admin.supporttickets.edit")}
-                {$this->getDeleteButtonAttribute("delete-supportticket", "admin.supporttickets.destroy")}
+        return '<div class="btn-group action-btn"> '.$this->getEditButtonAttribute("edit-supportticket", "admin.supporttickets.edit").'
+                '.$this->getDeleteButtonAttribute("delete-supportticket", "admin.supporttickets.destroy").'
                 </div>';
     }
 }

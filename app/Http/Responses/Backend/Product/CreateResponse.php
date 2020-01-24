@@ -3,6 +3,8 @@
 namespace App\Http\Responses\Backend\Product;
 
 use Illuminate\Contracts\Support\Responsable;
+use App\Models\Category\Category;
+use DB;
 
 class CreateResponse implements Responsable
 {
@@ -14,7 +16,9 @@ class CreateResponse implements Responsable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function toResponse($request)
-    {
-        return view('backend.products.create');
+    {   $category_list=DB::table('categories')
+        ->select('id','category_name')
+        ->get();
+        return view('backend.products.create')->with('category_list',$category_list);
     }
 }
