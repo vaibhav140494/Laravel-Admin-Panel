@@ -13,3 +13,7 @@
 {{ Html::style('frontend/css/bootstrap.min.css') }}
 {{ Html::style('frontend/css/style.css') }}
 {{ Html::style('frontend/css/responsive.css') }}
+{{ Html::script('frontend/js/vendor/jquery-1.12.4.min.js') }}
+{{ HTML::script('frontend/js/bootstrap.min.js') }}
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+

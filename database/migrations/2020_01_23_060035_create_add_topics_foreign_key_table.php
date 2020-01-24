@@ -26,8 +26,8 @@ class CreateAddTopicsForeignKeyTable extends Migration
     public function down()
     {
         Schema::table('supporttickets', function(Blueprint $table)
-    {
-        $table->dropForeign('topic_id');
-    });
+        {
+            $table->dropForeign('supporttickets_topic_id_foreign');
+        });
     }
 }

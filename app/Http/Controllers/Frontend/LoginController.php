@@ -28,10 +28,14 @@ class LoginController extends Controller
         {
             session(['username' => $users]);
             session()->get('username');
+            // dd($users->role);
+            if($users->role==2)
             return redirect('/front');
+            else
+            return redirect('/dashboard');
         }
         else
-            dd("hello");
+            return redirect('frontend/login')->with('errors','Invalid Credentials');
     }
     public function logout(Request $request)
     {

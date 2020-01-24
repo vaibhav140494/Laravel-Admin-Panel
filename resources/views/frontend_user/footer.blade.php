@@ -19,7 +19,9 @@
 								<h4 class="sf_title">Information</h4>
 								<ul>
 									<!-- display when user logged in -->
-									<!-- <li><a href="#">My Orders</a></li> -->
+									@if(session()->get('username'))
+									<li><a href="#">My Orders</a></li>
+									@endif
 									<li><a href="#">About Us</a></li>
 									<li><a href="#">Privacy Policy</a></li>
 									<li><a href="#">Terms & Conditions</a></li>
