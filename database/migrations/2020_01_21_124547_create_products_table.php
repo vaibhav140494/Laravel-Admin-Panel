@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             $table->integer('type');
             $table->integer('price');
             $table->integer('discouted_price');
-            $table->string('category_desc',250);
+            $table->string('image');
             $table->text('specification');
             $table->timestamps();
         });

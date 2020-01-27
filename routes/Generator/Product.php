@@ -9,6 +9,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::resource('products', 'ProductsController');
         //For Datatable
         Route::post('products/get', 'ProductsTableController')->name('products.get');
+        Route::get('products/ajax/getsubcategories','ProductsController@getSubCategories')->name('products.ajax.subcategrory');
     });
     
 });

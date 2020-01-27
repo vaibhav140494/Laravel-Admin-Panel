@@ -30,7 +30,7 @@ class Product extends Model
      * Mass Assignable fields of model
      * @var array
      */
-    protected $fillable = ['sku','product_name','subcategory_id','category_id','quantity','type','price','discounted_price',
+    protected $fillable = ['sku','product_name','subcategory_id','category_id','quantity','type','price','discounted_price','image',
         'specification'
     ];
 
