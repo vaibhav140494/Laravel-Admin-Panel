@@ -47,7 +47,7 @@ class LoginController extends Controller
             return route('admin.dashboard');
         }
 
-        return route('frontend.user.dashboard');
+        return route('frontend.index');
     }
 
     /**
@@ -140,7 +140,7 @@ class LoginController extends Controller
             return redirect('/login');   
         }
         else
-        return redirect('/front');
+        return redirect()->route('frontend.index');
     }
 
     /**

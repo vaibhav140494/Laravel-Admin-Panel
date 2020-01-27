@@ -49,7 +49,7 @@ class LoginController extends Controller
         app()->make(Auth::class)->flushTempSession();
 
         $request->session()->flush();
-        return redirect('/front');
+        return redirect('/');
     }
 
 }

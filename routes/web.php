@@ -38,8 +38,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
 * Routes From Module Generator
 */
 includeRouteFiles(__DIR__.'/Generator/');
-Route::get('/front',function(){
-return view('frontend_user.index');
+Route::get('/','Frontend\FrontendController@index')->name('frontend.index');
+Route::get('/register',function(){
+    return view('frontend_user.register');
 });
 
 // includeRouteFiles(__DIR__.'/frontend_user/');
@@ -56,11 +57,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::any('/', function () {
-    $user = \Auth::user();
-	if ($user->role == 1) {
-		return redirect('/admin/dashboard');
-	} else if ($user->role == 2) {
-		return redirect('/');
-	}
-})->middleware('auth');
+// Route::any('/', function () {
+//     $user = \Auth::user();
+//     if(isset($user)){
+//     dd($user->role);
+// 	if ($user->role == 1) {
+// 		return redirect('/admin/dashboard');
+// 	} else if ($user->role == 2) {
+// 		return view('frontend_user.index');
+//     }
+// }
+// });
