@@ -1,24 +1,49 @@
 <div class="box-body">
    
     <div class="form-group">
-         {{ Form::label('category', trans('labels.backend.categories.title'), ['class' => 'col-lg-2 control-label required']) }}    
+         {{ Form::label('category_id', trans('labels.backend.categories.title'), ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-                
-                <select name="category" id="category" class="form-control box-size">
+                @if(isset($products->id))
+                <select name="category_id" id="category_id" class="form-control box-size">
+                <option value="">Select Category</option>
+                        @foreach($category_list as $category)
+                        @if($products->category_id == $category->id)
+                        <option value="{{ $category->id}}" selected>{{ $category->category_name}}</option>
+                        @else
+                        <option value="{{ $category->id}}">{{ $category->category_name}}</option>
+                        @endif
+                        @endforeach
+                        
+                </select>
+                @else
+                <select name="category_id" id="category_id" class="form-control box-size">
                     <option value="">Select Category</option>
                         @foreach($category_list as $category)
                         <option value="{{ $category->id}}">{{ $category->category_name}}</option>
                         @endforeach
+                        
                 </select>
+                @endif
         </div>
     </div>
     <div class="form-group">
-         {{ Form::label('subcategory', trans('labels.backend.subcategories.title'), ['class' => 'col-lg-2 control-label required']) }}    
+         {{ Form::label('subcategory_id','Sub Categories' , ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-            
-                
-                <select name="subcategory" id="subcategory" class="form-control box-size">
+        
+                @if(isset($products->id))
+                <select name="subcategory_id" id="subcategory_id" class="form-control box-size">
+                        @foreach($subcategory_name as $subcategory)
+                            @if($products->subcategory_id == $subcategory->id)
+                                <option value="{{ $subcategory->id}}" selected>{{ $subcategory->subcategory_name}}</option>
+                        @else
+                                <option value="{{ $subcategory->id}}">{{ $subcategory->subcategory_name}}</option>
+                        @endif
+                @endforeach
                 </select>
+                @else
+                <select name="subcategory_id" id="subcategory_id" class="form-control box-size">
+                </select>
+                @endif
         </div>
     </div>
     <div class="form-group">
@@ -36,13 +61,16 @@
     <div class="form-group">
          {{ Form::label('quantity',trans('labels.backend.products.table.quantity'), ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-        {{ Form::number('qunatity', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.quantity'), 'required' => 'required']) }}
+        {{ Form::number('quantity', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.quantity'), 'required' => 'required']) }}
         </div>
     </div>
     <div class="form-group">
          {{ Form::label('type',trans('labels.backend.products.table.type'), ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-        {{ Form::text('type', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.type'), 'required' => 'required']) }}
+        <select name="type" id="type" class="form-control box-size">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        </select>
         </div>
     </div>
     <div class="form-group">
@@ -65,9 +93,15 @@
     </div>
     <div class="form-group">
          {{ Form::label('image',trans('labels.backend.products.table.image'), ['class' => 'col-lg-2 control-label required']) }}    
-        
+         <div class="col-lg-10">
         {{ Form::file('image', [ 'required' => 'required']) }}
-        
+        @if( isset($products))
+            
+            <div style="margin-top:20px;">
+            {{ Html::image('storage/products/'.$products->image, 'alt ', array('class' => 'css-class img-thumbnail', 'height' => '100px','width'=>'100px')) }}
+            </div>
+       @endif
+        </div>
     </div>
 </div><!--box-body-->
 
@@ -78,7 +112,7 @@
         //if your create or edit blade contains javascript of its own
         $( document ).ready( function() {
             //Everything in here would execute after the DOM is ready to manipulated.
-            $("#category").change(function(){
+            $("#category_id").change(function(){
                 var selected_cat=$(this).children("option:selected").val();
                 $.ajax({
                         method: 'GET',
@@ -90,7 +124,7 @@
                             for (var i = 0; i < data.length; i++) {
                             html = html + "<option value='" + data[i].id + "'>" + data[i].subcategory_name + "</option>";
                                     };
-                            $("#subcategory").html(html);
+                            $("#subcategory_id").html(html);
                             }
                         });    
             });

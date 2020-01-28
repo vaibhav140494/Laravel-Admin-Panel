@@ -71,6 +71,15 @@ class ProductsController extends Controller
     {
         //Input received from the request
         $input = $request->except(['_token']);
+        //dd($input);
+        if ($request->hasFile('image')){
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            //dd($imageName);
+        $path = $request->image->move(public_path('storage/products'), $imageName);
+            
+        }
+        
+          $input['image']=$imageName; 
         //Create the model using repository create method
         $this->repository->create($input);
         //return with successfull message
@@ -99,6 +108,14 @@ class ProductsController extends Controller
         //Input received from the request
         $input = $request->except(['_token']);
         //Update the model using repository update method
+        if ($request->hasFile('image')){
+            $imageName = time().'.'.$request->image->getClientOriginalExtension();
+            //dd($imageName);
+        $path = $request->image->move(public_path('storage/products'), $imageName);
+            
+        }
+        
+          $input['image']=$imageName; 
         $this->repository->update( $product, $input );
         //return with successfull message
         return new RedirectResponse(route('admin.products.index'), ['flash_success' => trans('alerts.backend.products.updated')]);

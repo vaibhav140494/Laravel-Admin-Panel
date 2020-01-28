@@ -33,6 +33,7 @@ class ProductRepository extends BaseRepository
                 config('module.products.table').'.category_id',
                 config('module.products.table').'.subcategory_id',
                 config('module.products.table').'.sku',
+                config('module.products.table').'.product_name',
                 config('module.products.table').'.quantity',
                 config('module.products.table').'.type',
                 config('module.products.table').'.price',
@@ -52,7 +53,7 @@ class ProductRepository extends BaseRepository
      * @return bool
      */
     public function create(array $input)
-    {
+    {   //dd($input);
         if (Product::create($input)) {
             return true;
         }

@@ -41,6 +41,12 @@ class ProductsTableController extends Controller
             ->addColumn('created_at', function ($product) {
                 return Carbon::parse($product->created_at)->toDateString();
             })
+            ->addColumn('image',function($product){
+                
+                $url=url('storage/products/'.$product->image);
+
+                return '<img src="'.$url.'" border="0" width="150" height="150" class="img-thumbnail" align="center" />';
+            })
             ->addColumn('actions', function ($product) {
                 return $product->action_buttons;
             })

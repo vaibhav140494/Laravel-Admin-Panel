@@ -25,6 +25,7 @@
                             <th>{{ trans('labels.backend.products.table.category_id') }}</th>
                             <th>{{ trans('labels.backend.products.table.subcategory_id') }}</th>
                             <th>{{ trans('labels.backend.products.table.sku') }}</th>
+                            <th>{{ trans('labels.backend.products.table.product_name') }}</th>
                             <th>{{ trans('labels.backend.products.table.quantity') }}</th>
                             <th>{{ trans('labels.backend.products.table.type') }}</th>
                             <th>{{ trans('labels.backend.products.table.price') }}</th>
@@ -47,6 +48,9 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th>
+                            
+                            </th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -84,6 +88,7 @@
                     {data: 'category_id', name: '{{config('module.products.table')}}.category_id'},
                     {data: 'subcategory_id', name: '{{config('module.products.table')}}.subcategory_id'},
                     {data: 'sku', name: '{{config('module.products.table')}}.sku'},
+                    {data: 'product_name', name: '{{config('module.products.table')}}.product_name'},
                     {data: 'quantity', name: '{{config('module.products.table')}}.quantity'},
                     {data: 'type', name: '{{config('module.products.table')}}.type'},
                     {data: 'price', name: '{{config('module.products.table')}}.price'},
@@ -94,6 +99,7 @@
                     {data: 'updated_at', name: '{{config('module.products.table')}}.updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
+               
                 order: [[0, "asc"]],
                 searchDelay: 500,
                 dom: 'lBfrtip',
@@ -110,5 +116,6 @@
 
             Backend.DataTableSearch.init(dataTable);
         });
+        
     </script>
 @endsection

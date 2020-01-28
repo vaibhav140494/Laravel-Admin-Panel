@@ -3,6 +3,9 @@
 namespace App\Http\Responses\Backend\Product;
 
 use Illuminate\Contracts\Support\Responsable;
+use DB;
+use App\Models\Category\Category;
+use App\Models\Subcategory\Subcategory;
 
 class EditResponse implements Responsable
 {
@@ -27,9 +30,20 @@ class EditResponse implements Responsable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function toResponse($request)
-    {
+    {    
+        //dd($this->products);
+        $category_list=DB::table('categories')
+        ->select('id','category_name')
+        ->get();
+        $subcategory_name=DB::table('subcategories')
+        ->select('id','subcategory_name')
+        ->where('category_id','=',$this->products['category_id'])
+        ->get();
+        //dd($subcategory_name);
         return view('backend.products.edit')->with([
-            'products' => $this->products
+            'products' => $this->products,
+            'category_list'=>$category_list,
+            'subcategory_name'=>$subcategory_name
         ]);
     }
 }
