@@ -39,9 +39,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
 */
 includeRouteFiles(__DIR__.'/Generator/');
 Route::get('/','Frontend\FrontendController@index')->name('frontend.index');
-Route::get('/register',function(){
-    return view('frontend_user.register');
-});
+// Route::get('/register',function(){
+//     return view('frontend_user.register');
+// });
 
 // includeRouteFiles(__DIR__.'/frontend_user/');
 

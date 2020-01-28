@@ -20,29 +20,15 @@ class LoginController extends Controller
         $credentials = $request->only(['email', 'password']);
         if (\Auth::attempt($credentials)) {
             if(\Auth::user()->role==2)
-            return redirect('/front');
+            return redirect('/');
             else
             return redirect()->route('admin.dashboard');
-    }
+        }
 
-    else
-    {
-        return view('frontend_user.login')->with('errors','Invalid Credentials');
-    }
-    // dd(\Auth::user()->first_name);
-        // $users=User::where('email',$email)->first();
-        // if(($users!='') && ((Hash::check($password, $users->password))))
-        // {
-        //     session(['username' => $users]);
-        //     session()->get('username');
-
-        //     if($users->role==2)
-        //     return redirect('/front');
-        //     else
-        //     return redirect('/dashboard');
-        // }
-        // else
-        //     return redirect('frontend/login')->with('errors','Invalid Credentials');
+        else
+        {
+            return view('frontend_user.login')->with('errors','Invalid Credentials');
+        }
     }
     public function logout(Request $request)
     {

@@ -5,64 +5,59 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6 text-left">
-						<h3>Full Width Blog</h3>
+						<h3>All Categories</h3>
 					</div>		
 
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
-							<li><a href="#">home</a></li>
+							<li><a href="{{route('frontend.index')}}">home</a></li>
 							<li><a href="#">category</a></li>
-							<li><span>Blog</span></li>
 						</ul>					
 					</div>	
 				</div>
 			</div>
 		</div>
-				
 		<!-- Blog Page -->
 		<div id="blog_page_area">
 			<div class="container">
 				<div class="row">				
-		
 					<div class="col-md-12 col-xs-12">
 						<div class="row">
+							@foreach ($category as $cat)
 							<!-- Single blog -->
 							<div class="col-lg-4 col-md-6 col-sm-6">						
 								<div class="single_blog">
 									<div class="single_blog_img">
-										<a href="#"><img src="{{url('frontend/img/blog/1.jpg')}}" alt=""></a>
-										<div class="blog_date text-center">
+										<a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}"><img src="{{url('frontend/img/blog/1.jpg')}}" alt=""></a>
+										<!-- <div class="blog_date text-center">
 											<div class="bd_day"> 25</div>
 											<div class="bd_month">Aug</div>
-										</div>
+										</div> -->
 									</div>
 														
 									<div class="blog_content">
 										<ul class="post-meta">
-											<li><i class="ti-user"></i> <a href="#">Admin</a></li>									
-											<li><i class="ti-comments"></i> <a href="#">2 comments</a></li>
-											<li><i class="ti-eye"></i> <a href="#">12 Views</a></li>
+											<li><i class="ti-eye"></i> <a href="#">{{$sub[$cat->id]}} Subcategories</a></li>
+
 										</ul>
-										<h4 class="post_title"><a href="#">Integer euismod dui non auctor</a> </h4>															
+										<h4 class="post_title"><a href="#">{{ $cat->category_name}}</a> </h4>															
 										<p>
-											Lorem ipsum dolor sit amet, consectetur adipiscing 
-											elit. Praesent vel elit et lectus pulvinar dignissim ....
+											{{$cat->category_desc}}
 										
 										</p>
 									</div>
 								</div>
 							</div>
+							@endforeach
+	
 							<!-- End Single blog -->
 
 							<!-- Single blog -->
-							<div class="col-lg-4 col-md-6 col-sm-6">						
+							<!-- <div class="col-lg-4 col-md-6 col-sm-6">						
 								<div class="single_blog">
 									<div class="single_blog_img">
 										<a href="#"><img src="{{url('frontend/img/blog/2.jpg')}}" alt=""></a>
-										<div class="blog_date text-center">
-											<div class="bd_day"> 25</div>
-											<div class="bd_month">Aug</div>
-										</div>
+										
 									</div>
 														
 									<div class="blog_content">
@@ -79,18 +74,15 @@
 										</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!-- End Single blog -->			
 
 							<!-- Single blog -->
-							<div class="col-lg-4 col-md-6 col-sm-6">						
+							<!-- <div class="col-lg-4 col-md-6 col-sm-6">						
 								<div class="single_blog">
 									<div class="single_blog_img">
 										<a href="#"><img src="{{url('frontend/img/blog/3.jpg')}}" alt=""></a>
-										<div class="blog_date text-center">
-											<div class="bd_day"> 25</div>
-											<div class="bd_month">Aug</div>
-										</div>
+										
 									</div>
 														
 									<div class="blog_content">
@@ -107,19 +99,16 @@
 										</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!-- End Single blog -->
 
 
 							<!-- Single blog -->
-							<div class="col-lg-4 col-md-6 col-sm-6">						
+							<!-- <div class="col-lg-4 col-md-6 col-sm-6">						
 								<div class="single_blog">
 									<div class="single_blog_img">
 										<a href="#"><img src="{{url('frontend/img/blog/1.jpg')}}" alt=""></a>
-										<div class="blog_date text-center">
-											<div class="bd_day"> 25</div>
-											<div class="bd_month">Aug</div>
-										</div>
+										
 									</div>
 														
 									<div class="blog_content">
@@ -136,18 +125,15 @@
 										</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!-- End Single blog -->
 
 							<!-- Single blog -->
-							<div class="col-lg-4 col-md-6 col-sm-6">						
+							<!-- <div class="col-lg-4 col-md-6 col-sm-6">						
 								<div class="single_blog">
 									<div class="single_blog_img">
 										<a href="#"><img src="{{url('frontend/img/blog/2.jpg')}}" alt=""></a>
-										<div class="blog_date text-center">
-											<div class="bd_day"> 25</div>
-											<div class="bd_month">Aug</div>
-										</div>
+										
 									</div>
 														
 									<div class="blog_content">
@@ -164,18 +150,15 @@
 										</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!-- End Single blog -->
 
 							<!-- Single blog -->
-							<div class="col-lg-4 col-md-6 col-sm-6">						
+							<!-- <div class="col-lg-4 col-md-6 col-sm-6">						
 								<div class="single_blog">
 									<div class="single_blog_img">
 										<a href="#"><img src="{{url('frontend/img/blog/3.jpg')}}" alt=""></a>
-										<div class="blog_date text-center">
-											<div class="bd_day"> 25</div>
-											<div class="bd_month">Aug</div>
-										</div>
+										
 									</div>
 														
 									<div class="blog_content">
@@ -192,7 +175,7 @@
 										</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!-- End Single blog -->	
 							
 						</div>

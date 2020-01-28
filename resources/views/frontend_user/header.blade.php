@@ -48,11 +48,11 @@
 								
 								@if (\Auth::user()!='')
 								<li class="account_area"><a href="#"> My Orders</a></li>
-								<li class="account_area"><a href="{{url('frontend/logout')}}"> SignOut</a></li>
+								<li class="account_area"><a href="{{route('frontend.logout')}}"> SignOut</a></li>
 
 								@else
-								<li class="account_area"><a href="{{url('frontend/login')}}"> <i class="ti-user"></i>Log In</a></li>
-								<li class="account_area"><a href="#"><i class="ti-user"></i> Sign Up</a></li>
+								<li class="account_area"><a href="{{route('frontend.login')}}"> <i class="ti-user"></i>Log In</a></li>
+								<li class="account_area"><a href="{{url('/register')}}"><i class="ti-user"></i> Sign Up</a></li>
 								@endif
 							</ul>
 						</div>
@@ -64,7 +64,7 @@
 				<div class="container">
 					<div class="row">		
 						<div class="col-xs-12 col-sm-12 col-md-3"> 
-							<a class="logo" href="#"> <img alt="" src="{{url('/frontend/img/logo.png')}}"></a> 
+							<a class="logo" href="{{route('frontend.index')}}"> <img alt="" src="{{url('/frontend/img/logo.png')}}"></a> 
 						</div><!--  End Col -->
 						
 						<div class="col-xs-12 col-sm-12 col-md-7 text-center">
@@ -104,9 +104,9 @@
 														<a href="#">T-Shirts</a>
 														<a href="#">sports shoes</a>	
 													</div>												
-													<button class="btn btn-outline-danger pull-right header-category-btn">
+													<a  href="{{route('frontend.category.list')}}" class="btn btn-outline-danger pull-right header-category-btn">
 														See All
-													</button>
+													</a>
 												</div>
 											</li> 
 											<li><a href="#">Products <i class="fa fa-angle-down"></i></a>
@@ -207,7 +207,7 @@ x										</ul>
 											</div>
 										</div>
 									</li> -->
-									@if(session()->get('username'))
+									@if(\Auth::user())
 									<li>
 										<div class="cart_menu_area">
 											<div class="cart_icon">

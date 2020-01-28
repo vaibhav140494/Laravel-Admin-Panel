@@ -10,7 +10,7 @@
 
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
-							<li><a href="{{url('front')}}">home</a></li>
+							<li><a href="{{url('frontend_user.index')}}">home</a></li>
 							<li><span>Login</span></li>
 						</ul>					
 					</div>	
@@ -61,6 +61,9 @@
                                             <button type="submit" id="acc_Login" class="btn btn-default acc_btn" > 
                                                 <span> <i class="fa fa-lock btn_icon"></i> Sign in </span> 
                                             </button>
+                                            <a class="login-link" href="{{url('/register')}}"> 
+                                                New User? Sign Up 
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +128,6 @@
         });
     });
     </script> -->
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
         
@@ -149,7 +151,7 @@
         //             passwordcheck: function(element) {
         //                 return ($('#password').val());
         //             },
-        //         }
+        //         }    
         //     },
         //     messages:{
         //         password:{
