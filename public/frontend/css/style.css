@@ -677,7 +677,7 @@ input:focus, textarea:focus {
 	border-color: #ff546e;
 }
 .header-category-btn:hover{
-	color:#fff;
+	color:#fff!important;
 }
 
 
@@ -830,7 +830,6 @@ input:focus, textarea:focus {
   width: 33.33%;
 }
 /* Mega Menu Column */
-.mm-column{}
 .mm-column h3 {
   font-size: 12px;
   font-weight: 700;
@@ -850,7 +849,6 @@ input:focus, textarea:focus {
   width: 25px;
 }
 /* Mega Menu Column Link */
-.mm-column-link {}
 .mm-column-link a {
 	display: block;
 	font-size: 14px;
@@ -2021,8 +2019,8 @@ input:focus, textarea:focus {
 /* -------- Page item css -------- */
 
 #page_item_area {
-	padding: 45px 0;
-	margin-bottom: 40px;
+	padding: 25px 0;
+	margin-bottom: 30px;
 	background: linear-gradient(45deg, #ff546e 0%, #fd7f92 100%);
 }
 .p_items li {
@@ -2540,6 +2538,14 @@ input:focus, textarea:focus {
 	padding: 22px 23px;
 	text-align: left;
 }
+ #register-form input[type=text], input[type=password],input[type=number],.textarea , input[type=email],input[type=date]{
+	width: 100%;
+  padding: 15px;
+  /* margin: 5px 0 22px 0; */
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
 .caa_pdngbtm {
 	padding-bottom: 113px;
 }
@@ -2560,7 +2566,12 @@ input:focus, textarea:focus {
 	transition:.5s;
 	margin-top:10px;
 	text-transform: capitalize;
-	
+	margin-bottom: 20px;
+	margin-left: 35%;
+}
+.login-link{
+	padding: 8px 20px;
+	/* margin-top:10px; */
 }
 .acc_btn:hover {
 	background: #000;

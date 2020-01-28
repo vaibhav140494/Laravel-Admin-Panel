@@ -16,4 +16,5 @@
 {{ Html::script('frontend/js/vendor/jquery-1.12.4.min.js') }}
 {{ HTML::script('frontend/js/bootstrap.min.js') }}
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 

@@ -39,7 +39,7 @@
                     <li>{{ link_to_route('frontend.auth.login', trans('navs.frontend.login')) }}</li>
 
                     @if (config('access.users.registration'))
-                        <li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>
+                        {{--<li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>--}}
                     @endif
                 @else
                     <li class="dropdown">

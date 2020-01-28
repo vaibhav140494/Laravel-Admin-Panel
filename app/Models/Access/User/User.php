@@ -41,10 +41,16 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'addrss',
+        'pincode',
         'email',
+        'username',
         'status',
         'confirmation_code',
         'confirmed',
+        'phone_no',
+        'birthdate',
+        'role',
         'created_by',
         'updated_by',
     ];
