@@ -10,7 +10,7 @@ class variationMaster extends Model
     protected $table='variationmaster';
 
 
-    protected $fillable = ['variation_name','is_active','category_id'];
+    protected $fillable = ['variation_name','is_active','product_id'];
 
     protected $dates = [
         'created_at',

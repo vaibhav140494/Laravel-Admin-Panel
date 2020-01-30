@@ -15,9 +15,9 @@ class CreateVariationmasterTable extends Migration
     {
         Schema::create('variationmaster', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')
-            ->references('id')->on('categories')
+            $table->bigInteger('product_id')->unsigned();
+            $table->foreign('product_id')
+            ->references('id')->on('products')
             ->onDelete('cascade');
             $table->string('variation_name',50);
             $table->boolean('is_active')->default(0);

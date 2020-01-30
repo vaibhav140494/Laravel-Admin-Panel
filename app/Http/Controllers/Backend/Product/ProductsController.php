@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Product;
 use App\Models\Product\Product;
 use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
+use App\Models\Product\variationMaster;
+use App\Models\Product\variationValues;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
@@ -145,5 +147,90 @@ class ProductsController extends Controller
             $subcat = json_encode($subcategories);
             return $subcat;                   
         }
+    }
+    public function getProductVariations(Request $request,$id)
+    {
+        //dd($request['id']);
+        $pid=$request['id'];
+        $product_name=DB::table('products')
+                    ->select('product_name as pname')
+                    ->where('id','=',$request['id'])
+                    ->get();
+                   //dd($product_name);
+        
+                    //dd($variation_nameid);
+        $var=DB::table('variationmaster')
+                ->join('variationvalues', 'variationmaster.id', '=', 'variationvalues.variation_id')
+                ->select('variationmaster.variation_name as VariationName','variationmaster.id as id',DB::raw("(GROUP_CONCAT(variationvalues.variation_value SEPARATOR ',')) as `Variationvalues`"))
+                ->where('variationmaster.product_id','=',$request['id'])
+                ->groupBy('variationmaster.id')
+                ->paginate(1);
+               // dd($var);
+                
+                return view('backend.products.productvariation')->with([
+                    'data' => $var,
+                    'name' => $product_name,
+                    'productid'=>$pid
+                ]);
+        
+    }  
+    public function deleteVariation(Request  $request)
+    {
+        //dd($request['id']);
+        
+        DB::table('variationmaster')->where('id','=',$request['id'])->delete();
+        return redirect()->back();
+        //return view('backend.products.productvariation');
+    }
+    public function createVariation(Request $request)
+    {
+        $productdetails=DB::table('products')
+                    ->select('product_name','category_id','subcategory_id')
+                    ->where('id','=',$request['id'])
+                    ->get(); 
+                    //dd( $productdetails);
+        $subcategory_name=DB::table('subcategories') 
+                            ->select('subcategory_name')
+                            ->where('id','=',$productdetails[0]->subcategory_id)
+                            ->get();
+                       // dd($subcategory_name);
+        $category_name=DB::table('categories') 
+                            ->select('category_name')
+                            ->where('id','=',$productdetails[0]->category_id)
+                            ->get();               
+            return view('backend.products.createVariation')->with([
+                'pname'=>$productdetails[0]->product_name,
+                'cname'=>$category_name[0]->category_name,
+                'sname'=>$subcategory_name[0]->subcategory_name
+            ]);
+    }
+    public function storeVariation(Request $request)
+    {
+        $input = $request->except(['_token']);
+        
+        $product_id=DB::table('products')
+                    ->select('id')
+                    ->where('product_name','=',$input['product_name'])
+                    ->get();
+        //dd($product_id);
+        DB::table('variationmaster')->insert([
+            'variation_name'=>$input['variation_name'],
+            'product_id'=>$product_id[0]->id
+        ]);
+        $variation_id=DB::table('variationmaster')
+                     ->select('id')
+                     ->where([
+                         ['product_id','=',$product_id[0]->id],
+                         ['variation_name','=',$input['variation_name']]
+                     ])->get();
+        $variation_values=$input['variation_value'] ;
+        foreach($variation_values as $value)
+        {
+            DB::table('variationvalues')->insert([
+                'variation_value'=>$value,
+                'variation_id'=>$variation_id[0]->id
+            ]);
+        }  
+        return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
     }
 }

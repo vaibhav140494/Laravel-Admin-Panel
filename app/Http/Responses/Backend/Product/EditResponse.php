@@ -39,7 +39,7 @@ class EditResponse implements Responsable
         ->select('id','subcategory_name')
         ->where('category_id','=',$this->products['category_id'])
         ->get();
-        //dd($subcategory_name);
+        //productdd($subcategory_name);
         return view('backend.products.edit')->with([
             'products' => $this->products,
             'category_list'=>$category_list,

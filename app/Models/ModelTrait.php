@@ -31,4 +31,11 @@ trait ModelTrait
                 </a>';
         }
     }
+    public function getCostumButtonsAttribute($route)
+    {
+        return '<a href="" class="btn btn-flat btn-default">
+                    <i data-toggle="tooltip" data-placement="top" title="custom" class="fa fa-eye"></i>
+                </a>';
+       
+    }
 }

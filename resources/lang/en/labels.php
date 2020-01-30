@@ -272,6 +272,7 @@ return [
 	
 	],
 	],
+	
 	"subcategories" => [
 	"create" => "Create SubCategory",
 	"edit" => "Edit SubCategory",
