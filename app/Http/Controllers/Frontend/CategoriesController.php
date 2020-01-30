@@ -13,25 +13,40 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-      $category=Category::all();
+      $category=Category::paginate(6);
       for($i=0;$i<$category->count();$i++){
         $subcategory=Subcategory::where('category_id',$category[$i]->id)->get();
         $sub[$category[$i]->id] = $subcategory->count();
       }
       return view('frontend_user.category_list',compact('category','sub'));
     }
-    public function getSub($id)
+    public function getAllCat(Request $request)
     {
-        $category=Category::find($id);
-        $subcategory=Subcategory::where('category_id',$id)->get();
-        // dd($subcategory[0]->subcategory_name);
-        return view('frontend_user.subcategory-list',compact('category','subcategory'));
+        if($request->ajax())
+        {
+            $param= $request->input('str');
+            $subcategory;
+            if(($param!='') && (strlen($param)>=1))
+            {
+                $cat=Category::where('category_name','like','%'.$param.'%')
+                ->get();;
+                for($i=0;$i<$cat->count();$i++){
+                    $subcategory=Subcategory::where('category_id',$cat[$i]->id)->get();
+                    $sub[$cat[$i]->id] = $subcategory->count();
+                  }
+                // $sub=Subcategory::find($cat->id);
+                if(count($cat)==0){
+                $response['error'] ="sorry no sub category found";
+                }
+                else{
+                    $response['sub']=$sub;
+                    $response['success'] = true;
+                    $response['data'] = $cat;
+                }
+                return json_encode($response);
+            }
+            
+        }
     }
-    public function getProd($id)
-    {
-        $subcategory=Subcategory::find($id);
-        // dd($subcategory);
-        $prod=Product::where('subcategory_id',$subcategory->id)->get();
-        return view('frontend_user.subcategory-list',compact('category','subcategory'));
-    }
+    
 }

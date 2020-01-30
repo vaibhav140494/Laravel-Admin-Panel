@@ -12,6 +12,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::get('categories/{id}/get','SubcategoriesController@get')->name('categories.id.get');
 
         Route::get('subcategories/{id}/create','SubcategoriesController@create')->name('categories.id.create');
+        Route::get('subcategories/{id}/edit','SubcategoriesController@edit')->name('categories.id.edit');
 
     });
     

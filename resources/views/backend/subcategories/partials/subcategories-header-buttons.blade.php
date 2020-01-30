@@ -32,10 +32,11 @@
         </li>
         @permission( 'create-subcategory' )
             <li>
-
+@if(isset($category))
                 <a href="{{ url('/admin/subcategories/'.$category->id.'/create') }}">
                     <i class="fa fa-plus"></i> {{ trans( 'menus.backend.subcategories.create' ) }}
                 </a>
+                @endif
             </li>
         @endauth
     </ul>

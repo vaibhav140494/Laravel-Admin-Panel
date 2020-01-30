@@ -1,17 +1,17 @@
 @include('frontend_user.header')
-		
 		<!-- Page item Area -->
 		<div id="page_item_area">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6 text-left">
-						<h3>{{$category->category_name}}</h3>
+					
+						<h3> Category : {{$categories['category_name']}}</h3>
 					</div>		
 
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
 							<li><a href="{{route('frontend.index')}}">home</a></li>
-							<li><a href="{{route('frontend.category.list')}}">category</a></li>
+							<li><a href="{{route('frontend.category.list')}}">{{$categories['category_name']}}</a></li>
 							<li><span>Subcategories</span></li>
 						</ul>					
 					</div>	
@@ -38,9 +38,9 @@
 									<li><i class="ti-eye"></i> <a href="#">{{$subcategory->count()}} Subcategories</a></li>
 								</ul>										
 							
-								<h4 class="post_title"><a href="#">{{$category->category_name}}</a> </h4>															
+								<h4 class="post_title"><a href="#">{{$categories['category_name']}}</a> </h4>															
 								<p>
-									{{$category->category_desc}}
+									{{$categories['category_desc']}}
 								
 								</p>
 							</div>
@@ -90,7 +90,7 @@
 									<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 								</ul>
 							</div>
-						</div>					 -->
+						</div>	 -->
 					</div>
 				
 					<!-- Blog Sidebar -->
@@ -98,10 +98,11 @@
 						<div class="single_sidebar search_widget">
 							<h3 class="sdbr_title">Search</h3>
 							<div class="sdbr_inner">
-								<form class="search_form" method="post" action="#">
-									<input type="text" class="form-control search_input" name="s" id="s" placeholder="Search Here ...">
+								<form class="search_form" >
+									<input type="text" class="form-control search_input" name="search" id="search" placeholder="Search Sub categories ...">
 									<button type="submit" class="search_button"><i class="fa fa-search"></i></button>
 								</form>
+								
 							</div>
 						</div>
 						
@@ -109,7 +110,7 @@
 							<h3 class="sdbr_title"> Subcategories</h3>
 							<div class="sdbr_inner">
 							<!-- treeview start -->
-								<ul>
+								<ul class="show">
 									@foreach ($subcategory as $sub)
 									<li><a href="{{route('frontend.products.list',['id'=>$sub->id])}}">{{$sub->subcategory_name}}</a></li>
 									@endforeach
@@ -162,4 +163,57 @@
 			</div>
 		</div>
 
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var append1 =$('.show').html();
+		$('#search').keyup(function(){
+			console.log(append1);
+			if($(this).val()=='')
+			{
+				$('.show').html(append1);
+			}	
+			var str=$(this).val();
+			var id=<?php echo $categories['id']; ?>;
+			$.ajax({
+				url:"{{route('frontend.subcategory.list.ajax')}}",
+				method:'get',
+				dataType:'json',
+				data:{'str':str,'id':id},
+				success: function(response)
+				{
+					console.log(response);
+					if(response['success'])
+					{
+						
+						cat=response['data'];
+						
+						console.log(cat);
+						var li1='';
+						$.each(cat,function(key,value){
+							var id=value.id;
+							var route="{{route('frontend.products.list',['id'=>0])}}";
+							console.log(route);
+							var splitarr=route.split('/');
+							splitarr[splitarr.length-1]=id;
+							console.log(splitarr);
+							route1=splitarr[splitarr.length-2]+'/'+splitarr[splitarr.length-1];
+							li1 +='<li><a href="http://127.0.0.1:8000/'+route1+'">'+cat[key].subcategory_name+'</a></li>';
+							console.log(li1);
+						});	
+						$('.show').html(li1);
+
+					}
+					else
+					{
+						$('.show').html(response['error']);
+					}
+					
+				}
+				
+			});
+			
+
+		});
+	});
+	</script>
 @include('frontend_user.footer')

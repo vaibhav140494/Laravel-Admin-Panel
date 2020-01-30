@@ -16,29 +16,28 @@ trait ProductAttribute
      * Action Button Attribute to show in grid
      * @return string
      */
-    public $count=0;
     public function getActionButtonsAttribute()
     {   
         
-        $products=DB::table('products')
-                    ->select('type')
-                    ->get();
-        //dd($products);
-          dd($this->count);
-        // dd($products[$this->count]->type);
-            if($products[$this->count]->type == 2){
+        // echo "<pre>"; print_r($this->attributes['type']); 
+        $products=Product::select('type')->get();
+        
+            if($products[$this->count]->type != 2){
+                $var=$products[$this->count]->type.$this->count;
                 $this->count++;
-                
+                return $var;
                 return '<div class="btn-group action-btn"> '.$this->getEditButtonAttribute("edit-product", "admin.products.edit").'
                                 '.$this->getDeleteButtonAttribute("delete-product", "admin.products.destroy").'
                                 '.$this->getCostumButtonsAttribute().'
                         </div>';
             }
             else{ 
+                $var=$products[$this->count]->type.$this->count;
                 $this->count++;
-                return '<div class="btn-group action-btn"> '.$this->getEditButtonAttribute("edit-product", "admin.products.edit").'
-                                                           '.$this->getDeleteButtonAttribute("delete-product", "admin.products.destroy").'
-                           </div>';
+                return $var;
+                // return '<div class="btn-group action-btn"> '.$this->getEditButtonAttribute("edit-product", "admin.products.edit").'
+                //                                            '.$this->getDeleteButtonAttribute("delete-product", "admin.products.destroy").'
+                //            </div>';
             }     
               
     }

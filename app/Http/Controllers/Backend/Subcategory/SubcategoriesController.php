@@ -111,8 +111,12 @@ class SubcategoriesController extends Controller
      */
     public function edit(Subcategory $subcategory, EditSubcategoryRequest $request)
     {
+        // dd($request->get('id'));
+        // $cat=Category::find($id);    
+        // dd($cat);   
         return new EditResponse($subcategory);
     }
+    // view('backend.subcategories.edit',compact('subcategories')
     /**
      * Update the specified resource in storage.
      *
