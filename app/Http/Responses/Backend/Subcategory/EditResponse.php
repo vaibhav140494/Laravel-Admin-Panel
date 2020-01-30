@@ -28,6 +28,7 @@ class EditResponse implements Responsable
      */
     public function toResponse($request)
     {
+        // dd($this->subcategories);   
         return view('backend.subcategories.edit')->with([
             'subcategories' => $this->subcategories
         ]);
