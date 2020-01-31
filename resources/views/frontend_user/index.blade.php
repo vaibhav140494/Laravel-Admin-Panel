@@ -11,8 +11,8 @@
 									<p class="animated">New Year 2019</p>
 									<h1 class="animated">best shopping</h1>
 									<h4 class="animated">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam <br> vitae posuere est Sed placerat ligula </h4>
-									<a href="#" class="btn main_btn animated">Shop Now</a>
-									<a href="#" class="btn main_btn coll_btn animated">Collection</a>
+									<!-- <a href="#" class="btn main_btn animated">Shop Now</a> -->
+									<a href="{{route('frontend.category.list')}}" class="btn main_btn coll_btn animated">Collection</a>
 								</div>
 							</div>
 						</div>						
@@ -56,49 +56,39 @@
 	
 		<!--  Promo ITEM STRAT  -->
 		<section id="promo_area" class="section_padding">
+		
 			<div class="container">
+			<div class="row">
+					<div class="col-md-12 text-center">
+						<div class="section_title">	
+							<!-- <span class="sub-title">Check Our All Products</span> -->
+							<h2>Featured Categories</h2>
+							<div class="divider"></div>							
+						</div>
+					</div>
+				</div>
 				<div class="row">
+				<?php $i=0; ?>
+				@foreach($category_featured as $cat)
+					@if($i++<= 3)
+					
 					<div class="col-lg-4 col-md-6 col-sm-12">							
 						<div class="single_promo">
 							<img src=" {{url('/frontend/img/promo/1.jpg')}}" alt="promo image">
 							<div class="box-content">
 								<div class="promo-content">
-									<h3 class="title">Shoes</h3>
-									<span class="post">2019 Collection</span>
-									<p>You Will Love Upto 60% Off</p>
-									<a class="shop_now_btn" href="#">Shop Now</a>
+									<h3 class="title">{{$cat->category_name}}</h3>
+									<span class="post">2020 Collection</span>
+									<p>{{$cat->category_desc}}</p>
+									<a class="shop_now_btn" href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">Shop Now</a>
 								</div>
 							</div>
 						</div>													
-					</div><!--  End Col -->						
+					</div><!--  End Col -->	
+					@endif					
 					
-					<div class="col-lg-4 col-md-6 col-sm-12">							
-						<div class="single_promo">
-							<img src="  {{url('/frontend/img/promo/2.jpg')}}" alt="promo image">
-							<div class="box-content">
-								<div class="promo-content">
-									<h3 class="title">Watch</h3>
-									<span class="post">Sprint Collection</span>
-									<p>You Will Love Upto 50% Off</p>
-									<a class="shop_now_btn" href="#">Shop Now</a>
-								</div>
-							</div>
-						</div>														
-					</div><!--  End Col -->					
-
-					<div class="col-lg-4 col-md-6 col-sm-12">					
-						<div class="single_promo">
-							<img src=" {{url('/frontend/img/promo/3.jpg')}}" alt="promo image">
-							<div class="box-content">
-								<div class="promo-content">
-									<h3 class="title">Bags</h3>
-									<span class="post">Exclusive Desgin</span>
-									<p>You Will Love Upto 20% Off</p>
-									<a class="shop_now_btn" href="#">Shop Now</a>
-								</div>
-							</div>
-						</div>									
-					</div><!--  End Col -->					
+					@endforeach
+					
 				</div>			
 			</div>		
 		</section>
@@ -129,8 +119,9 @@
 					</div>
 					
 					<div class="product_item">
-						<div class="row">					
-							<div class="col-lg-3 col-md-4 col-sm-6 mix sale">
+						<div class="row">
+						@foreach($product as $prod)					
+							<div class="col-lg-3 col-md-4 col-sm-6 mix ">
 								<div class="product-grid">
 									<div class="product-image">
 										<a href="#">
@@ -142,7 +133,7 @@
 											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
 											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 										</ul>
-										<span class="product-new-label">Sale</span>
+										<!-- <span class="product-new-label">Sale</span> -->
 									</div>
 									<ul class="rating">
 										<li class="fa fa-star"></li>
@@ -152,16 +143,23 @@
 										<li class="fa fa-star"></li>
 									</ul>
 									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
+										<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
+										<div class="price">
+										@if($prod->discouted_price != $prod->price)
+										{{$prod->discouted_price}}
+											<span>{{$prod->price}}</span>
+											@else
+											{{$prod->price}}
+											@endif
 										</div>
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->	
+							</div>
+						@endforeach
 							
-							<div class="col-lg-3 col-md-4 col-sm-6 mix ftrd">
+						
+							<!-- <div class="col-lg-3 col-md-4 col-sm-6 mix ftrd">
 								<div class="product-grid">
 									<div class="product-image">
 										<a href="#">
@@ -190,7 +188,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->	
+							</div>
 									
 							<div class="col-lg-3 col-md-4 col-sm-6 mix">
 								<div class="product-grid">
@@ -221,7 +219,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->	
+							</div>
 
 							
 							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
@@ -253,7 +251,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->			
+							</div>			
 							
 							
 							<div class="col-lg-3 col-md-4 col-sm-6 mix ftrd">
@@ -285,7 +283,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->			
+							</div>			
 							
 							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
 								<div class="product-grid">
@@ -316,7 +314,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->		
+							</div>		
 							
 							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
 								<div class="product-grid">
@@ -347,7 +345,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->	
+							</div>	
 
 							
 							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
@@ -379,7 +377,7 @@
 										<a class="add-to-cart" href="#">+ Add To Cart</a>
 									</div>
 								</div>
-							</div><!-- End Col -->			
+							</div>			 -->
 		
 						</div>
 					</div>
@@ -429,70 +427,50 @@
 					</div>
 				</div>
 
-				<div class="row text-center">					
-					<div class="col-lg-3 col-md-4 col-sm-6">
-						<div class="product-grid">
-							<div class="product-image">
-								<a href="#">
-									<img class="pic-1" src="{{url('/frontend/img/product/1.jpg')}}" alt="product image">
-									<img class="pic-2" src="{{url('/frontend/img/product/2.jpg')}}" alt="product image">
-								</a>
-								<ul class="social">
-									<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-									<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-									<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-								</ul>
-								<span class="product-new-label">Sale</span>
-							</div>
-							<ul class="rating">
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-							</ul>
-							<div class="product-content">
-								<h3 class="title"><a href="#">Product Title</a></h3>
-								<div class="price">$16.00
-									<span>$20.00</span>
+				<div class="row text-center">
+				<?php $c=0; ?>
+					@foreach($featured_prod as $fprod)		
+						@if($c++ < 8)
+							<div class="col-lg-3 col-md-4 col-sm-6">
+								<div class="product-grid">
+									<div class="product-image">
+										<a href="#">
+											<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
+											<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
+										</a>
+										<ul class="social">
+											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
+											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+										</ul>
+										<span class="product-new-label">-20%</span>				
+									</div>
+									<ul class="rating">
+										<li class="fa fa-star"></li>
+										<li class="fa fa-star"></li>
+										<li class="fa fa-star"></li>
+										<li class="fa fa-star"></li>
+										<li class="fa fa-star"></li>
+									</ul>
+									<div class="product-content">
+										<h3 class="title"><a href="#">{{$fprod->product_name}}</a></h3>
+										<div class="price">
+											@if($prod->discouted_price != $prod->price)
+												{{$prod->discouted_price}}
+												<span>{{$prod->price}}</span>
+											@else
+												{{$prod->price}}
+											@endif
+										
+											
+										</div>
+										<a class="add-to-cart" href="#">+ Add To Cart</a>
+									</div>
 								</div>
-								<a class="add-to-cart" href="#">+ Add To Cart</a>
-							</div>
-						</div>
-					</div><!-- End Col -->	
-					
-					<div class="col-lg-3 col-md-4 col-sm-6">
-						<div class="product-grid">
-							<div class="product-image">
-								<a href="#">
-									<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
-									<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
-								</a>
-								<ul class="social">
-									<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-									<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-									<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-								</ul>
-								<span class="product-new-label">-20%</span>				
-							</div>
-							<ul class="rating">
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-								<li class="fa fa-star"></li>
-							</ul>
-							<div class="product-content">
-								<h3 class="title"><a href="#">Product Title</a></h3>
-								<div class="price">$16.00
-									<span>$20.00</span>
-								</div>
-								<a class="add-to-cart" href="#">+ Add To Cart</a>
-							</div>
-						</div>
-					</div><!-- End Col -->	
-							
-					<div class="col-lg-3 col-md-4 col-sm-6">
+							</div><!-- End Col -->
+						@endif	
+					@endforeach	
+					<!-- <div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="product-grid">
 							<div class="product-image">
 								<a href="#">
@@ -521,7 +499,7 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div><!-- End Col -->	
+					</div>
 
 					
 					<div class="col-lg-3 col-md-4 col-sm-6">
@@ -553,7 +531,7 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div><!-- End Col -->			
+					</div>			
 					
 					
 					<div class="col-lg-3 col-md-4 col-sm-6">
@@ -585,7 +563,7 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div><!-- End Col -->			
+					</div>			
 					
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="product-grid">
@@ -616,7 +594,7 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div><!-- End Col -->		
+					</div>		
 					
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="product-grid">
@@ -647,7 +625,7 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div><!-- End Col -->	
+					</div>	
 
 					
 					<div class="col-lg-3 col-md-4 col-sm-6">
@@ -679,7 +657,7 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div><!-- End Col -->			
+					</div>		 -->
 				</div>
 			</div>
 		</section>
@@ -755,107 +733,21 @@
 			</div>
 		</section> <!-- End STestimonials Area -->		
 		
-        <!--  Blog -->
-        <section id="blog_area" class="section_padding">
-            <div class="container">	
-				<div class="row">
-					<div class="col-md-12 text-center">
-						<div class="section_title">	
-							<span class="sub-title">Latest News From Blog</span>
-							<h2>Our Blog</h2>
-							<div class="divider"></div>							
-						</div>
-					</div>
-				</div>			
-				
-				<div class="row">	
-					<div class="col-lg-4 col-md-6 col-sm-6">
-						<div class="single_blog">
-							<div class="single_blog_img">
-								<img src=" {{url('/frontend/img/blog/1.jpg')}}" alt="">
-								<div class="blog_date text-center">
-									<div class="bd_day"> 25</div>
-									<div class="bd_month">Aug</div>
-								</div>
-							</div>
-												
-							<div class="blog_content">									
-								<ul class="post-meta">
-									<li><i class="ti-user"></i> <a href="#">Admin</a></li>									
-									<li><i class="ti-comments"></i> <a href="#">2 comments</a></li>
-									<li><i class="ti-eye"></i> <a href="#">12 Views</a></li>
-								</ul>	
-								<h4 class="post_title"><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a> </h4>								
-								<p>Proin in blandit lacus. Nam pellentesque tortor eget dui feugiat venenatis ....</p>
-							</div>
-						</div>
-					</div> <!--  End Col -->				
-					
-					<div class="col-lg-4 col-md-6 col-sm-6">
-						<div class="single_blog">
-							<div class="single_blog_img">
-								<img src="{{url('/frontend/img/blog/2.jpg')}}" alt="">
-								<div class="blog_date text-center">
-									<div class="bd_day"> 25</div>
-									<div class="bd_month">Aug</div>
-								</div>
-							</div>
-												
-							<div class="blog_content">													
-								<ul class="post-meta">
-									<li><i class="ti-user"></i> <a href="#">Admin</a></li>									
-									<li><i class="ti-comments"></i> <a href="#">2 comments</a></li>
-									<li><i class="ti-eye"></i> <a href="#">18 Views</a></li>
-								</ul>
-								<h4 class="post_title"><a href="#">Phasellus pellentesque viverra metus, id euismod hendrerit</a> </h4>	
-								<p>Proin in blandit lacus. Nam pellentesque tortor eget dui feugiat venenatis ....</p>
-							</div>
-						</div>
-					</div> <!--  End Col -->				
-					
-					<div class="col-lg-4 col-md-6 col-sm-6">
-						<div class="single_blog">
-							<div class="single_blog_img">
-								<img src="{{url('/frontend/img/blog/3.jpg')}}" alt="">
-								<div class="blog_date text-center">
-									<div class="bd_day"> 25</div>
-									<div class="bd_month">Aug</div>
-								</div>
-							</div>
-												
-							<div class="blog_content">
-								<ul class="post-meta">
-									<li><i class="ti-user"></i> <a href="#">Admin</a></li>									
-									<li><i class="ti-comments"></i> <a href="#">2 comments</a></li>
-									<li><i class="ti-eye"></i> <a href="#">12 Views</a></li>
-								</ul>
-								<h4 class="post_title"><a href="#">Nulla sit amet pellentesque nisl, non ultrices nisl. Vivamus quis</a> </h4>
-								<p>Proin in blandit lacus. Nam pellentesque tortor eget dui feugiat venenatis ....</p>
-							</div>
-						</div>
-					</div> <!--  End Col -->
-
-				</div>
-            </div>
-        </section>
-        <!--  Blog end -->
-		
-
         <!--  Brand -->
 		<section id="brand_area" class="text-center">
 			<div class="container">					
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							<div class="item text-center"> <a href="#"><img src=" {{url('/frontend/img/brand/1.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/2.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/3.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/4.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/5.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/6.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/7.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/8.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center"> <a href="#"><img src="{{url('/frontend/img/brand/9.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src=" {{url('storage/category/GyZ6WiW3zlz51oxDNlUD3sykNSvgdTBixRnUROkI.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;">  <a href="#"><img src=" {{url('storage/category/GyZ6WiW3zlz51oxDNlUD3sykNSvgdTBixRnUROkI.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/3.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/4.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/5.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/6.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/7.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/8.png')}}" alt="" class="img-responsive" /></a> </div>
+							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/9.png')}}" alt="" class="img-responsive" /></a> </div>
 						</div>
 					</div>
 				</div>

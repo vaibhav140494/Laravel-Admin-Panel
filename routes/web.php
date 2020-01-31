@@ -68,6 +68,3 @@ Route::get('/home', 'HomeController@index')->name('home');
 //     }
 // }
 // });
-Route::get('/productvariations',function(){
-    return view('backend.products.productvariation');
-});

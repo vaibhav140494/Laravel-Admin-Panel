@@ -12,7 +12,7 @@
 		
     </head>	
     <body>
-        
+
 		<!--  Start Preloader  -->
 		
 		<div class="preloader">
@@ -30,16 +30,15 @@
 						<div class="col-xs-12 col-sm-6">
 							<div class="hdr_tp_left">
 								<div class="call_area">
-									<span class="single_con_add"><i class="ti-mobile"></i> +0123>456789</span>
-									<span class="single_con_add"><i class="ti-email"></i> example@gmail.com</span>
+									<div class="form-group ">
+										<input type="text" class="form-control header-search-bar" placeholder="Search for Products">
+									</div>
 								</div>
 							</div>
 						</div>
 						
 						<div class="col-xs-12 col-sm-6">
-						<div class="form-group ">
-										<input type="text" class="form-control header-search-bar" placeholder="Search for Products">
-									</div>
+						
 							<ul class="hdr_tp_right text-right">
 								<!-- <li>
 									
@@ -47,14 +46,50 @@
 								<!-- <li class="account_area"><a href="#"><i class="ti-user"></i> My Account</a></li> -->
 								
 								@if (\Auth::user()!='')
+								
 								<li class="account_area"><a href="#"> My Orders</a></li>
-								<li class="account_area"><a href="{{route('frontend.logout')}}"> SignOut</a></li>
+								<!-- <li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li> -->
+								<li>
+										<div class="cart_menu_area">
+											<div class="cart_icon">
+												<span>Profile</span>
+												<!-- <span class="cart_number">2</span> -->
+											</div>
+											
+											
+											<!-- Mini Cart Wrapper -->	
+											<div class=" user-profile" style="visibility: hidden;">
+											<div class="close-button">
+														<span>
+															<i class="fa fa-times-circle" aria-hidden="true" ></i>
+														</span>
+													</div>
+												<div class="user-header">
+													
+													<h3>Welcome {{\Auth::user()->first_name}}</h3>
+												</div>
+												<div class="user_footer">
+													<div class="pull-left">
+													
+														
+														<a href="{{route('frontend.register.edit',['id'=>\Auth::user()->id])}}" class="btn btn-primary">Edit Profile</a>
+													</div>
+													<div class="pull-right">
+														<a href="{{route('frontend.logout')}}" class="btn btn-danger">Sign out</a>
+													</div>
+												</div>
+											</div>											
+										</div>	
+										
+									</li>
+
 
 								@else
-								<li class="account_area"><a href="{{route('frontend.login')}}"> <i class="ti-user"></i>Log In</a></li>
-								<li class="account_area"><a href="{{url('/register')}}"><i class="ti-user"></i> Sign Up</a></li>
+								<li class="account_area"><a href="{{route('frontend.user.login')}}"> <i class="ti-user"></i>Log In</a></li>
+								<li class="account_area"><a href="{{route('frontend.register.show')}}"><i class="ti-user"></i> Sign Up</a></li>
 								@endif
 							</ul>
+							
 						</div>
 					</div>
 				</div>

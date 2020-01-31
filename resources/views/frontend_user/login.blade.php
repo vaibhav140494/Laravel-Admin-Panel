@@ -17,7 +17,7 @@
 				</div>
 			</div>
 		</div>
-
+        
         <div class="login_page_area">
 			<div class="container">
              
@@ -36,6 +36,7 @@
                             @endif
                             <form action="{{route('frontend.login.store')}}" method="post" id="login-form" name="login-form">
                             @csrf
+                            <input type="hidden" value="{{url()->previous()}}" name="hiddenurl">
                                 <div class="create_account_area">
                                     <h2 class="caa_heading">Log In</h2>
                                     <div class="caa_form_area">
@@ -44,7 +45,6 @@
                                                 <label  >Email address</label>
                                                 <div class="input-area"><input type="email" id="email" name="email"/></div>
                                                 <span for="Email"class="label label-danger" style="display:block;" id="email-err"></span>
-
                                             </div>
 
                                             <div class="login_password">

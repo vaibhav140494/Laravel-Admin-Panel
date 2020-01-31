@@ -17,16 +17,16 @@ class LoginController extends Controller
     }
     public function store(Request $request)
     {
+        $returnpath=$request->input('hiddenurl');
         $credentials = $request->only(['email', 'password']);
         if (\Auth::attempt($credentials)) {
             if(\Auth::user()->role==2)
-            return redirect('/');
+            return redirect($returnpath);
             else
             return redirect()->route('admin.dashboard');
         }
 
-        else
-        {
+            {
             return view('frontend_user.login')->with('errors','Invalid Credentials');
         }
     }
