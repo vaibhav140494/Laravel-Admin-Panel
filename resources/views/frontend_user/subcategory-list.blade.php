@@ -1,4 +1,5 @@
 @include('frontend_user.header')
+
 		<!-- Page item Area -->
 		<div id="page_item_area">
 			<div class="container">

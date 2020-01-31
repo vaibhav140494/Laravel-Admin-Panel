@@ -107,7 +107,6 @@ class LoginController extends Controller
     {
         
         $id=\Auth::user()->role;
-
         /*
          * Boilerplate needed logic
          */
@@ -170,7 +169,7 @@ class LoginController extends Controller
 
             //Otherwise logout and redirect to login
             access()->logout();
-
+            // dd("hrllo");
             return redirect()->route('frontend.auth.login');
         }
     }

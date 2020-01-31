@@ -112,7 +112,7 @@
                                 </a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{--{!! route('frontend.auth.logout') !!}--}}" class="btn btn-danger btn-flat">
+                                <a href="{!! route('frontend.auth.logout-as') !!}" class="btn btn-danger btn-flat">
                                     <i class="fa fa-sign-out"></i>
                                     {{ trans('navs.general.logout') }}
                                 </a>

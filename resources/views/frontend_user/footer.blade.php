@@ -29,21 +29,19 @@
 								</ul>
 							</div>
 						</div> <!--  End Col -->
-						
+						@if(isset($category_featured))
 						<div class=" offset-lg-1 col-lg-3 col-sm-6">
 							<div class="single_ftr" >
 								<h4 class="sf_title">Featured Categories</h4>
 								<ul> 
+								@foreach($category_featured as $cat)
 								<!-- print top 5 category of products which sold most frequently -->
-									<li><a href="#">Returns</a></li>
-									<li><a href="#">Site Map</a></li>
-									<li><a href="#">Wish List</a></li>
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">Order History</a></li>
+									<li><a href="{{route('frontend.subcategory.list',[$cat->id])}}">{{$cat->category_name}}</a></li>
+									@endforeach
 								</ul>
 							</div>
 						</div> <!--  End Col -->	
-						
+						@endif
 						<!-- <div class="col-lg-4 col-sm-6">
 							<div class="single_ftr">
 								<h4 class="sf_title">Join Us Newsletter</h4>
@@ -89,7 +87,18 @@
 		<!--  FOOTER END  -->
 
 	@include('frontend_user.script')
-		
+		<script>
+			$(document).ready(function(){
+				// alert($('.cart_icon').offset());
+				$('.cart_menu_area').click(function(){
+					$('.user-profile').css('visibility','visible');
+				});	
+				$('.close-button').click(function(){
+					// alert("hello");
+					$('.user-profile').css('visibility','hidden');
+				});	
+			});
+		</script>
 	</body>
 
 <!-- Mirrored from getmasum.com/html-preview/rapidshop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Jan 2020 16:06:13 GMT -->

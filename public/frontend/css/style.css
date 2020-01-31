@@ -393,7 +393,7 @@ input:focus, textarea:focus {
 }
 .hdr_tp_left, 
 .hdr_tp_right {
-	
+	padding:25px 0 0 0;
 }
 .header_top_area i{
 	color: #ff546e;
@@ -609,7 +609,7 @@ input:focus, textarea:focus {
 }
 
 .mini-cart-wrapper{
-	width:230px;
+	width:250px;
 	position: absolute;
 	top: 40px;
 	left: -135px;
@@ -620,8 +620,45 @@ input:focus, textarea:focus {
 	border: 1px solid rgba(0,0,0,0.04);
 	opacity: 0;
 	visibility: hidden;
+	/* display: none; */
 	transition: .5s;
 	text-align: left;
+	/* height: 300px; */
+}
+.user-profile{
+	
+		width:250px;
+		position: absolute;
+		top: 40px;
+		left: -135px;
+		z-index: 100;
+		background: #fff;
+		padding: 10px 20px 20px;
+		box-shadow: 0 0px 7px rgba(0,0,0,0.05);
+		border: 1px solid rgba(0,0,0,0.04);
+		/* opacity: 0; */
+		
+		transition: .5s;
+		text-align: left;
+		/* height: 300px; */
+	
+}
+.close-button{
+	margin-left:0;
+}
+.user-header{
+	text-align: center;
+	height: 100px;
+	/* padding-top:80px; */
+}
+.user-header span{
+	color: white;
+    font-size: 30px;
+    margin-left: -10px;
+}
+.user_footer a{
+	color:#fff;
+	width:100px;
 }
 .cart_menu_area:hover .mini-cart-wrapper{
 	top: 100%;
@@ -3354,3 +3391,7 @@ input:focus, textarea:focus {
 #topcontrol:hover {
     background: #f0314e none repeat scroll 0 0;
 }
+
+ .error{
+	 color:red;
+ }
