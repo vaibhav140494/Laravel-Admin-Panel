@@ -129,7 +129,7 @@ return [
 	"management" => "SubCategory Management",
 	"main" => "SubCategories",
 	],
-	],
+	
 	"language-picker" => [
 	"language" => "Language",
 	"langs" => [
@@ -148,7 +148,7 @@ return [
 	"sv" => "Swedish",
 	"th" => "Thai",
 	],
-	],
+],
 	"offers" => [
 		"all" => "All Offers",
 		"create" => "Create Offer",
@@ -170,4 +170,6 @@ return [
 		"management" => "SupportTicket Management",
 		"main" => "SupportTickets",
 		],
+	],
+
 ];

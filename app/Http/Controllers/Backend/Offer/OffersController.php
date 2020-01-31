@@ -67,6 +67,7 @@ class OffersController extends Controller
     {
         //Input received from the request
         $input = $request->except(['_token']);
+        
         //Create the model using repository create method
         $this->repository->create($input);
         //return with successfull message

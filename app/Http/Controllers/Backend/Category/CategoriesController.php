@@ -71,18 +71,20 @@ class CategoriesController extends Controller
         //Create the model using repository create method
         //return with successfull message
         if ($request->hasFile('category_image')) {
-            
-             $destinationPath = public_path('storage/category');
+            $imageName = time().'.'.$request->category_image->getClientOriginalExtension();
+             //$destinationPath = public_path('storage/category');
             //  dd($destinationPath);
             //The [public/storage] directory has been linked.
+            $path = $request->category_image->move(public_path('storage/category'), $imageName);
             
-            $path = $request->file('category_image')->store($destinationPath);
             // dd($path);
-            $split=explode("/",$path);
-            $input['category_image']=end($split);
+            //$split=explode("/",$path);
+            $input['category_image']=$imageName;
+           // $input['category_image']=end($split);
+        }
             $this->repository->create($input);
 
-        }
+        
         return new RedirectResponse(route('admin.categories.index'), ['flash_success' => trans('alerts.backend.categories.created')]);
     }
     /**

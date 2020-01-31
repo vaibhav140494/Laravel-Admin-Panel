@@ -13,11 +13,14 @@
         <meta name="description" content="@yield('meta_description', 'Default Description')">
         <meta name="author" content="@yield('meta_author', 'Vaibhav Mehta')">
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+
         @yield('meta')
 
         <!-- Styles -->
         @yield('before-styles')
-
+        
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         @langrtl

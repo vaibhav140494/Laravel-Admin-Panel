@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
 use App\Http\Responses\ViewResponse;
+use Carbon\Carbon;
 use App\Http\Responses\Backend\Product\CreateResponse;
 use App\Http\Responses\Backend\Product\EditResponse;
 use App\Repositories\Backend\Product\ProductRepository;
@@ -164,7 +165,7 @@ class ProductsController extends Controller
                 ->select('variationmaster.variation_name as VariationName','variationmaster.id as id',DB::raw("(GROUP_CONCAT(variationvalues.variation_value SEPARATOR ',')) as `Variationvalues`"))
                 ->where('variationmaster.product_id','=',$request['id'])
                 ->groupBy('variationmaster.id')
-                ->paginate(1);
+                ->get();
                // dd($var);
                 
                 return view('backend.products.productvariation')->with([
@@ -215,7 +216,9 @@ class ProductsController extends Controller
         //dd($product_id);
         DB::table('variationmaster')->insert([
             'variation_name'=>$input['variation_name'],
-            'product_id'=>$product_id[0]->id
+            'product_id'=>$product_id[0]->id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
         $variation_id=DB::table('variationmaster')
                      ->select('id')
@@ -228,9 +231,60 @@ class ProductsController extends Controller
         {
             DB::table('variationvalues')->insert([
                 'variation_value'=>$value,
-                'variation_id'=>$variation_id[0]->id
+                'variation_id'=>$variation_id[0]->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
         }  
         return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
+    }
+    public function editVariation($vid,$pid)
+    {
+        //dd($pid);
+        $product_details=DB::table('products')
+                    ->select('id','product_name')
+                    ->where('id','=',$pid)
+                    ->get();
+        //dd($product_name);
+        $variation_details=DB::table('variationmaster')
+                          ->select('id','variation_name')
+                          ->where('id','=',$vid)
+                          ->get();
+        $variation_values=DB::table('variationvalues')
+                            ->select('variation_value')
+                            ->where('variation_id','=',$vid)
+                            ->get();                  
+        //dd($variation_values);
+            return view('backend.products.editVariation')->with([
+                'pdetails'=>$product_details,
+                'vdetails'=>$variation_details,
+                'values'=>$variation_values
+            ]);
+    }
+    public function updateVariation(Request $request)
+    {
+        $input = $request->except(['_token']);
+       // dd($input);
+        $product_id=DB::table('products')
+                    ->select('id')
+                    ->where('product_name','=',$input['product_name'])
+                    ->get();
+        DB::table('variationmaster')
+            ->where('id','=',$input['variation_id'])
+            ->update(['variation_name'=>$input['variation_name'],
+                      'updated_at' => Carbon::now()   
+                    ]);
+         DB::table('variationvalues')->where('variation_id','=',$input['variation_id'])->delete();   
+        $variation_values=$input['variation_value'] ;
+        foreach($variation_values as $value)
+            {
+                DB::table('variationvalues')->insert([
+                    'variation_value'=>$value,
+                    'variation_id'=>$input['variation_id'],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }     
+            return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
     }
 }

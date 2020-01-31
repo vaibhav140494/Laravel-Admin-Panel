@@ -14,6 +14,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::get('products/productvariations/delete/{id}','ProductsController@deleteVariation')->name('products.productvariations.delete');
         Route::get('products/productvariations/create/{id}','ProductsController@createVariation')->name('products.productvariations.create');
         Route::post('products/productvariations/create','ProductsController@storeVariation')->name('products.productvariations.store');
+        Route::get('products/productvariations/edit/{vid}/{pid}','ProductsController@editVariation')->name('products.productvariations.edit');
+        Route::post('products/productvariations/update','ProductsController@updateVariation')
+        ->name('products.productvariations.update');
     });
     
 });
