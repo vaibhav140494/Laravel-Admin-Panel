@@ -14,7 +14,8 @@ Route::get('/logout','LoginController@logout')->name('logout');
 Route::post('login/store','LoginController@store')->name('login.store');
 Route::get('categories','CategoriesController@index')->name('category.list');
 Route::get('subcategories/{id}','SubcategoriesController@getSub')->name('subcategory.list');
-Route::get('products/{id}','ProductsController@getProd')->name('products.list');
+Route::get('products/{id}/{cid}','ProductsController@getProd')->name('products.list');
+Route::get('product/details/{id}/{subid}/{cid}','ProductsController@detailProd')->name('product.details');
 
 Route::get('/register', 'RegisterController@index')->name('register.show');
 Route::post('/register/store', 'RegisterController@store')->name('register.store');

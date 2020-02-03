@@ -27,8 +27,8 @@
 									<p class="animated">Women fashion</p>
 									<h1 class="animated">New Collection</h1>
 									<h4 class="animated">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam <br> vitae posuere est Sed placerat ligula </h4>
-									<a href="#" class="btn main_btn animated">Shop Now</a>
-									<a href="#" class="btn main_btn coll_btn animated">Collection</a>
+									<!-- <a href="#" class="btn main_btn animated">Shop Now</a> -->
+									<a href="{{route('frontend.category.list')}}" class="btn main_btn coll_btn animated">Collection</a>
 								</div>
 							</div>
 						</div>	
@@ -43,8 +43,8 @@
 									<p class="animated">Men Collection</p>
 									<h1 class="animated">New Collection</h1>
 									<h4 class="animated">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam <br> vitae posuere est Sed placerat ligula </h4>
-									<a href="#" class="btn main_btn animated">Shop Now</a>
-									<a href="#" class="btn main_btn coll_btn animated">Collection</a>
+									<!-- <a href="#" class="btn main_btn animated">Shop Now</a> -->
+									<a href="{{route('frontend.category.list')}}" class="btn main_btn coll_btn animated">Collection</a>
 								</div>
 							</div>
 						</div>
@@ -68,26 +68,48 @@
 					</div>
 				</div>
 				<div class="row">
-				<?php $i=0; ?>
-				@foreach($category_featured as $cat)
-					@if($i++<= 3)
-					
-					<div class="col-lg-4 col-md-6 col-sm-12">							
-						<div class="single_promo">
-							<img src=" {{url('/frontend/img/promo/1.jpg')}}" alt="promo image">
-							<div class="box-content">
-								<div class="promo-content">
-									<h3 class="title">{{$cat->category_name}}</h3>
-									<span class="post">2020 Collection</span>
-									<p>{{$cat->category_desc}}</p>
-									<a class="shop_now_btn" href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">Shop Now</a>
-								</div>
-							</div>
-						</div>													
-					</div><!--  End Col -->	
-					@endif					
+				@if($category_featured->count()>0)
+					<?php $i=0; ?>
+					@foreach($category_featured as $cat)
+						@if($i++<= 3)
+							<div class="col-lg-4 col-md-6 col-sm-12">							
+								<div class="single_promo">
+									<img src=" {{url('/frontend/img/promo/1.jpg')}}" alt="promo image">
+									<div class="box-content">
+										<div class="promo-content">
+											<h3 class="title">{{$cat->category_name}}</h3>
+											<span class="post">2020 Collection</span>
+											<p>{{$cat->category_desc}}</p>
+											<a class="shop_now_btn" href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">Shop Now</a>
+										</div>
+									</div>
+								</div>													
+							</div><!--  End Col -->	
+						@endif					
 					
 					@endforeach
+				@else
+				<?php $i=0; ?>
+				
+					@foreach($category as $cat)
+						@if($i++<= 3)
+							<div class="col-lg-4 col-md-6 col-sm-12">							
+								<div class="single_promo">
+									<img src=" {{url('storage/category/'.$cat->category_image)}}" alt="promo image">
+									<div class="box-content">
+										<div class="promo-content">
+											<h3 class="title">{{$cat->category_name}}</h3>
+											<!-- <span class="post">2020 Collection</span> -->
+											<p>{{$cat->category_desc}}</p>
+											<a class="shop_now_btn" href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">Shop Now</a>
+										</div>
+									</div>
+								</div>													
+							</div><!--  End Col -->	
+						@endif					
+					
+					@endforeach
+				@endif
 					
 				</div>			
 			</div>		
@@ -125,8 +147,8 @@
 								<div class="product-grid">
 									<div class="product-image">
 										<a href="#">
-											<img class="pic-1" src=" {{url('/frontend/img/product/1.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/2.jpg')}}" alt="product image">
+											<img class="pic-1" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
+											<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
 										</a>
 										<ul class="social">
 											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
@@ -135,12 +157,15 @@
 										</ul>
 										<!-- <span class="product-new-label">Sale</span> -->
 									</div>
+									
 									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
+										@for($i=0;$i<$product_review->count();$i++)
+											@if($product_review[$i]->product_id==$prod->id)
+												@for($j=0;$j<$product_review[$i]->rating;$j++)
+												<li class="fa fa-star"></li>
+												@endfor
+											@endif
+										@endfor
 									</ul>
 									<div class="product-content">
 										<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
@@ -428,7 +453,7 @@
 				</div>
 
 				<div class="row text-center">
-				<?php $c=0; ?>
+					<?php $c=0; ?>
 					@foreach($featured_prod as $fprod)		
 						@if($c++ < 8)
 							<div class="col-lg-3 col-md-4 col-sm-6">
@@ -455,11 +480,11 @@
 									<div class="product-content">
 										<h3 class="title"><a href="#">{{$fprod->product_name}}</a></h3>
 										<div class="price">
-											@if($prod->discouted_price != $prod->price)
-												{{$prod->discouted_price}}
-												<span>{{$prod->price}}</span>
+											@if($fprod->discouted_price != $fprod->price)
+												{{$fprod->discouted_price}}
+												<span>{{$fprod->price}}</span>
 											@else
-												{{$prod->price}}
+												{{$fprod->price}}
 											@endif
 										
 											
@@ -669,12 +694,12 @@
 				<div class="row">
 					<div class="col-md-8 center-block">
 						<div id="testimonial-slider" class="owl-carousel text-center">
+						
+							@foreach($product_review_random as $p_review)
 							<div class="testimonial">
 								<div class="testimonial-content">
 									<p class="description">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam risus felis, bibendum 
-										eu nibh et, finibus semper sem. Nam at tincidunt leo. Nam sit amet mauris et lorem 
-										varius lobortis eu a nisl.
+									{{$p_review->review}}
 									</p>
 									
 									<div class="test-bottom text-center">
@@ -682,14 +707,22 @@
 											<div class="pic">
 												<img src="{{url('/frontend/img/testimonial/1.jpg')}}" alt="">
 											</div>
-											<h3 class="testimonial-title">williamson</h3>
-											<small class="post"> - Themesvila</small>
+											<h3 class="testimonial-title">
+											{{$p_review-> fname}}  {{$p_review-> lname}}
+											</h3>
+											
+											<small class="post">
+											@for($i=0;$i< $p_review->rating;$i++)
+												<li class="fa fa-star"></li>
+												@endfor
+											</small>
+											
 										</div>
 									</div>
 								</div>
 							</div>
-			 
-							<div class="testimonial">
+			 				@endforeach
+							<!-- <div class="testimonial">
 								<div class="testimonial-content">
 									<p class="description">
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam risus felis, bibendum 
@@ -726,7 +759,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -739,15 +772,11 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src=" {{url('storage/category/GyZ6WiW3zlz51oxDNlUD3sykNSvgdTBixRnUROkI.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;">  <a href="#"><img src=" {{url('storage/category/GyZ6WiW3zlz51oxDNlUD3sykNSvgdTBixRnUROkI.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/3.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/4.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/5.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/6.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/7.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/8.png')}}" alt="" class="img-responsive" /></a> </div>
-							<div class="item text-center" style="padding: 0 10px;"> <a href="#"><img src="{{url('/frontend/img/brand/9.png')}}" alt="" class="img-responsive" /></a> </div>
+							@foreach($category as $cat)
+							
+								<div class="item text-center" style="padding: 0 10px;"> <a href="{{route('frontend.subcategory.list',[$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt="" class="img-thumbnail" width="70" height="70"/></a> </div>
+							@endforeach
+							
 						</div>
 					</div>
 				</div>

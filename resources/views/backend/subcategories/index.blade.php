@@ -60,7 +60,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            
             var dataTable = $('#subcategories-table').dataTable({
                 processing: true,
                 serverSide: true,
@@ -86,6 +85,7 @@
                     ]
                 }
             });
+            
 
             Backend.DataTableSearch.init(dataTable);
         });

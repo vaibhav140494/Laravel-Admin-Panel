@@ -39,27 +39,31 @@
 					<div class="col-md-12 col-xs-12">
 						<div class="row category_container" >
 							<!-- <div class="searchedCategories"> -->
-							@foreach ($category as $cat)
-								<!-- Single blog -->
-								<div class="col-lg-4 col-md-6 col-sm-6">
-									<div class="single_blog" >
-										<div class="single_blog_img">
-											<a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}"><img src="{{url('frontend/img/blog/1.jpg')}}" alt=""></a>
-										</div>						
-										<div class="blog_content">
-											<ul class="post-meta">
-												<li><i class="ti-eye"></i> <a href="#">{{$sub[$cat->id]}} Subcategories</a></li>
+							@if($category->count()>0)
+								@foreach ($category as $cat)
+									<!-- Single blog -->
+									<div class="col-lg-4 col-md-6 col-sm-6">
+										<div class="single_blog" >
+											<div class="single_blog_img">
+												<a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}"><img src="{{url('frontend/img/blog/1.jpg')}}" alt=""></a>
+											</div>						
+											<div class="blog_content">
+												<ul class="post-meta">
+													<li><i class="ti-eye"></i> <a href="#">{{$sub[$cat->id]}} Subcategories</a></li>
 
-											</ul>
-											<h4 class="post_title"><a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">{{ $cat->category_name}}</a> </h4>															
-											<p>
-												{{$cat->category_desc}}
-											
-											</p>
+												</ul>
+												<h4 class="post_title"><a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">{{ $cat->category_name}}</a> </h4>															
+												<p>
+													{{$cat->category_desc}}
+												
+												</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							@endforeach	
+								@endforeach	
+							@else
+								Sorry no Category found!!!
+							@endif
 							<!-- </div> -->
 						</div>
 						

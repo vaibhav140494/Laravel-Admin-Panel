@@ -129,9 +129,11 @@ class SubcategoriesController extends Controller
         //Input received from the request
         $input = $request->except(['_token']);
         //Update the model using repository update method
+        // dd($subcategory);
         $this->repository->update( $subcategory, $input );
         //return with successfull message
-        return new RedirectResponse(route('admin.subcategories.index'), ['flash_success' => trans('alerts.backend.subcategories.updated')]);
+        return view('backend.subcategories.edit',compact('subcategories'));
+        // return new RedirectResponse(route('admin.subcategories.index',[$subcategory->id]), ['flash_success' => trans('alerts.backend.subcategories.updated')]);
     }
     /**
      * Remove the specified resource from storage.

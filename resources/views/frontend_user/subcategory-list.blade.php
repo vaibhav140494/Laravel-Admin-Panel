@@ -112,9 +112,16 @@
 							<div class="sdbr_inner">
 							<!-- treeview start -->
 								<ul class="show">
-									@foreach ($subcategory as $sub)
-									<li><a href="{{route('frontend.products.list',['id'=>$sub->id])}}">{{$sub->subcategory_name}}</a></li>
-									@endforeach
+								<?php $cid=$categories['id'];
+								?>
+									@if($subcategory->count()>0)
+										@foreach ($subcategory as $sub)
+										<?php $id = $sub->id; ?>
+										<li><a href="{{route('frontend.products.list',[$id,$cid])}}">{{$sub->subcategory_name}}</a></li>
+										@endforeach
+									@else
+										Sorry No subcategory found!!!
+									@endif
 								</ul>
 							</div>
 						</div>
@@ -174,7 +181,7 @@
 				$('.show').html(append1);
 			}	
 			var str=$(this).val();
-			var id=<?php echo $categories['id']; ?>;
+			var cid=<?php echo $categories['id']; ?>;
 			$.ajax({
 				url:"{{route('frontend.subcategory.list.ajax')}}",
 				method:'get',
@@ -182,7 +189,7 @@
 				data:{'str':str,'id':id},
 				success: function(response)
 				{
-					console.log(response);
+					// console.log(response);
 					if(response['success'])
 					{
 						
@@ -192,7 +199,7 @@
 						var li1='';
 						$.each(cat,function(key,value){
 							var id=value.id;
-							var route="{{route('frontend.products.list',['id'=>0])}}";
+							var route="{{route('frontend.products.list',['id'=>"+id+","+cid+"])}}";
 							console.log(route);
 							var splitarr=route.split('/');
 							splitarr[splitarr.length-1]=id;
