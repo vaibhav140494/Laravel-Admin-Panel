@@ -68,8 +68,8 @@
          {{ Form::label('type',trans('labels.backend.products.table.type'), ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
         <select name="type" id="type" class="form-control box-size">
-        <option value="1">1</option>
-        <option value="2">2</option>
+        <option value="1">Simple Product</option>
+        <option value="2">Congigurable Product</option>
         </select>
         </div>
     </div>

@@ -17,6 +17,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::get('products/productvariations/edit/{vid}/{pid}','ProductsController@editVariation')->name('products.productvariations.edit');
         Route::post('products/productvariations/update','ProductsController@updateVariation')
         ->name('products.productvariations.update');
+        Route::get('products/productimages/upload/{id}','ProductsController@uploadProductImages')->name('products.productimages.upload');
+        Route::post('products/productimages/store','ProductsController@storeProductImages')
+        ->name('products.productimages.store');
+        Route::get('products/productimages/galary/{id}','ProductsController@productGalary')->name('products.productimages.galary');
+        Route::get('products/productimages/galary/delete/{id}','ProductsController@deleteProductImage')->name('products.productimages.galary.delete');
     });
     
 });
