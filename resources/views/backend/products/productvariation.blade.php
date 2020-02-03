@@ -16,11 +16,11 @@
             <div class="box-tools pull-right">
                 
                 <div class="btn-group">
-    <button type="button" class="btn btn-primary btn-flat dropdown-toggle" data-toggle="dropdown">Action
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
+                <button type="button" class="btn btn-primary btn-flat dropdown-toggle" data-toggle="dropdown">Action
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            <ul class="dropdown-menu" role="menu">
         
         @permission( 'create-product' )
             <li>
@@ -30,7 +30,7 @@
             </li>
         @endauth
     </ul>
-</div>
+            </div>
             </div>
         </div>
         <div class="box-body">
@@ -52,7 +52,7 @@
                        <td>{{$d->id}}</td>
                        <td>{{$d->VariationName}}</td>
                        <td>{{$d->Variationvalues}}</td>
-                       <td><a href="{{ route('admin.products.productvariations.edit',[$d->id, $productid]) }}" class="btn btn-flat btn-default">
+                       <td><a href="{{ route('admin.products.productvariations.edit',[$d->id,$productid]) }}" class="btn btn-flat btn-default">
                            <i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-pencil"></i>
                            </a>
                        </td>

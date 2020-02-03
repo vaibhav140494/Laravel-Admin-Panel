@@ -33,10 +33,16 @@ trait ProductAttribute
             }
                 return '<div class="btn-group action-btn"> '.$this->getEditButtonAttribute("edit-product", "admin.products.edit").'
                                 '.$this->getDeleteButtonAttribute("delete-product", "admin.products.destroy").'
+                                '.'<a href="'.route('admin.products.productimages.galary',[$this->attributes['id']]).'" class="btn btn-flat btn-default">
+                                <i data-toggle="tooltip" data-placement="top" title="view galary" class="fa fa-image"></i>
+                                </a>'.'
+                                '.'<a href="'.route('admin.products.productimages.upload',[$this->attributes['id']]).'" class="btn btn-flat btn-default">
+                                <i data-toggle="tooltip" data-placement="top" title="add pictures" class="fa fa-camera"></i>
+                                </a>'.'
                                 '.$str.'
                         </div>';
             
-                        
+
               
     }
     

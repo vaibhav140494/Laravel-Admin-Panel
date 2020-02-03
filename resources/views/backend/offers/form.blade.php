@@ -22,8 +22,8 @@
 
         <div class="col-lg-10">
             <select name="offer_type" id="offer_type" class="form-control box-size">
-                <option value="1">1</option>
-                <option value="2">2</option>
+                <option value="1">FLAT DISCOUNT</option>
+                <option value="2">PERCENTAGE DISCOUNT</option>
             </select>
         </div>
     </div>

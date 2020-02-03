@@ -7,6 +7,7 @@ use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Product\variationMaster;
 use App\Models\Product\variationValues;
+use App\Models\Product\productImages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
@@ -74,7 +75,7 @@ class ProductsController extends Controller
     {
         //Input received from the request
         $input = $request->except(['_token']);
-        //dd($input);
+        dd($input);
         if ($request->hasFile('image')){
             $imageName = time().'.'.$request->image->getClientOriginalExtension();
             //dd($imageName);
@@ -286,5 +287,68 @@ class ProductsController extends Controller
                 ]);
             }     
             return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
+    }
+
+    public function uploadProductImages(Request $request,$id)
+    {
+        $input = $request->except(['_token']);
+        //
+       // dd($id);
+       $product_details=DB::table('products')
+                    ->select('id','product_name')
+                    ->where('id','=',$id)
+                    ->get();
+        return view('backend.products.addProductImages')->with([
+            'pdetails'=>$product_details
+        ]);            
+    }
+    public function storeProductImages(Request $request)
+    {
+        $input = $request->except(['_token']);
+        //dd($input);
+        $count=0;
+        $imageName=array();
+        if($request->hasFile('images'))
+        {
+            foreach($input['images'] as $image)
+            {
+                $name=time().$count.'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('storage/productimages'), $name);
+                $imageName[]=$name;
+                $count++;
+            }
+        }
+        //dd($imageName);
+        foreach($imageName as $image)
+        {
+            DB::table('productimages')->insert([
+                'product_id'=>$input['product_id'],
+                'product_image'=>$image,
+                'created_at'=>Carbon::now(),
+                'updated_at'=>Carbon::now()
+            ]);
+        }
+        return view('backend.products.index');
+    }
+    public function productGalary($id)
+    {
+        //dd($id);
+        $images=DB::table('productimages')
+                   ->select('id','product_image')
+                   ->where('product_id','=',$id)
+                   ->get();
+                   //dd($images);
+        return view('backend.products.productGalary')->with([
+            'images'=>$images,
+            'productid'=>$id
+        ]);            
+    }
+    public function deleteProductImage($id)
+    {
+        //dd($id);
+        DB::table('productimages')->where('id','=',$id)->delete();
+        return redirect()->back();
+        
+        
     }
 }
