@@ -694,7 +694,7 @@
 				<div class="row">
 					<div class="col-md-8 center-block">
 						<div id="testimonial-slider" class="owl-carousel text-center">
-						
+							@if(isset($product_review_random))
 							@foreach($product_review_random as $p_review)
 							<div class="testimonial">
 								<div class="testimonial-content">
@@ -722,6 +722,7 @@
 								</div>
 							</div>
 			 				@endforeach
+							 @endif
 							<!-- <div class="testimonial">
 								<div class="testimonial-content">
 									<p class="description">

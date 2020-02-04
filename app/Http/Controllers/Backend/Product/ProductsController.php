@@ -343,12 +343,15 @@ class ProductsController extends Controller
             'productid'=>$id
         ]);            
     }
-    public function deleteProductImage($id)
+    public function deleteProductImage(Request $request)
     {
-        //dd($id);
-        DB::table('productimages')->where('id','=',$id)->delete();
-        return redirect()->back();
         
+        $id=$request->input('id');
+        //dd($id);
+        
+        DB::table('productimages')->where('id','=',$id)->delete();
+        
+        return 1;
         
     }
 }

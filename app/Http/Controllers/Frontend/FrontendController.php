@@ -50,10 +50,10 @@ class FrontendController extends Controller
         //     ->whereIn('rating',[5,4])->get();
         // });
 
-        $product_review_random=DB::table('users')
-        ->join('productreviews','users.id','=','productreviews.user_id')
-        ->select('users.first_name as fname' ,'users.last_name as lname','productreviews.*')
-        ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
+        // $product_review_random=DB::table('users')
+        // ->join('productreviews','users.id','=','productreviews.user_id')
+        // ->select('users.first_name as fname' ,'users.last_name as lname','productreviews.*')
+        // ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
         // dd($product_review_random);
         // productReviews::
         return view('frontend_user.index', compact('category_featured','category','product','featured_prod','product_review','product_review_random'));
