@@ -142,46 +142,48 @@
 					
 					<div class="product_item">
 						<div class="row">
-						@foreach($product as $prod)					
-							<div class="col-lg-3 col-md-4 col-sm-6 mix ">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
-											<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<!-- <span class="product-new-label">Sale</span> -->
-									</div>
-									
-									<ul class="rating">
-										@for($i=0;$i<$product_review->count();$i++)
-											@if($product_review[$i]->product_id==$prod->id)
-												@for($j=0;$j<$product_review[$i]->rating;$j++)
-												<li class="fa fa-star"></li>
-												@endfor
-											@endif
-										@endfor
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
-										<div class="price">
-										@if($prod->discouted_price != $prod->price)
-										{{$prod->discouted_price}}
-											<span>{{$prod->price}}</span>
-											@else
-											{{$prod->price}}
-											@endif
+						@if(isset($product))
+							@foreach($product as $prod)					
+								<div class="col-lg-3 col-md-4 col-sm-6 mix ">
+									<div class="product-grid">
+										<div class="product-image">
+											<a href="#">
+												<img class="pic-1" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
+												<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
+											</a>
+											<ul class="social">
+												<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
+												<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+											</ul>
+											<!-- <span class="product-new-label">Sale</span> -->
 										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
+										
+										<ul class="rating">
+											@for($i=0;$i<$product_review->count();$i++)
+												@if($product_review[$i]->product_id==$prod->id)
+													@for($j=0;$j<$product_review[$i]->rating;$j++)
+													<li class="fa fa-star"></li>
+													@endfor
+												@endif
+											@endfor
+										</ul>
+										<div class="product-content">
+											<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
+											<div class="price">
+											@if($prod->discouted_price != $prod->price)
+											{{$prod->discouted_price}}
+												<span>{{$prod->price}}</span>
+												@else
+												{{$prod->price}}
+												@endif
+											</div>
+											<a class="add-to-cart" href="#">+ Add To Cart</a>
+										</div>
 									</div>
 								</div>
-							</div>
-						@endforeach
+							@endforeach
+						@endif
 							
 						
 							<!-- <div class="col-lg-3 col-md-4 col-sm-6 mix ftrd">
@@ -453,48 +455,50 @@
 				</div>
 
 				<div class="row text-center">
-					<?php $c=0; ?>
-					@foreach($featured_prod as $fprod)		
-						@if($c++ < 8)
-							<div class="col-lg-3 col-md-4 col-sm-6">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">-20%</span>				
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">{{$fprod->product_name}}</a></h3>
-										<div class="price">
-											@if($fprod->discouted_price != $fprod->price)
-												{{$fprod->discouted_price}}
-												<span>{{$fprod->price}}</span>
-											@else
-												{{$fprod->price}}
-											@endif
-										
-											
+					@if(isset($featured_prod))
+						<?php $c=0; ?>
+						@foreach($featured_prod as $fprod)		
+							@if($c++ < 8)
+								<div class="col-lg-3 col-md-4 col-sm-6">
+									<div class="product-grid">
+										<div class="product-image">
+											<a href="#">
+												<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
+												<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
+											</a>
+											<ul class="social">
+												<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
+												<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+											</ul>
+											<span class="product-new-label">-20%</span>				
 										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
+										<ul class="rating">
+											<li class="fa fa-star"></li>
+											<li class="fa fa-star"></li>
+											<li class="fa fa-star"></li>
+											<li class="fa fa-star"></li>
+											<li class="fa fa-star"></li>
+										</ul>
+										<div class="product-content">
+											<h3 class="title"><a href="#">{{$fprod->product_name}}</a></h3>
+											<div class="price">
+												@if($fprod->discouted_price != $fprod->price)
+													{{$fprod->discouted_price}}
+													<span>{{$fprod->price}}</span>
+												@else
+													{{$fprod->price}}
+												@endif
+											
+												
+											</div>
+											<a class="add-to-cart" href="#">+ Add To Cart</a>
+										</div>
 									</div>
-								</div>
-							</div><!-- End Col -->
-						@endif	
-					@endforeach	
+								</div><!-- End Col -->
+							@endif	
+						@endforeach	
+					@endif
 					<!-- <div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="product-grid">
 							<div class="product-image">
@@ -694,34 +698,35 @@
 				<div class="row">
 					<div class="col-md-8 center-block">
 						<div id="testimonial-slider" class="owl-carousel text-center">
-						
-							@foreach($product_review_random as $p_review)
-							<div class="testimonial">
-								<div class="testimonial-content">
-									<p class="description">
-									{{$p_review->review}}
-									</p>
-									
-									<div class="test-bottom text-center">
-										<div class="test-des-area">
-											<div class="pic">
-												<img src="{{url('/frontend/img/testimonial/1.jpg')}}" alt="">
+							@if(isset($product_review_random))
+								@foreach($product_review_random as $p_review)
+									<div class="testimonial">
+										<div class="testimonial-content">
+											<p class="description">
+											{{$p_review->review}}
+											</p>
+											
+											<div class="test-bottom text-center">
+												<div class="test-des-area">
+													<div class="pic">
+														<img src="{{url('/frontend/img/testimonial/1.jpg')}}" alt="">
+													</div>
+													<h3 class="testimonial-title">
+													{{$p_review-> fname}}  {{$p_review-> lname}}
+													</h3>
+													
+													<small class="post">
+													@for($i=0;$i< $p_review->rating;$i++)
+														<li class="fa fa-star"></li>
+														@endfor
+													</small>
+													
+												</div>
 											</div>
-											<h3 class="testimonial-title">
-											{{$p_review-> fname}}  {{$p_review-> lname}}
-											</h3>
-											
-											<small class="post">
-											@for($i=0;$i< $p_review->rating;$i++)
-												<li class="fa fa-star"></li>
-												@endfor
-											</small>
-											
 										</div>
 									</div>
-								</div>
-							</div>
-			 				@endforeach
+								@endforeach
+							@endif
 							<!-- <div class="testimonial">
 								<div class="testimonial-content">
 									<p class="description">

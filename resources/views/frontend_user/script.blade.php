@@ -1,6 +1,6 @@
 {{--{{ Html::script('frontend/js/vendor/jquery-1.12.4.min.js') }}--}}
         {{ HTML::script('frontend/js/popper.min.js') }}
-        
+        {{ HTML::script('frontend/js/jquery.floating-social-share.min.js') }}
       {{--  {{ HTML::script('frontend/js/bootstrap.min.js') }}--}}
         {{ HTML::script('frontend/js/jquery.meanmenu.min.js') }}
         {{ HTML::script('frontend/js/jquery.mixitup.js') }}

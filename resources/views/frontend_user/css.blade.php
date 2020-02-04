@@ -1,6 +1,7 @@
 <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,800" rel="stylesheet" >
 <link href="http://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet" type="text/css" >		 
 <link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
+{{ Html::style('frontend/css/jquery.floating-social-share.min.css') }}
 {{ Html::style('frontend/css/themify-icons.css') }}
 {{ Html::style('frontend/css/animate.css') }}
 {{ Html::style('frontend/css/font-awesome.css') }}

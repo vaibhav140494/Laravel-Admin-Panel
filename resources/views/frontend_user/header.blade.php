@@ -15,11 +15,11 @@
 
 		<!--  Start Preloader  -->
 		
-		<div class="preloader">
+		<!-- <div class="preloader">
 			<div class="status-mes">
 				<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 			</div>
-		</div>
+		</div> -->
 		<!-- End Preloader -->
 		
 		<!--  Start Header  -->

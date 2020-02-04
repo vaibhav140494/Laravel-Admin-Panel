@@ -96,24 +96,6 @@
 					// alert("hello");
 					$('.user-profile').css('visibility','hidden');
 				});	
-				$('#prod_qty').change(function(){
-					var value=$(this).val();
-					<?php $prod= $product->quantity;?>
-					 if(<?php echo $prod; ?> < value)
-					 {
-						 $('#cart-btn').html("product Out of stock");
-						 $('#cart-btn').attr('type','button');
-						 $('#cart-btn').css('cursor','not-allowed');
-					 }
-					 else
-					 {
-						$('#cart-btn').html("Add to Cart");
-						 $('#cart-btn').removeAttr('type','button');
-						//  $('#cart-btn').attr('href');
-						 $('#cart-btn').css('cursor','pointer');
-					 }
-				});	
-				
 			});
 		</script>
 	</body>

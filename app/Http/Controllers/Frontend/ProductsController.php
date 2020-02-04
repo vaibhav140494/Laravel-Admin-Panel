@@ -27,21 +27,24 @@ class ProductsController extends Controller
     {
         $category=Category::find($cid);
         $subcategory=Subcategory::find($subid);
-        $product=Product::find($id);
+        $product=DB::table('products')->join('productreviews','products.id','=','productreviews.product_id')->
+        select('products.*','productreviews.*',\DB::raw("ROUND(AVG(rating),2) as avg_rating"))
+        ->where('products.id',$id)->get();
 
+        // dd($product);
+        
         $users_product_reviews=DB::table('users')
         ->join('productreviews','users.id','=','productreviews.user_id')
-        ->select('users.*','productreviews.*')
+        ->select('users.*','productreviews.*' )
         ->where('productreviews.product_id',$id)
         ->orderBy('productreviews.rating','desc')->get();
-
         $all_products=DB::table('products')->
         join('productreviews','products.id','=','productreviews.product_id')->select('products.*','productreviews.*')
-       ->where('products.category_id',$cid)
+        ->where('products.category_id',$cid)
+        ->where('products.id','<>',$id)
         ->orderBy('rating','desc')->get()->keyBy('subcategory_id');
         // dd($all_products);
-        $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
-        return view('frontend_user.product-details',compact('product','users_product_reviews','avg','category','subcategory','all_products'));
+        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','all_products'));
     }
 }
 

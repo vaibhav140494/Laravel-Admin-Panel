@@ -14,7 +14,7 @@
 						<li><a href="#">home</a></li>
 						<li><a href="{{route('frontend.category.list')}}">{{$category->category_name}}</a></li>
 						<li><a href="{{route('frontend.subcategory.list',[$category->id])}}">{{$subcategory->subcategory_name}}</a></li>
-						<li><span>{{$product->product_name}}</span></li>
+						<li><span>{{$product[0]->product_name}}</span></li>
 					</ul>					
 				</div>	
 					
@@ -31,41 +31,48 @@
 				<!-- Product Details Image -->
 				<div class="col-md-6 col-xs-12">
 					<div class="pd_img fix">
-						<a class="venobox" href=" {{url('storage/products/'.$product->image)}}"><img src="{{url('storage/products/'.$product->image)}}" alt=""/></a>
+						<a class="venobox" href=" {{url('storage/products/'.$product[0]->image)}}"><img src="{{url('storage/products/'.$product[0]->image)}}" alt=""/></a>
 					</div>
 				</div>
 				<!-- Product Details Content -->
 				<div class="col-md-6 col-xs-12">
 					<div class="prdct_dtls_content">
-						<a class="pd_title" href="#">{{$product->product_name}}</a>
+						<a class="pd_title" href="#">{{$product[0]->product_name}}</a>
 						<div class="pd_price_dtls fix">
 							<!-- Product Price -->
 							<div class="pd_price">
-								<span class="new">&#x20b9; {{$product->price}}</span>
-								@if($product->discouted_price !=$product->price)
-								<span class="old">&#x20b9; {{$product->price}}</span>
+								<span class="new">&#x20b9; {{$product[0]->price}}</span>
+								@if($product[0]->discouted_price !=$product[0]->price)
+								<span class="old">&#x20b9; {{$product[0]->discouted_price}}</span>
 								@endif
 							</div>
 							<!-- Product Ratting -->
+							
+
+							
 							<div class="pd_ratng">
 								<div class="rtngs">
+									<?php $i=0?>
+									@for($i=0;$i< $product[0]->avg_rating ;$i++)
+										
 									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-half-o"></i>
+									
+									@endfor
+									@for($j=$i;$j <$product[0]->rating;$j++)
+										<i class="fa fa-star-o"></i>
+									@endfor
 								</div>
 							</div>
 						</div>
 						<div class="pd_text">
 							<h4>overview:</h4>
 							
-							<p>{{$product->category_desc}}</p>
-							@if(strlen($product->category_desc) > 100)
+							<p>{{$product[0]->category_desc}}</p>
+							@if(strlen($product[0]->category_desc) > 100)
 							<a class="btn btn-primary" href="#description"> Read more</a>
 							@endif
 						</div>
-						@if($product->type==2)
+						@if($product[0]->type==2)
 							<div class="pd_img_size fix">
 								<h4>size:</h4>
 								<a href="#">s</a>
@@ -77,7 +84,7 @@
 							@endif
 
 							<div class="pd_clr_qntty_dtls fix">
-							@if($product->type==2)
+							@if($product[0]->type==2)
 								<div class="pd_clr">
 									<h4>color:</h4>
 									<a href="#" class="active" style="background: #ffac9a;">color 1</a>
@@ -86,7 +93,7 @@
 								</div>
 							@endif
 								<div class="pd_qntty_area">
-								@if($product->quantity > 0)
+								@if($product[0]->quantity > 0)
 									<h4>quantity:</h4>
 									<div class="pd_qty fix">
 										<input value="0" name="qttybutton"  id="prod_qty"class="cart-plus-minus-box" type="number" min="0">
@@ -96,7 +103,7 @@
 							</div>
 						<!-- Product Action -->
 						<div class="pd_btn fix">
-							@if($product->quantity > 0)
+							@if($product[0]->quantity > 0)
 							<a class="btn btn-default acc_btn"  href="#" id="cart-btn">add to cart</a>
 							@else
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
@@ -104,18 +111,42 @@
 							<a class="btn btn-default acc_btn btn_icn"><i class="fa fa-heart"></i></a>
 							<!-- <a class="btn btn-default acc_btn btn_icn"><i class="fa fa-refresh"></i></a> -->
 						</div>
-						<div class="pd_share_area fix">
+<!-- 
+						<div id="app">
+						<div class="card">
+							<div class="card-content">
+							<div class="media-content">
+								<p class="title is-4">Star Rating</p>
+								<p class="subtitle is-6">A simple VueJS rating component</p> 
+							</div>
+							<star-rating :max="5" :current="value"></star-rating><br>
+							<br>
+							<button class="button" @click="randomValue">Play with values </button>
+							</div>
+						</div>
+						</div>
+						<script type="text/x-template" id="star-rating">
+  <div class="star-rating">
+    <span v-for="n in max">&star;</span>
+    <div class="star-rating__current" :style="{width: getRating + '%'}">
+      <span v-for="n in max">&starf;</span>
+    </div>
+  </div>
+</script> -->
+
+
+						<!-- <div class="pd_share_area fix">
 							<h4>share this on:</h4>
-							<!-- <div class="pd_social_icon">
+							<div class="pd_social_icon">
 								<a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
 								<a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
 								<a class="vimeo" href="#"><i class="fa fa-vimeo"></i></a>
 								<a class="google_plus" href="#"><i class="fa fa-google-plus"></i></a>
 								<a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a>
 								<a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a>
-							</div> -->
-							<div id="demo1" data-url="http://sharrre.com" data-text="Make your sharing widget with Sharrre (jQuery Plugin)" data-title="share"></div>
-						</div>
+							</div>
+							
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -136,35 +167,35 @@
 						<!-- Tab panes -->
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane fade show active" id="description">
-								<p>{{$product->category_desc}}</p>
+								<p>{{$product[0]->category_desc}}</p>
 												  
 							</div>
 
 								<div role="tabpanel" class="tab-pane fade" id="reviews">
 									<div class="pda_rtng_area fix">
-										<h4>{{$avg}} <span> (Overall)</span></h4>
+										<h4>{{$product[0]->avg_rating}} <span> (Overall)</span></h4>
 										<span>Based on {{$users_product_reviews->count()}} Comments</span>
 									</div>
 									<div class="rtng_cmnt_area fix">
-									
-										@foreach($users_product_reviews as $preview)
-											<div class="single_rtng_cmnt">
-												<div class="rtngs">
-													@for($i=0;$i< $preview->rating;$i++)
-													<i class="fa fa-star"></i>
-													
-													@endfor
-												<span>({{$preview->rating}})</span>
+										@if(isset($users_product_reviews))
+											@foreach($users_product_reviews as $preview)
+												<div class="single_rtng_cmnt">
+													<div class="rtngs">
+														@for($i=0;$i< $preview->rating;$i++)
+														<i class="fa fa-star"></i>
+														
+														@endfor
+													<span>({{$preview->rating}})</span>
+													</div>
+													<div class="rtng_author">
+														<h3> {{ $preview->first_name}} {{ $preview->last_name}}</h3>
+														<span>{{\Carbon\Carbon::parse($preview->review_date)->format('d-M-Y')}}</span>
+														<span></span>
+													</div>
+													<p>{{$preview->review}}</p>
 												</div>
-												<div class="rtng_author">
-													<h3> {{ $preview->first_name}} {{ $preview->last_name}}</h3>
-													<span>{{\Carbon\Carbon::parse($preview->review_date)->format('d-M-Y')}}</span>
-													<span></span>
-												</div>
-												<p>{{$preview->review}}</p>
-											</div>
-										@endforeach									
-
+											@endforeach									
+										@endif
 									</div>
 									<div class="col-md-6 rcf_pdnglft">
 										<div class="rtng_cmnt_form_area fix">
@@ -235,9 +266,67 @@
 		</div>
 	</div>
 @include('frontend_user.footer')
+
 <script>
 
+$(document).ready(function(){
+	// $(function () {
+	// 	$(".starrr").starrr();
+	// });
+	$("body").floatingSocialShare({
+    buttons: [
+      "facebook", "linkedin", "pinterest", 
+      "telegram", "viber", "twitter", "whatsapp"
+    ],
+    text: "share with: ",
+    url: "{{route('frontend.product.details',[$product[0]->id,$subcategory->id,$category->id])}}"
+  });
+	$('#prod_qty').change(function(){
+		var value=$(this).val();
+		<?php 
 
+			if(isset($product)){
+				$prod= $product[0]->quantity;
+			
+		?>
+		if(<?php echo $prod; ?> < value)
+		{
+			$('#cart-btn').html("product Out of stock");
+			$('#cart-btn').attr('type','button');
+			$('#cart-btn').css('cursor','not-allowed');
+		}
+		else
+		{
+		$('#cart-btn').html("Add to Cart");
+			$('#cart-btn').removeAttr('type','button');
+		//  $('#cart-btn').attr('href');
+			$('#cart-btn').css('cursor','pointer');
+		}
+		<?php
+		}?>
+		Vue.component('star-rating', {
+		template: '#star-rating',
+		props: ['max', 'current'],
+		computed: {
+			getRating: function() {
+			return (this.current / this.max) * 100
+			}
+		}
+		})
+
+		new Vue({
+		el: '#app',
+		data: {
+			value: 4
+		},
+		methods: {
+			randomValue: function () {
+			this.value = (Math.random()*4+1).toFixed(2)
+			}
+		}
+		})
+	});		
+});
 
 
 
