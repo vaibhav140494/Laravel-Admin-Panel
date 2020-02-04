@@ -21,7 +21,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::post('products/productimages/store','ProductsController@storeProductImages')
         ->name('products.productimages.store');
         Route::get('products/productimages/galary/{id}','ProductsController@productGalary')->name('products.productimages.galary');
-        Route::get('products/productimages/galary/delete/{id}','ProductsController@deleteProductImage')->name('products.productimages.galary.delete');
+        Route::post('products/productimages/galary/delete','ProductsController@deleteProductImage')->name('products.productimages.galary.delete');
     });
     
 });

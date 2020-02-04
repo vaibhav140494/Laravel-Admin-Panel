@@ -66,12 +66,12 @@
     </div>
     <div class="form-group">
          {{ Form::label('type',trans('labels.backend.products.table.type'), ['class' => 'col-lg-2 control-label required']) }}    
-        <div class="col-lg-10">
-        <select name="type" id="type" class="form-control box-size">
-        <option value="1">Simple Product</option>
-        <option value="2">Congigurable Product</option>
-        </select>
-        </div>
+            <div class="col-lg-10">
+                <select name="type" id="type" class="form-control box-size">
+                    <option value="1">Simple Product</option>
+                    <option value="2">Congigurable Product</option>
+                </select>
+            </div>
     </div>
     <div class="form-group">
          {{ Form::label('price',trans('labels.backend.products.table.price'), ['class' => 'col-lg-2 control-label required']) }}    
@@ -94,13 +94,13 @@
     <div class="form-group">
          {{ Form::label('image',trans('labels.backend.products.table.image'), ['class' => 'col-lg-2 control-label required']) }}    
          <div class="col-lg-10">
-        {{ Form::file('image', [ 'required' => 'required']) }}
-        @if( isset($products))
+            {{ Form::file('image', [ 'required' => 'required']) }}
+                @if( isset($products))
             
-            <div style="margin-top:20px;">
-            {{ Html::image('storage/products/'.$products->image, 'alt ', array('class' => 'css-class img-thumbnail', 'height' => '100px','width'=>'100px')) }}
-            </div>
-       @endif
+                <div style="margin-top:20px;">
+                    {{ Html::image('storage/products/'.$products->image, 'alt ', array('class' => 'css-class img-thumbnail', 'height' => '100px','width'=>'100px')) }}
+                </div>
+                @endif
         </div>
     </div>
 </div><!--box-body-->
