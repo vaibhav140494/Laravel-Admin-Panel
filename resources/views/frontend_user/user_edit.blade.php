@@ -43,7 +43,7 @@
                     <span style="color:red;">{{$errors->register->first('pincode') ?? ''}}</span>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="enter Email" value="{{  $user->email }}">
+                    <input type="email" name="email" placeholder="enter Email" value="{{  $user->email }}" disabled>
                     <span style="color:red;">{{$errors->register->first('email') ?? ''}}</span>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <input type="date" name="birthdate" placeholder="Enter Birthdate" value="{{  $user->birthdate }}">
+                    <input type="date" name="birthdate" id="birthdate"placeholder="Enter Birthdate" value="{{  $user->birthdate }}" max="">
                     <span style="color:red;">{{$errors->register->first('birthdate') ?? ''}}</span>
                 </div>
                 <div class="form-group">
@@ -63,6 +63,7 @@
         </div>
     </div>
     <div class="container">
+        
     <button class="btn btn-default acc_btn " type="submit" id="acc_Create"> 
         <span> <i class="fa fa-user btn_icon"></i> Edit Profile </span> 
     </button>
@@ -74,6 +75,21 @@
 @include('frontend_user.script')
 <script type="text/javascript">
 $(document).ready(function(){
+    var date = new Date();
+    var currentMonth = date.getMonth();
+    var currentDate = date.getDate();
+    var currentYear = date.getFullYear();
+
+    if(currentMonth.toString().length < 2){
+    currentMonth='0'+currentMonth;
+    }
+    if(currentDate.toString().length < 2){
+    currentDate='0'+currentDate;
+    }
+    var date1=currentYear+"-"+currentMonth+"-"+currentDate;
+    console.log(date1);
+    // alert(date->format('y-m-d'));
+    $('#birthdate').attr('max',date1);
     $.validator.addMethod("passwordcheck", function(value, element) {
         if (value.length > 0) {
             return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(value);
@@ -105,10 +121,7 @@ $(document).ready(function(){
                     return ($('#pincode').val());
               }          
             },
-            email: {
-                required: true,
-                email:true
-            },
+           
             username: {
                 required:true
             },

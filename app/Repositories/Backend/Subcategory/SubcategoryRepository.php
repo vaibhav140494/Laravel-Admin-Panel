@@ -68,6 +68,7 @@ class SubcategoryRepository extends BaseRepository
      */
     public function update(Subcategory $subcategory, array $input)
     {
+        // echo "<pre>"; print_r($subcategory); exit;
     	if ($subcategory->update($input))
             return true;
 

@@ -15,6 +15,7 @@
 									<a href="{{route('frontend.category.list')}}" class="btn main_btn coll_btn animated">Collection</a>
 								</div>
 							</div>
+
 						</div>						
 					</div>
 				</div>
@@ -74,12 +75,13 @@
 						@if($i++<= 3)
 							<div class="col-lg-4 col-md-6 col-sm-12">							
 								<div class="single_promo">
-									<img src=" {{url('/frontend/img/promo/1.jpg')}}" alt="promo image">
+									<img src=" {{url('storage/category/',$cat->category_image)}}" alt="promo image">
 									<div class="box-content">
 										<div class="promo-content">
 											<h3 class="title">{{$cat->category_name}}</h3>
 											<span class="post">2020 Collection</span>
-											<p>{{$cat->category_desc}}</p>
+											<p>{{\Illuminate\Support\Str::limit($cat->category_desc, 80, $end='...') }}</p>
+										
 											<a class="shop_now_btn" href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">Shop Now</a>
 										</div>
 									</div>
@@ -100,7 +102,9 @@
 										<div class="promo-content">
 											<h3 class="title">{{$cat->category_name}}</h3>
 											<!-- <span class="post">2020 Collection</span> -->
-											<p>{{$cat->category_desc}}</p>
+											<p>{{\Illuminate\Support\Str::limit($cat->category_desc, 100, $end='...') }}</p>
+											
+											
 											<a class="shop_now_btn" href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">Shop Now</a>
 										</div>
 									</div>
@@ -147,14 +151,14 @@
 								<div class="col-lg-3 col-md-4 col-sm-6 mix ">
 									<div class="product-grid">
 										<div class="product-image">
-											<a href="#">
+											<a href="{{route('frontend.product.details',[$prod->id,$prod->subcategory_id,$prod->category_id])}}">
 												<img class="pic-1" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
 												<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
 											</a>
 											<ul class="social">
-												<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+												<li><a class="venobox" href="{{url('storage/products/'.$prod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
 												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-												<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 											</ul>
 											<!-- <span class="product-new-label">Sale</span> -->
 										</div>
@@ -165,6 +169,7 @@
 													@for($j=0;$j<$product_review[$i]->rating;$j++)
 													<li class="fa fa-star"></li>
 													@endfor
+
 												@endif
 											@endfor
 										</ul>
@@ -178,234 +183,13 @@
 												{{$prod->price}}
 												@endif
 											</div>
-											<a class="add-to-cart" href="#">+ Add To Cart</a>
+											<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
 										</div>
 									</div>
 								</div>
 							@endforeach
 						@endif
 							
-						
-							<!-- <div class="col-lg-3 col-md-4 col-sm-6 mix ftrd">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">-20%</span>				
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>
-									
-							<div class="col-lg-3 col-md-4 col-sm-6 mix">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/5.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/6.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">Sale</span>
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star disable"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>
-
-							
-							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/7.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/8.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">New</span>
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>			
-							
-							
-							<div class="col-lg-3 col-md-4 col-sm-6 mix ftrd">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/5.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/6.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">Sale</span>
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>			
-							
-							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/1.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/2.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">-30%</span>
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>		
-							
-							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/7.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/8.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">Sale</span>
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>	
-
-							
-							<div class="col-lg-3 col-md-4 col-sm-6 mix sale bslr">
-								<div class="product-grid">
-									<div class="product-image">
-										<a href="#">
-											<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
-											<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
-										</a>
-										<ul class="social">
-											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
-										<span class="product-new-label">-50%</span>
-									</div>
-									<ul class="rating">
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-										<li class="fa fa-star"></li>
-									</ul>
-									<div class="product-content">
-										<h3 class="title"><a href="#">Product Title</a></h3>
-										<div class="price">$16.00
-											<span>$20.00</span>
-										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
-									</div>
-								</div>
-							</div>			 -->
-		
 						</div>
 					</div>
 				</div>
@@ -462,16 +246,15 @@
 								<div class="col-lg-3 col-md-4 col-sm-6">
 									<div class="product-grid">
 										<div class="product-image">
-											<a href="#">
-												<img class="pic-1" src="{{url('/frontend/img/product/3.jpg')}}" alt="product image">
-												<img class="pic-2" src="{{url('/frontend/img/product/4.jpg')}}" alt="product image">
+											<a href="{{route('frontend.product.details',[$fprod->id,$fprod->subcategory_id,$fprod->category_id])}}">
+												<img class="pic-1" src="{{url('storage/products/'.$fprod->image)}}" alt="product image">
+												<img class="pic-2" src="{{url('storage/products/'.$fprod->image)}}" alt="product image">
 											</a>
 											<ul class="social">
-												<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+												<li><a  class="venobox"href="{{url('storage/products/'.$fprod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
 												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-												<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 											</ul>
-											<span class="product-new-label">-20%</span>				
 										</div>
 										<ul class="rating">
 											<li class="fa fa-star"></li>
@@ -492,7 +275,7 @@
 											
 												
 											</div>
-											<a class="add-to-cart" href="#">+ Add To Cart</a>
+											<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
 										</div>
 									</div>
 								</div><!-- End Col -->
@@ -705,6 +488,11 @@
 											<p class="description">
 											{{$p_review->review}}
 											</p>
+											<small class="post">
+													@for($i=0;$i< $p_review->rating;$i++)
+														<li class="fa fa-star"></li>
+														@endfor
+													</small>
 											
 											<div class="test-bottom text-center">
 												<div class="test-des-area">
@@ -715,18 +503,17 @@
 													{{$p_review-> fname}}  {{$p_review-> lname}}
 													</h3>
 													
-													<small class="post">
-													@for($i=0;$i< $p_review->rating;$i++)
-														<li class="fa fa-star"></li>
-														@endfor
-													</small>
+													
 													
 												</div>
 											</div>
 										</div>
 									</div>
 								@endforeach
-							@endif
+								@else
+								no reviews
+								@endif
+
 							<!-- <div class="testimonial">
 								<div class="testimonial-content">
 									<p class="description">
@@ -777,8 +564,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							@foreach($category as $cat)
-							
+							@foreach($all_category as $cat)
 								<div class="item text-center" style="padding: 0 10px;"> <a href="{{route('frontend.subcategory.list',[$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt="" class="img-thumbnail" width="70" height="70"/></a> </div>
 							@endforeach
 							

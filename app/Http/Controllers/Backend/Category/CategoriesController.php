@@ -96,6 +96,7 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category, EditCategoryRequest $request)
     {
+        
         return new EditResponse($category);
     }
     /**

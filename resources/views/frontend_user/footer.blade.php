@@ -88,14 +88,73 @@
 	@include('frontend_user.script')
 		<script>
 			$(document).ready(function(){
+				
 				// alert($('.cart_icon').offset());
-				$('.cart_menu_area').click(function(){
-					$('.user-profile').css('visibility','visible');
+				// $('.cart_menu_area').click(function(){
+				// 	$('.user-profile').css('visibility','visible');
+				// });	
+				// $('.close-button').click(function(){
+				// 	// alert("hello");
+				// 	$('.user-profile').css('visibility','hidden');
+				// });	
+
+				$('.cart-btn').click(function(){
+					var value=$('#prod_qty').val();
+					var id=$(this).attr('name');
+					if(value==0)
+					{
+						alert("please select Quantity");
+						return false;
+					}	
+					$.ajax({
+						url:'{{route("frontend.cart.add")}}',
+						method:'get',
+						dataType:'json',
+						data:{'value':value,'id':id},
+						success:function(response)
+						{
+							if(response['login']==false)
+							{
+								var route="{{route('frontend.user.login')}}";
+								window.location.replace(route);
+							}
+							if(response['message']=="success")
+							{
+								alert("product added to cart successfully");
+								location.reload(true);	
+								return false;
+							}
+							if(response['fail']=="fail")
+							{
+								alert("can not added to cart");
+								return false;
+							}
+						}
+					});
 				});	
-				$('.close-button').click(function(){
-					// alert("hello");
-					$('.user-profile').css('visibility','hidden');
-				});	
+				$(document).on('click','.cp_remove',function(){
+					var id=$(this).attr('name');
+					$.ajax({
+						url:'{{route("frontend.cart.remove")}}',
+						method:'get',
+						dataType:'json',
+						data:{'pid':id},
+						success:function(response)
+						{
+							if(response['message']=="success")
+							{
+								alert("product deleted to cart successfully");
+								location.reload(true);
+								return false;
+							}
+							if(response['message']=="fail")
+							{
+								alert("can not deleted from cart");
+								return false;
+							}
+						}
+					});
+				});
 			});
 		</script>
 	</body>

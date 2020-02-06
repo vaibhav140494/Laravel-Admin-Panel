@@ -59,8 +59,7 @@ class SubcategoriesController extends Controller
         $this->category=Category::find($id);
         $category=$this->category;
         $subcategories=Subcategory::where('category_id',$category->id)->get();
-        // dd($subcategory[1]->subcategory_name);
-        return new ViewResponse('backend.subcategories.index',compact('category','subcategories'));
+        return  view('backend.subcategories.index',compact('category','subcategories'));
     }
     /**
      * Show the form for creating a new resource.
@@ -111,8 +110,9 @@ class SubcategoriesController extends Controller
      */
     public function edit(Subcategory $subcategory, EditSubcategoryRequest $request)
     {
-        // dd($request->get('id'));
-        // $cat=Category::find($id);    
+
+        // dd($request);
+        // $category=Category::find($id);    
         // dd($cat);   
         return new EditResponse($subcategory);
     }

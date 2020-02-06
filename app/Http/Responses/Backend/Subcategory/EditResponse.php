@@ -27,8 +27,8 @@ class EditResponse implements Responsable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function toResponse($request)
-    {
-        // dd($this->subcategories);   
+    {        
+        dd($this->subcategories);
         return view('backend.subcategories.edit')->with([
             'subcategories' => $this->subcategories
         ]);

@@ -13,12 +13,19 @@ class CategoriesController extends Controller
 {
     public function index()
     {
+      $final_data= parent::__construct();
+        $all_category=$final_data[0];
+        $all_subcategory=$final_data[1];
+        $all_cart=$final_data[2];
+        
+
+      // dd($all_category);
       $category=Category::paginate(6);
       for($i=0;$i<$category->count();$i++){
         $subcategory=Subcategory::where('category_id',$category[$i]->id)->get();
         $sub[$category[$i]->id] = $subcategory->count();
       }
-      return view('frontend_user.category_list',compact('category','sub'));
+      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart'));
     }
     public function getAllCat(Request $request)
     {
@@ -34,7 +41,6 @@ class CategoriesController extends Controller
                     $subcategory=Subcategory::where('category_id',$cat[$i]->id)->get();
                     $sub[$cat[$i]->id] = $subcategory->count();
                   }
-                // $sub=Subcategory::find($cat->id);
                 if(count($cat)==0){
                 $response['error'] ="sorry no sub category found";
                 }
@@ -45,8 +51,8 @@ class CategoriesController extends Controller
                 }
                 return json_encode($response);
             }
-            
         }
+        
     }
     
 }

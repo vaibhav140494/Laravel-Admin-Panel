@@ -9,6 +9,7 @@
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
+            
         @if(isset($category))
             <h3 class="box-title">{{ ' Category = ' .$category->category_name }}</h3>
         @endif

@@ -391,7 +391,7 @@ input:focus, textarea:focus {
 	padding: 8px 0;
 	border-bottom: 1px solid #f5f5f5;
 }
-.hdr_tp_left, 
+
 .hdr_tp_right {
 	padding:25px 0 0 0;
 }
@@ -3396,29 +3396,33 @@ input:focus, textarea:focus {
 	 color:red;
  }
 
- /* sharer plugin css */
 
- #app {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
+  /* Rating Star Widgets Style */
+  .rating-stars ul {
+	list-style-type:none;
+	padding:0;
+	
+	-moz-user-select:none;
+	-webkit-user-select:none;
   }
-  .star-rating {
-	color: gold;
-	display: inline-block;
-	font-size: 4em;
-	position: relative;
-	transform: translate(-6px);
-  }
-  
-  .star-rating__max,
-  .star-rating__current {
-	position: absolute;
-	top: 0;
+  .rating-stars ul > li.star {
+	display:inline-block;
+	
   }
   
-  .star-rating__current {
-	overflow: hidden;
-	white-space: nowrap;
+  /* Idle State of the stars */
+  .rating-stars ul > li.star > i.fa {
+	font-size:1.5em; /* Change the size of the stars */
+	color:#ccc; /* Color on idle state */
   }
+  
+  /* Hover state of the stars */
+  .rating-stars ul > li.star.hover > i.fa {
+	color:#FFCC36;
+  }
+  
+  /* Selected state of the stars */
+  .rating-stars ul > li.star.selected > i.fa {
+	color:#FFCC36;
+  }
+  
