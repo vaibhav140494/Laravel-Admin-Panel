@@ -262,7 +262,7 @@
 												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
 												<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 											</ul>
-											<!-- <span class="product-new-label">Sale</span> -->
+											 <span class="product-new-label">Sale</span> -->
 										</div>
 										
 										<ul class="rating">
@@ -666,9 +666,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							@foreach($all_category as $cat)
-								<div class="item text-center" style="padding: 0 10px;"> <a href="{{route('frontend.subcategory.list',[$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt="" class="img-thumbnail" width="70" height="70"/></a> </div>
-							@endforeach
+							
 							
 						</div>
 					</div>

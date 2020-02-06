@@ -29,11 +29,9 @@ Route::get('/categories/search','CategoriesController@getAllCat')->name('categor
 ///Subcategory controller routes
 Route::get('subcategories/{id}','SubcategoriesController@getSub')->name('subcategory.list');
 Route::get('/subcategories/search/subcat','SubcategoriesController@getAll')->name('subcategory.list.ajax');
-<<<<<<< HEAD
 Route::get('/wishlist/add','WishListController@add')->name('wishlist.add');
 Route::get('/wishlist/remove','WishListController@remove')->name('wishlist.remove');
 Route::get('/wishlist/list/{uid}','WishListController@list')->name('wishlist.list');
-=======
 
 ////Product controller routes
 Route::get('products/{id}/{cid}','ProductsController@getProd')->name('products.list');
@@ -43,7 +41,6 @@ Route::get('product/details/reviews/store','ProductsController@storeReview')->na
 Route::get('cart/add','CartController@add')->name('cart.add');
 Route::get('cart/show','CartController@show')->name('cart.show');
 Route::get('cart/remove','CartController@remove')->name('cart.remove');
->>>>>>> 76f51952699613567498bce3e881f424c2e8ee76
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

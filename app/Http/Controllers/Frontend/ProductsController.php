@@ -36,7 +36,6 @@ class ProductsController extends Controller
         $subcategory=Subcategory::find($id);
         $category=Category::find($cid);
         $prod=Product::where('subcategory_id',$subcategory->id)->get();
-<<<<<<< HEAD
         // dd($prod);
         if(\Auth::user())
         {
@@ -48,10 +47,8 @@ class ProductsController extends Controller
                       ->toArray();
                     //dd($wished_prod); 
         }
-        return view('frontend_user.products_list',compact('prod','subcategory','category','wished_prod'));
-=======
-        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart'));
->>>>>>> 76f51952699613567498bce3e881f424c2e8ee76
+        
+        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod'));
     }
 
     public function detailProd($id,$subid,$cid)
@@ -68,7 +65,6 @@ class ProductsController extends Controller
         select('products.*','productreviews.product_id','productreviews.user_id','productreviews.rating','productreviews.review',\DB::raw("ROUND(AVG(rating),2) as avg_rating"))
         ->get()->first();
 
-<<<<<<< HEAD
         if(\Auth::user())
         {
             $wished_prod = DB::table('wishlist')
@@ -80,12 +76,10 @@ class ProductsController extends Controller
                     //dd($wished_prod); 
         }
 
-=======
         // dd($product);
         //Count no of reviews
         $count_reviews=productReviews::selectRaw("count(*) as count")->where('product_id',$id)->get()->toArray();
         // dd($count_reviews[0]['count']);
->>>>>>> 76f51952699613567498bce3e881f424c2e8ee76
         $users_product_reviews=DB::table('users')
         ->leftjoin('productreviews','users.id','=','productreviews.user_id')
         ->select('users.*','productreviews.product_id','productreviews.user_id','productreviews.rating','productreviews.review','productreviews.review_date')
@@ -98,13 +92,10 @@ class ProductsController extends Controller
         ->where('products.category_id',$cid)
         ->where('products.id','<>',$id)
         ->orderBy('rating','desc')->get()->keyBy('subcategory_id');
-<<<<<<< HEAD
         // dd($all_products);
         $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
-        return view('frontend_user.product-details',compact('product','users_product_reviews','avg','category','subcategory','all_products','wished_prod'));
-=======
-        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','all_products','count_reviews','all_category','all_subcategory','all_cart'));
->>>>>>> 76f51952699613567498bce3e881f424c2e8ee76
+        
+        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','all_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod'));
     }
 
     public function storeReview(Request $req)
