@@ -67,8 +67,8 @@
 						<div class="pd_text">
 							<h4>overview:</h4>
 							
-							<p>{{$product->category_desc}}</p>
-							@if(strlen($product->category_desc) > 100)
+							<p>{{$product->specification}}</p>
+							@if(strlen($product->specification) > 100)
 							<a class="btn btn-primary" href="#description"> Read more</a>
 							@endif
 						</div>
@@ -106,7 +106,7 @@
 						<!-- Product Action -->
 						<div class="pd_btn fix">
 							@if($product ->quantity > 0)
-							<a class="btn btn-default acc_btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn">add to cart</a>
+							<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn">add to cart</a>
 							@else
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
 							@endif
@@ -137,7 +137,7 @@
 						<!-- Tab panes -->
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane fade show active" id="description">
-								<p>{{$product ->category_desc}}</p>
+								<p>{{$product->specification}}</p>
 												  
 							</div>
 

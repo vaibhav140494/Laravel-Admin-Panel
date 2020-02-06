@@ -1,5 +1,6 @@
 @include('frontend_user.header')
 
+
 		<!-- Page item Area -->
 		<div id="page_item_area">
 			<div class="container">
@@ -19,7 +20,6 @@
 				</div>
 			</div>
 		</div>
-				
 		<!-- Blog Page -->
 		<div id="blog_page_area">
 			<div class="container">

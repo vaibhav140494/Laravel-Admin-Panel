@@ -29,7 +29,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
-							<div >
+							<div>
 								<div class="call_area">
 									<div class="form-group ">
 										<input type="text" class="form-control header-search-bar" placeholder="Search for Products">
@@ -263,7 +263,43 @@
 											</div>  -->
 										</div>
 									</li>
-									
+									<li>
+										@if(isset($all_cart))
+											<?php //print_r($all_cart); exit;?>
+											<?php $total=0;?>
+											<div class="cart_menu_area">
+												<div class="cart_icon">
+													<a href="{{route('frontend.cart.show')}}"><i class="ti-shopping-cart-full" aria-hidden="true"></i></a>
+													<span class="cart_number">{{$all_cart->count()}}</span>
+												</div>
+												<!-- Mini Cart Wrapper -->
+												<div class="mini-cart-wrapper">
+													<!-- Product List -->
+													<div class="mc-pro-list fix">
+														@foreach($all_cart as $allcrt)
+															<div class="mc-sin-pro fix">
+																<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
+																<div class="mc-pro-details fix">
+																	<a href="#">{{$allcrt->product_name}}</a>
+																	<p>{{$allcrt->quantity}}x &#x20b9;{{$allcrt->gross_amount}}</p>
+																	<?php $total+=$allcrt->total_amount;?>
+																	<a class="pro-del cp_remove" href="javascript:void(0)" name="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
+																</div>
+															</div>
+														@endforeach
+													</div>
+													<!-- Sub Total -->
+													<div class="mc-subtotal fix">
+														<h4>Subtotal <span> &#x20b9; {{$total}}</span></h4>
+													</div>
+													<!-- Cart Button -->
+													<div class="mc-button">
+														<a href="#" class="checkout_btn">checkout</a>
+													</div>
+												</div>											
+											</div>	
+										@endif
+									</li>
 									@endif
 								</ul>
 							</div>	

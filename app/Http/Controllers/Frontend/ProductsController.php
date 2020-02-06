@@ -47,7 +47,6 @@ class ProductsController extends Controller
                       ->toArray();
                     //dd($wished_prod); 
         }
-        
         return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod'));
     }
 

@@ -17,7 +17,7 @@ trait SubcategoryAttribute
      */
     public function getActionButtonsAttribute()
     {
-        dd($this->attribute);
+        
         return '<div class="btn-group action-btn"> 
         '.$this->getEditButtonAttribute("edit-subcategory", "admin.subcategories.edit").'
                 '.$this->getDeleteButtonAttribute("delete-subcategory", "admin.subcategories.destroy").'
