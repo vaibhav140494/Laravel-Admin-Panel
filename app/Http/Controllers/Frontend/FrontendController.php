@@ -24,8 +24,17 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $product=Product::get()->keyBy('category_id');// fetch unique products based on category
-       $count = DB::table('products')->selectRaw('products.category_id, count(products.id) as total')
+        $final_data= parent::__construct();
+        $all_category=$final_data[0];
+        $all_subcategory=$final_data[1];
+        $all_cart=$final_data[2];
+        // dd($subcategory);
+
+         $product=Product::all();
+       // ->leftjoin('productreviews','products.id','=','produ');// fetch unique products based on category
+        //for fetching featured category
+        
+        $count = DB::table('products')->selectRaw('products.category_id, count(products.id) as total')
         ->join('order_details','products.id','=','order_details.product_id')
         ->groupBy('order_details.product_id')
         ->orderBy('total','desc')->get();
@@ -68,6 +77,30 @@ class FrontendController extends Controller
         // dd($product_review_random);
         // productReviews::
         return view('frontend_user.index', compact('category_featured','category','product','featured_prod','product_review','product_review_random','wished_prod'));
+        // $category=Category::where('is_active',1)->get();
+        //fetching featured PROductss
+        $featured_prod=DB::table('products')
+        ->leftjoin('categories','products.category_id','=','categories.id')
+        ->whereIn('categories.id',$catarr)
+        ->where('is_active',1)
+        ->select('products.*')->get();
+        // dd($count);
+        // dd($featured_prod);
+        $product_review=productReviews::all();     
+        for($i=0;$i<$all_category->count();$i++)
+        {
+            $subcategory[$all_category[$i]->id]=Subcategory::where('category_id',$all_category[$i]->id)->where('is_active',1)->get();
+        }
+        // dd($product_review);
+        
+        //  fetching user Reviews  
+
+        $product_review_random=DB::table('users')
+        ->join('productreviews','users.id','=','productreviews.user_id')
+        ->select('users.first_name as fname' ,'users.last_name as lname','productreviews.*')
+        ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
+
+        return view('frontend_user.index', compact('category_featured','all_category','product','featured_prod','product_review','product_review_random','all_subcategory','all_cart'));
     }
 
     /**

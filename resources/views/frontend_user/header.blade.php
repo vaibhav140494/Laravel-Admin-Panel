@@ -13,13 +13,14 @@
     </head>	
     <body>
 
+	
 		<!--  Start Preloader  -->
 		
-		<div class="preloader">
+		<!-- <div class="preloader">
 			<div class="status-mes">
 				<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 			</div>
-		</div>
+		</div> -->
 		<!-- End Preloader -->
 		
 		<!--  Start Header  -->
@@ -28,7 +29,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
-							<div class="hdr_tp_left">
+							<div >
 								<div class="call_area">
 									<div class="form-group ">
 										<input type="text" class="form-control header-search-bar" placeholder="Search for Products">
@@ -107,22 +108,27 @@
 								<div class="main-menu">
 									<nav>
 										<ul>
-											<li><a href="#">home</a>					
+											<li><a href="{{route('frontend.index')}}">home</a>					
 											</li>									
 											
 											<li><a href="#">Categories <i class="fa fa-angle-down"></i></a>
 												
 												<div class="mega-menu mm-3-column mm-left">
-													<div class="mm-column mm-column-link float-left">
-														<h3>Electronics</h3>
-														<a href="#">Mobiles</a>
-														<a href="#">Laptops</a>
-														<a href="#">Speakers</a>
-														<a href="#">Camera</a>
-														<a href="#">Tablets</a>
-													</div>
-													
-													<div class="mm-column mm-column-link float-left">
+														@if(isset($all_category) && isset($all_subcategory))
+														@foreach($all_category as $cat)
+															<div class="mm-column mm-column-link float-left">
+																<h3>{{$cat->category_name}}</h3>
+																@foreach($all_subcategory[$cat->id] as $sub)
+																	<a href="#">{{$sub->subcategory_name}}</a>
+																	<!-- <a href="#">Laptops</a>
+																	<a href="#">Speakers</a>
+																	<a href="#">Camera</a>
+																	<a href="#">Tablets</a> -->
+																@endforeach
+															</div>
+														@endforeach
+													@endif
+													<!-- <div class="mm-column mm-column-link float-left">
 														<h3>Fashion</h3>
 														<a href="#">Jackets</a>
 														<a href="#">Shirts</a>
@@ -138,7 +144,7 @@
 														<a href="#">Collections</a>
 														<a href="#">T-Shirts</a>
 														<a href="#">sports shoes</a>	
-													</div>												
+													</div>												 -->
 													<a  href="{{route('frontend.category.list')}}" class="btn btn-outline-danger pull-right header-category-btn">
 														See All
 													</a>
@@ -258,37 +264,39 @@ x										</ul>
 										</div>
 									</li>
 									<li>
+									<?php $total=0;?>
 										<div class="cart_menu_area">
 											<div class="cart_icon">
-												<a href="#"><i class="ti-shopping-cart-full" aria-hidden="true"></i></a>
-												<span class="cart_number">2</span>
+												<a href="{{route('frontend.cart.show')}}"><i class="ti-shopping-cart-full" aria-hidden="true"></i></a>
+												<span class="cart_number">{{$all_cart->count()}}</span>
 											</div>
-											
-											
 											<!-- Mini Cart Wrapper -->
 											<div class="mini-cart-wrapper">
 												<!-- Product List -->
 												<div class="mc-pro-list fix">
-													<div class="mc-sin-pro fix">
-														<a href="#" class="mc-pro-image float-left"><img src="{{url('/frontend/img/mini-cart/1.jpg')}}" alt="" /></a>
-														<div class="mc-pro-details fix">
-															<a href="#">This is Product Name</a>
-															<span>1x$25.00</span>
-															<a class="pro-del" href="#"><i class="fa fa-times-circle"></i></a>
+													@foreach($all_cart as $allcrt)
+														<div class="mc-sin-pro fix">
+															<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
+															<div class="mc-pro-details fix">
+																<a href="#">{{$allcrt->product_name}}</a>
+																<p>{{$allcrt->quantity}}x &#x20b9;{{$allcrt->gross_amount}}</p>
+																<?php $total+=$allcrt->total_amount;?>
+																<a class="pro-del cp_remove" href="javascript:void(0)" name="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
+															</div>
 														</div>
-													</div>
-													<div class="mc-sin-pro fix">
+													@endforeach
+													<!-- <div class="mc-sin-pro fix">
 														<a href="#" class="mc-pro-image float-left"><img src="{{url('/frontend/img/mini-cart/2.jpg')}}" alt="" /></a>
 														<div class="mc-pro-details fix">
 															<a href="#">This is Product Name</a>
 															<span>1x$25.00</span>
 															<a class="pro-del" href="#"><i class="fa fa-times-circle"></i></a>
 														</div>
-													</div>
+													</div> -->
 												</div>
 												<!-- Sub Total -->
 												<div class="mc-subtotal fix">
-													<h4>Subtotal <span>$50.00</span></h4>												
+													<h4>Subtotal <span> &#x20b9; {{$total}}</span></h4>												
 												</div>
 												<!-- Cart Button -->
 												<div class="mc-button">

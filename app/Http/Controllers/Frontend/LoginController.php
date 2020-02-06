@@ -29,7 +29,7 @@ class LoginController extends Controller
             {
             return view('frontend_user.login')->with('errors','Invalid Credentials');
         }
-    }
+    }   
     public function logout(Request $request)
     {
         app()->make(Auth::class)->flushTempSession();

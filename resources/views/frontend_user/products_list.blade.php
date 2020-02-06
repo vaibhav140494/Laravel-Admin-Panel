@@ -50,6 +50,8 @@
 											<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
 											@endif
 											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+											<!-- <li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li> -->
+											<li><a href="javascript:void(0)"  name="{{$fprod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 										</ul>
 										<!-- <span class="product-new-label">-20%</span>				 -->
 									</div>
@@ -72,7 +74,7 @@
 										
 											
 										</div>
-										<a class="add-to-cart" href="#">+ Add To Cart</a>
+										<a class="add-to-cart cart-btn"  name="{{$fprod->id}}" href="javascript:void(0)">+ Add To Cart</a>
 									</div>
 								</div>
 							</div><!-- End Col -->

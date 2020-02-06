@@ -36,7 +36,12 @@
                             @endif
                             <form action="{{route('frontend.login.store')}}" method="post" id="login-form" name="login-form">
                             @csrf
-                            <input type="hidden" value="{{url()->previous()}}" name="hiddenurl">
+                            
+                            @if(isset($url))
+                                <input type="hidden" value="{{$url}}" name="hiddenurl">
+                            @else
+                                <input type="hidden" value="{{url()->previous()}}" name="hiddenurl">
+                            @endif
                                 <div class="create_account_area">
                                     <h2 class="caa_heading">Log In</h2>
                                     <div class="caa_form_area">

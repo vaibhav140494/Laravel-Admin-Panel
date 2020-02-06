@@ -11,11 +11,15 @@ class SubcategoriesController extends Controller
 {
     public function getSub($id)
     {
-        // dd($id);
+        $final_data= parent::__construct();
+        $all_category=$final_data[0];
+        $all_subcategory=$final_data[1];
+        $all_cart=$final_data[2];
+
         $categories=Category::find($id);
         $subcategory=Subcategory::where('category_id',$id)->get();
         // dd($category->category_name);
-        return view('frontend_user.subcategory-list',compact('categories','subcategory'));
+        return view('frontend_user.subcategory-list',compact('categories','subcategory','all_category','all_subcategory','all_cart'));
     }
     public function getAll(Request $request)
     {

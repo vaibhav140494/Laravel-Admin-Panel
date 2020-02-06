@@ -391,7 +391,7 @@ input:focus, textarea:focus {
 	padding: 8px 0;
 	border-bottom: 1px solid #f5f5f5;
 }
-.hdr_tp_left, 
+
 .hdr_tp_right {
 	padding:25px 0 0 0;
 }
@@ -3419,53 +3419,33 @@ input:focus, textarea:focus {
 	 color:red;
  }
 
- /* sharer plugin css */
 
- .sharrre .box{
-	float:left;
-  }
-  .sharrre .count {
-	color:#444444;
-	display:block;
-	font-size:17px;
-	line-height:34px;
-	height:34px;
-	padding:4px 0;
-	position:relative;
-	text-align:center;
-	text-decoration:none;
-	width:50px;
-	background-color:#eee;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-  }
-  .sharrre .share {
-	color:#FFFFFF;
-	display:block;
-	font-size:11px;
-	height:16px;
-	line-height:16px;
-	margin-top:3px;
+  /* Rating Star Widgets Style */
+  .rating-stars ul {
+	list-style-type:none;
 	padding:0;
-	text-align:center;
-	text-decoration:none;
-	width:50px;
-	background-color:#9CCE39;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
+	
+	-moz-user-select:none;
+	-webkit-user-select:none;
   }
-  .sharrre .buttons {
-	display:none;
-	position:absolute;
-	margin-left:50px;
-	z-index:10;
-	background-color:#fff;
+  .rating-stars ul > li.star {
+	display:inline-block;
+	
   }
-  .sharrre .button {
-	float:left;
-	max-width:50px;
-	margin-left:10px;
+  
+  /* Idle State of the stars */
+  .rating-stars ul > li.star > i.fa {
+	font-size:1.5em; /* Change the size of the stars */
+	color:#ccc; /* Color on idle state */
   }
-
+  
+  /* Hover state of the stars */
+  .rating-stars ul > li.star.hover > i.fa {
+	color:#FFCC36;
+  }
+  
+  /* Selected state of the stars */
+  .rating-stars ul > li.star.selected > i.fa {
+	color:#FFCC36;
+  }
+  

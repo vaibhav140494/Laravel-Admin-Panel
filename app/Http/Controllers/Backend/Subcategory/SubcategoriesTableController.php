@@ -36,7 +36,6 @@ class SubcategoriesTableController extends Controller
      */
     public function __invoke(ManageSubcategoryRequest $request,$id)
     {
-        // echo $id; exit;
         return Datatables::of($this->subcategory->getForDataTable($id))
             ->escapeColumns(['id'])
             ->addColumn('subcategory_name', function ($subcategory) {
