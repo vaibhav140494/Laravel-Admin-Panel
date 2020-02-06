@@ -29,7 +29,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
-							<div >
+							<div>
 								<div class="call_area">
 									<div class="form-group ">
 										<input type="text" class="form-control header-search-bar" placeholder="Search for Products">
@@ -264,8 +264,8 @@ x										</ul>
 										</div>
 									</li>
 									<li>
-										@if(isset($all_cart))
-											<?php print_r($all_cart); exit;?>
+										{{--@if(isset($all_cart))--}}
+											<?php //print_r($all_cart); exit;?>
 											<?php $total=0;?>
 											<div class="cart_menu_area">
 												<div class="cart_icon">
@@ -287,18 +287,10 @@ x										</ul>
 																</div>
 															</div>
 														@endforeach
-														<!-- <div class="mc-sin-pro fix">
-															<a href="#" class="mc-pro-image float-left"><img src="{{url('/frontend/img/mini-cart/2.jpg')}}" alt="" /></a>
-															<div class="mc-pro-details fix">
-																<a href="#">This is Product Name</a>
-																<span>1x$25.00</span>
-																<a class="pro-del" href="#"><i class="fa fa-times-circle"></i></a>
-															</div>
-														</div> -->
 													</div>
 													<!-- Sub Total -->
 													<div class="mc-subtotal fix">
-														<h4>Subtotal <span> &#x20b9; {{$total}}</span></h4>												
+														<h4>Subtotal <span> &#x20b9; {{$total}}</span></h4>
 													</div>
 													<!-- Cart Button -->
 													<div class="mc-button">
@@ -306,7 +298,7 @@ x										</ul>
 													</div>
 												</div>											
 											</div>	
-										@endif
+										{{--@endif--}}
 									</li>
 									@endif
 								</ul>

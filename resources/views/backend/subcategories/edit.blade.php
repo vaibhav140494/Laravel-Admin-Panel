@@ -10,7 +10,6 @@
 @endsection
 
 @section('content')
-<?php print_r($subcategories); exit;?>
     {{ Form::model($subcategories, ['route' => ['admin.subcategories.update', $subcategories->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-subcategory']) }}
         <div class="box box-info">
             <div class="box-header with-border">

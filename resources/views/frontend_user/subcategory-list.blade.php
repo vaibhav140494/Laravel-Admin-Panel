@@ -20,7 +20,6 @@
 				</div>
 			</div>
 		</div>
-		<?php echo "hello";exit;?>
 		<!-- Blog Page -->
 		<div id="blog_page_area">
 			<div class="container">
