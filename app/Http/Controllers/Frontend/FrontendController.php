@@ -28,7 +28,7 @@ class FrontendController extends Controller
         $all_category=$final_data[0];
         $all_subcategory=$final_data[1];
         $all_cart=$final_data[2];
-        // dd($subcategory);
+        // dd($all_cart);
 
          $product=Product::all();
        // ->leftjoin('productreviews','products.id','=','produ');// fetch unique products based on category

@@ -11,6 +11,7 @@ class SubcategoriesController extends Controller
 {
     public function getSub($id)
     {
+        // dd("hello");
         $final_data= parent::__construct();
         $all_category=$final_data[0];
         $all_subcategory=$final_data[1];

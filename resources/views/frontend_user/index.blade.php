@@ -571,10 +571,10 @@
 								<a class="add-to-cart" href="#">+ Add To Cart</a>
 							</div>
 						</div>
-					</div>		 -->
+					</div>		 
 				</div>
 			</div>
-		</section>
+		</section>-->
 		<!-- End Featured Products Area -->
 
 		<!-- Testimonials Area -->
@@ -616,44 +616,7 @@
 								no reviews
 								@endif
 
-							<!-- <div class="testimonial">
-								<div class="testimonial-content">
-									<p class="description">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam risus felis, bibendum 
-										eu nibh et, finibus semper sem. Nam at tincidunt leo. Nam sit amet mauris et lorem 
-										varius lobortis eu a nisl.
-									</p>
-									<div class="test-bottom text-center">
-										<div class="test-des-area">
-											<div class="pic">
-												<img src="{{url('/frontend/img/testimonial/2.jpg')}}" alt="">
-											</div>
-											<h3 class="testimonial-title">Susana</h3>
-											<small class="post"> - Themesvila</small>
-										</div>
-									</div>
-								</div>
-							</div>
 							
-							
-							<div class="testimonial">
-								<div class="testimonial-content">
-									<p class="description">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam risus felis, bibendum 
-										eu nibh et, finibus semper sem. Nam at tincidunt leo. Nam sit amet mauris et lorem 
-										varius lobortis eu a nisl. 
-									</p>
-									<div class="test-bottom text-center">
-										<div class="test-des-area">
-											<div class="pic">
-												<img src="{{url('/frontend/img/testimonial/3.jpg')}}" alt="">
-											</div>
-											<h3 class="testimonial-title">Michel</h3>
-											<small class="post"> - Themesvila</small>
-										</div>
-									</div>
-								</div>
-							</div> -->
 						</div>
 					</div>
 				</div>
@@ -666,9 +629,9 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							@foreach($all_category as $cat)
+							{{--@foreach($all_category as $cat)
 								<div class="item text-center" style="padding: 0 10px;"> <a href="{{route('frontend.subcategory.list',[$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt="" class="img-thumbnail" width="70" height="70"/></a> </div>
-							@endforeach
+							@endforeach--}}
 							
 						</div>
 					</div>
