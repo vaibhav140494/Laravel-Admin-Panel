@@ -101,7 +101,11 @@
 							@else
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
 							@endif
-							<a class="btn btn-default acc_btn btn_icn"><i class="fa fa-heart"></i></a>
+							@if(\Auth::user() && (in_array($product->id,$wished_prod)) )
+							<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$product->id}}" class="remove"><i class="fa fa-minus-circle"></i></a>
+							@else
+							<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$product->id}}"><i class="fa fa-shopping-bag"></i></a>
+							@endif
 							<!-- <a class="btn btn-default acc_btn btn_icn"><i class="fa fa-refresh"></i></a> -->
 						</div>
 						<div class="pd_share_area fix">

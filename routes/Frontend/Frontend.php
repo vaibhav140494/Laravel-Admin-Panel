@@ -24,6 +24,9 @@ Route::post('/register/{id}/update', 'RegisterController@update')->name('registe
 
 Route::get('/categories/search','CategoriesController@getAllCat')->name('category.list.ajax');
 Route::get('/subcategories/search/subcat','SubcategoriesController@getAll')->name('subcategory.list.ajax');
+Route::get('/wishlist/add','WishListController@add')->name('wishlist.add');
+Route::get('/wishlist/remove','WishListController@remove')->name('wishlist.remove');
+Route::get('/wishlist/list/{uid}','WishListController@list')->name('wishlist.list');
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

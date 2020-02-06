@@ -23,7 +23,7 @@ class CreateOffersTable extends Migration
             $table->integer('max_discount');
             $table->integer('min_offer_amount');
             $table->boolean('is_active');
-            $table->date('start_date');
+            $table->date('start_date')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->date('end_date');
             $table->integer('no_of_counts');
             $table->timestamps();

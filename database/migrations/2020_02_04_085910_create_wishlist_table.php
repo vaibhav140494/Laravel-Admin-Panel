@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSupportticketsTable extends Migration
+class CreateWishlistTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateSupportticketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('supporttickets', function (Blueprint $table) {
+        Schema::create('wishlist', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')->on('users')
                   ->onDelete('cascade');
-            $table->bigInteger('topic_id')->unsigned();      
-            $table->string('discription',255);
-            $table->string('admin_comment',255);
-            $table->enum('status', ['Generated', 'Processed','Removed','Closed']);       
+            $table->bigInteger('product_id')->unsigned();
+            $table->foreign('product_id')
+                  ->references('id')->on('products')
+                  ->onDelete('cascade');       
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateSupportticketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supporttickets');
+        Schema::dropIfExists('wishlist');
     }
 }

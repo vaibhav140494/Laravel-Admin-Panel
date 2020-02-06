@@ -10,7 +10,6 @@
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
 							<li><a href="#">home</a></li>
-							<li><a href="#">category</a></li>
 							<li><span>Wishlist</span></li>
 						</ul>					
 					</div>	
@@ -30,32 +29,62 @@
 								<th class="cpt_pn">product name</th>
 								<th class="stock">stock status</th>
 								<th class="cpt_p">price</th>
+								<th class="cpt_p">discounted price</th>
 								<th class="add-cart">add to cart</th>
 								<th class="cpt_r">remove</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							@foreach($wished_products as $product)
+							<tr class="disp" id="{{$product->id}}">
 								<td><span class="cart-number">1</span></td>
-								<td><a href="#" class="cp_img"><img src=" {{url('frontend/img/cart-prdct/1.jpg')}}" alt="" /></a></td>
-								<td><a href="#" class="cart-pro-title">This is Product Title</a></td>
+								<td><a href="#" class="cp_img"><img src=" {{url('storage/products/'.$product->image)}}" alt="" /></a></td>
+								<td><a href="#" class="cart-pro-title">{{$product->product_name}}</a></td>
 								<td><p class="stock in-stock">Out of stock</p></td>
-								<td><p class="cart-pro-price">$204.00</p></td>
+								<td><p class="cart-pro-price">{{$product->price}}</p></td>
+								<td><p class="cart-disc-price">{{$product->discouted_price}}</p></td>
 								<td><a href="#" class="btn border-btn">add to cart</a></td>
-								<td><a class="cp_remove"><i class="fa fa-trash"></i></a></td>
+								<td><a class="rmv" pId="{{$product->id}}"><i class="fa fa-trash"></i></a></td>
 							</tr>
-							<tr>
-								<td><span class="cart-number">2</span></td>
-								<td><a href="#" class="cp_img"><img src="{{url('frontend/img/cart-prdct/2.jpg')}}" alt="" /></a></td>
-								<td><a href="#" class="cart-pro-title">This is Product Title</a></td>
-								<td><p class="stock in-stock">in stock</p></td>
-								<td><p class="cart-pro-price">$89.00</p></td>
-								<td><a href="#" class="btn border-btn">add to cart</a></td>
-								<td><a class="cp_remove"><i class="fa fa-trash"></i></a></td>
+							@endforeach
+							<?php if(count($wished_products)>0) { $display = "none"; } else { $display = "block"; } ?>
+							<tr class="no-wishlist" style="display:{{$display}}">
+								<td colspan="8">No products in your Wishlist</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js" integrity="sha256-vHsV98JlYVo7h9eo1BQrqWgGQDt6prGrUbKAlHfP+0Y=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" integrity="sha256-sfG8c9ILUB8EXQ5muswfjZsKICbRIJUG/kBogvvV5sY=" crossorigin="anonymous"></script>
+	<script>
+	$(document).ready(function(){
+		$(document).on('click','.rmv',function(){
+					var uid=$(this).attr('pId');
+					var el = this;
+
+					bootbox.confirm("are you sure?", function(result){
+					if(result){	
+					$.ajax({
+						url:'{{route("frontend.wishlist.remove")}}',
+						type:'GET',
+						data:{id:uid},
+						success:function(response){
+							if(response){
+									
+								$('#'+uid).remove();
+								if(!$("tr").hasClass("disp"))
+								{
+									$('.no-wishlist').css("display", "block");									
+								}
+							}
+						}
+					});
+				  } 
+				});
+			});
+		});
+	</script>
+
 @include('frontend_user.footer')

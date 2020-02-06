@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Product\Product;
+use App\Models\Order\wishList;
 use App\Models\Product\productReviews;
 use DB;
 use Carbon\Carbon;
@@ -21,13 +22,34 @@ class ProductsController extends Controller
         $category=Category::find($cid);
         $prod=Product::where('subcategory_id',$subcategory->id)->get();
         // dd($prod);
-        return view('frontend_user.products_list',compact('prod','subcategory','category'));
+        if(\Auth::user())
+        {
+            $wished_prod = DB::table('wishlist')
+                      ->select('product_id')
+                      ->where('user_id','=',\Auth::user()->id) 
+                      ->get()
+                      ->pluck('product_id')
+                      ->toArray();
+                    //dd($wished_prod); 
+        }
+        return view('frontend_user.products_list',compact('prod','subcategory','category','wished_prod'));
     }
     public function detailProd($id,$subid,$cid)
     {
         $category=Category::find($cid);
         $subcategory=Subcategory::find($subid);
         $product=Product::find($id);
+
+        if(\Auth::user())
+        {
+            $wished_prod = DB::table('wishlist')
+                      ->select('product_id')
+                      ->where('user_id','=',\Auth::user()->id) 
+                      ->get()
+                      ->pluck('product_id')
+                      ->toArray();
+                    //dd($wished_prod); 
+        }
 
         $users_product_reviews=DB::table('users')
         ->join('productreviews','users.id','=','productreviews.user_id')
@@ -41,7 +63,7 @@ class ProductsController extends Controller
         ->orderBy('rating','desc')->get()->keyBy('subcategory_id');
         // dd($all_products);
         $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
-        return view('frontend_user.product-details',compact('product','users_product_reviews','avg','category','subcategory','all_products'));
+        return view('frontend_user.product-details',compact('product','users_product_reviews','avg','category','subcategory','all_products','wished_prod'));
     }
 }
 

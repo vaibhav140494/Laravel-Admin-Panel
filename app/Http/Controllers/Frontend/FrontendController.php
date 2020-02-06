@@ -8,6 +8,7 @@ use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Models\Category\Category;
 use App\Models\Order\Order;
 use App\Models\Order\orderDetails;
+use App\Models\Order\wishList;
 use App\Models\Product\Product;
 use App\Models\Product\productReviews;
 use App\Models\Subcategory\Subcategory;
@@ -42,8 +43,18 @@ class FrontendController extends Controller
         $category_featured=Category::findMany($catarr);
         $category=Category::all();
         $featured_prod=Product::findMany($catarr);
-        $product_review=productReviews::all();     
-
+        $product_review=productReviews::all();
+        if(\Auth::user())
+        {
+            $wished_prod = DB::table('wishlist')
+                      ->select('product_id')
+                      ->where('user_id','=',\Auth::user()->id) 
+                      ->get()
+                      ->pluck('product_id')
+                      ->toArray();
+                    //dd($wished_prod); 
+        }     
+        
         // $product_review_random=User::whereIn('id',function($query){
         //     $query->select('user_id')
         //     ->from(with(new productReviews)->getTable())
@@ -56,7 +67,7 @@ class FrontendController extends Controller
         // ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
         // dd($product_review_random);
         // productReviews::
-        return view('frontend_user.index', compact('category_featured','category','product','featured_prod','product_review','product_review_random'));
+        return view('frontend_user.index', compact('category_featured','category','product','featured_prod','product_review','product_review_random','wished_prod'));
     }
 
     /**

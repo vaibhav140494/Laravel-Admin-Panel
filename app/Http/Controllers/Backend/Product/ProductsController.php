@@ -75,15 +75,14 @@ class ProductsController extends Controller
     {
         //Input received from the request
         $input = $request->except(['_token']);
-        dd($input);
+
         if ($request->hasFile('image')){
             $imageName = time().'.'.$request->image->getClientOriginalExtension();
-            //dd($imageName);
-        $path = $request->image->move(public_path('storage/products'), $imageName);
+            $path = $request->image->move(public_path('storage/products'), $imageName);
             
         }
         
-          $input['image']=$imageName; 
+        $input['image']=$imageName; 
         //Create the model using repository create method
         $this->repository->create($input);
         //return with successfull message
@@ -154,14 +153,12 @@ class ProductsController extends Controller
     {
         //dd($request['id']);
         $pid=$request['id'];
-        $product_name=DB::table('products')
+        $product_name = DB::table('products')
                     ->select('product_name as pname')
                     ->where('id','=',$request['id'])
                     ->get();
-                   //dd($product_name);
-        
-                    //dd($variation_nameid);
-        $var=DB::table('variationmaster')
+                    
+        $var = DB::table('variationmaster')
                 ->join('variationvalues', 'variationmaster.id', '=', 'variationvalues.variation_id')
                 ->select('variationmaster.variation_name as VariationName','variationmaster.id as id',DB::raw("(GROUP_CONCAT(variationvalues.variation_value SEPARATOR ',')) as `Variationvalues`"))
                 ->where('variationmaster.product_id','=',$request['id'])
@@ -169,13 +166,13 @@ class ProductsController extends Controller
                 ->get();
                // dd($var);
                 
-                return view('backend.products.productvariation')->with([
-                    'data' => $var,
-                    'name' => $product_name,
-                    'productid'=>$pid
-                ]);
-        
-    }  
+        return view('backend.products.productvariation')->with([
+            'data' => $var,
+            'name' => $product_name,
+            'productid'=>$pid
+        ]);
+    }
+
     public function deleteVariation(Request  $request)
     {
         //dd($request['id']);
@@ -199,12 +196,12 @@ class ProductsController extends Controller
         $category_name=DB::table('categories') 
                             ->select('category_name')
                             ->where('id','=',$productdetails[0]->category_id)
-                            ->get();               
-            return view('backend.products.createVariation')->with([
-                'pname'=>$productdetails[0]->product_name,
-                'cname'=>$category_name[0]->category_name,
-                'sname'=>$subcategory_name[0]->subcategory_name
-            ]);
+                            ->get();
+        return view('backend.products.createVariation')->with([
+            'pname'=>$productdetails[0]->product_name,
+            'cname'=>$category_name[0]->category_name,
+            'sname'=>$subcategory_name[0]->subcategory_name
+        ]);
     }
     public function storeVariation(Request $request)
     {
@@ -228,15 +225,18 @@ class ProductsController extends Controller
                          ['variation_name','=',$input['variation_name']]
                      ])->get();
         $variation_values=$input['variation_value'] ;
+        $qry = '';
         foreach($variation_values as $value)
         {
-            DB::table('variationvalues')->insert([
-                'variation_value'=>$value,
-                'variation_id'=>$variation_id[0]->id,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
-        }  
+            $qry .= "($value, ".$variation_id[0]->id."),";
+        }
+
+        if($qry!='')
+        {
+            $qry = substr($qry, 0, -1);
+            $finalQry = "INSERT INTO `variationvalues` (`variation_value`, `variation_id`) VALUES ".$qry;
+            DB::unprepared($finalQry);
+        }
         return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
     }
     public function editVariation($vid,$pid)

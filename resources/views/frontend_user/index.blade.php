@@ -115,7 +115,7 @@
 			</div>		
 		</section>
 		<!--  Promo ITEM END -->	
-		
+		 
 
 		<!-- Start product Area -->
 		<section id="product_area" class="section_padding">
@@ -152,7 +152,11 @@
 										</a>
 										<ul class="social">
 											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
+											@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+											<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove"><i class="fa fa-minus-circle"></i></a></li>
+											@else
+											<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+											@endif
 											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 										</ul>
 										<!-- <span class="product-new-label">Sale</span> -->

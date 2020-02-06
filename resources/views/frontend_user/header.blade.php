@@ -243,6 +243,20 @@ x										</ul>
 										</div>
 									</li> -->
 									@if(\Auth::user())
+									
+									<li>
+										<div class="wishlist_manu_area">
+											<div class="wishlist_icon">
+												<a href="{{route('frontend.wishlist.list',[\Auth::user()->id])}}"><i class="fa fa-heart" aria-hidden="true"></i></a>
+												<span class="wishlist_number">2</span>
+											</div>
+
+											<!-- Mini Wishlist Wrapper -->
+											<!-- <div class="mini-wishlist-wrapper">
+												
+											</div>  -->
+										</div>
+									</li>
 									<li>
 										<div class="cart_menu_area">
 											<div class="cart_icon">

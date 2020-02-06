@@ -106,8 +106,8 @@
                 buttons: {
                     buttons: [
                         { extend: 'copy', className: 'copyButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0, 1 ]  }},
-                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [ 0, 1 ]  }},
+                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0,1,2,3,4,5,6,7,8,9, 10 ]  }},
+                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [ 0,1,2,3,4,5,6,7,8,9, 10 ]  }},
                         { extend: 'pdf', className: 'pdfButton',  exportOptions: {columns: [ 0, 1 ]  }},
                         { extend: 'print', className: 'printButton',  exportOptions: {columns: [ 0, 1 ]  }}
                     ]

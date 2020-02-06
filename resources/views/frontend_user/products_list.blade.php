@@ -33,18 +33,22 @@
 				<div class="row text-center">
 					<?php $c=0; ?>
 					@if($prod->count()>0)
-					@foreach($prod as $fprod)		
+					@foreach($prod as $prod)		
 						@if($c++ < 8)
 							<div class="col-lg-3 col-md-4 col-sm-6">
 								<div class="product-grid">
 									<div class="product-image">
-										<a href="{{route('frontend.product.details',[$fprod->id,$subcategory->id,$category->id])}}">
-											<img class="pic-1" src="{{url('storage/products/'.$fprod->image)}}" alt="product image">
-											<img class="pic-2" src="{{url('storage/products/'.$fprod->image)}}" alt="product image">
+										<a href="{{route('frontend.product.details',[$prod->id,$subcategory->id,$category->id])}}">
+											<img class="pic-1" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
+											<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
 										</a>
 										<ul class="social">
 											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
+											@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+											<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove"><i class="fa fa-minus-circle"></i></a></li>
+											@else
+											<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+											@endif
 											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 										</ul>
 										<!-- <span class="product-new-label">-20%</span>				 -->
@@ -57,13 +61,13 @@
 										<li class="fa fa-star"></li>
 									</ul>
 									<div class="product-content">
-										<h3 class="title"><a href="#">{{$fprod->product_name}}</a></h3>
+										<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
 										<div class="price">
-											@if($fprod->discouted_price != $fprod->price)
-												{{$fprod->discouted_price}}
-												<span>{{$fprod->price}}</span>
+											@if($prod->discouted_price != $prod->price)
+												{{$prod->discouted_price}}
+												<span>{{$prod->price}}</span>
 											@else
-												{{$fprod->price}}
+												{{$prod->price}}
 											@endif
 										
 											

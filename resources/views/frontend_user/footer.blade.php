@@ -96,6 +96,37 @@
 					// alert("hello");
 					$('.user-profile').css('visibility','hidden');
 				});	
+				$(document).on('click','.remove',function(){
+					var uid = $(this).attr('pid');
+					var el 	= this;
+
+					$.ajax({
+						url:'{{route("frontend.wishlist.remove")}}',
+						type:'GET',
+						data:{id:uid},
+						success:function(response){
+							if(response){
+								$(el).replaceWith(response);
+							}
+							
+						}
+					});
+				});
+				$(document).on('click','.add',function(){
+					var uid=$(this).attr('pid');
+					var el = this;
+
+					$.ajax({
+						url:'{{route("frontend.wishlist.add")}}',
+						type:'GET',
+						data:{id:uid},
+						success:function(response){
+							if(response){
+								$(el).replaceWith(response);
+							}
+						}
+					});
+				});
 				// $('#prod_qty').change(function(){
 				// 	var value=$(this).val();
 				// 	<?php //if($product->count() > 0){
@@ -130,6 +161,4 @@
 			});
 		</script>
 	</body>
-
-<!-- Mirrored from getmasum.com/html-preview/rapidshop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Jan 2020 16:06:13 GMT -->
 </html>
