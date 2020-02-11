@@ -76,8 +76,10 @@
 								$('#'+uid).remove();
 								if(!$("tr").hasClass("disp"))
 								{
-									$('.no-wishlist').css("display", "block");									
+									$('.no-wishlist').css("display", "block");		
+									$('.no-wish-bg').css("display", "block");							
 								}
+								
 							}
 						}
 					});

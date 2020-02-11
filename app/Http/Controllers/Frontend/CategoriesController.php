@@ -17,7 +17,7 @@ class CategoriesController extends Controller
         $all_category=$final_data[0];
         $all_subcategory=$final_data[1];
         $all_cart=$final_data[2];
-        
+        $wishlist=$final_data[3];
 
       // dd($all_category);
       $category=Category::paginate(6);
@@ -25,7 +25,7 @@ class CategoriesController extends Controller
         $subcategory=Subcategory::where('category_id',$category[$i]->id)->get();
         $sub[$category[$i]->id] = $subcategory->count();
       }
-      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart'));
+      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart','wishlist'));
     }
     public function getAllCat(Request $request)
     {

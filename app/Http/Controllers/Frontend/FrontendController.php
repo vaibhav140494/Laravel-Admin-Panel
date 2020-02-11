@@ -28,6 +28,7 @@ class FrontendController extends Controller
         $all_category=$final_data[0];
         $all_subcategory=$final_data[1];
         $all_cart=$final_data[2];
+        $wishlist=$final_data[3];
         // dd($all_cart);
 
          $product=Product::all();
@@ -51,6 +52,7 @@ class FrontendController extends Controller
         }
         $category_featured=Category::findMany($catarr);
         $category=Category::all();
+        //dd($category);
         $featured_prod=Product::findMany($catarr);
         $product_review=productReviews::all();
         if(\Auth::user())
@@ -100,7 +102,7 @@ class FrontendController extends Controller
         ->select('users.first_name as fname' ,'users.last_name as lname','productreviews.*')
         ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
 
-        return view('frontend_user.index', compact('category_featured','all_category','product','featured_prod','product_review','product_review_random','all_subcategory','all_cart','wished_prod'));
+        return view('frontend_user.index', compact('category_featured','all_category','category','product','featured_prod','product_review','product_review_random','all_subcategory','all_cart','wished_prod','wishlist'));
     }
 
     /**

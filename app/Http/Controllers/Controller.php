@@ -18,6 +18,7 @@ class Controller extends BaseController
     public $subcat;
     public $cart;
     public $uid;
+    public $wishlist;
     public function __construct()
     {
          $this->cat=Category::where('is_active',1)->get();
@@ -29,7 +30,9 @@ class Controller extends BaseController
         // $this->uid= $this->middleware('auth')->Auth::user() ;
 
         $this->middleware(function ($request, $next) {
+            if(\Auth::user()!= null){    
             $this->uid= \Auth::user()->id;
+            }
     
             return $next($request);
         });
@@ -38,10 +41,15 @@ class Controller extends BaseController
         $this->cart= DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
         ->select('cart.*','products.product_name','products.image')
         ->where('user_id',$this->uid)->get();
+        $this->wishlist= DB::table('wishlist')->leftjoin('products','wishlist.product_id','=','products.id')
+        ->select('wishlist.*','products.product_name','products.image','products.price')
+        ->where('user_id',$this->uid)->get();
+        
         
         $this->final_data[0]=$this->cat;
         $this->final_data[1]=$this->subcat;
         $this->final_data[2]=$this->cart;
+        $this->final_data[3]=$this->wishlist;
         return $this->final_data;
     }
 

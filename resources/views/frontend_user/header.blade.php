@@ -251,17 +251,35 @@
 									@if(\Auth::user())
 									
 									<li>
-										<div class="wishlist_manu_area">
+										@if(isset($wishlist))
+										<div class="wishlist_manu_area" style="align:center">
 											<div class="wishlist_icon">
 												<a href="{{route('frontend.wishlist.list',[\Auth::user()->id])}}"><i class="fa fa-heart" aria-hidden="true"></i></a>
-												<span class="wishlist_number">2</span>
+												<span class="wishlist_number">{{$wishlist->count()}}</span>
 											</div>
 
 											<!-- Mini Wishlist Wrapper -->
-											<!-- <div class="mini-wishlist-wrapper">
-												
-											</div>  -->
-										</div>
+											
+											 <div class="mini-wishlist-wrapper">
+											 <div class="mc-pro-list fix">
+														@foreach($wishlist as $wproduct)
+															<div class="nowish mc-sin-pro fix" id="{{$wproduct->product_id}}">
+																<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$wproduct->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
+																<div class="mc-pro-details fix">
+																	<a href="#">{{$wproduct->product_name}}</a>
+																	<p>{{$wproduct->price}}</p>
+																	<a class="pro-del remove-wish" href="javascript:void(0)" pid="{{$wproduct->product_id}}"><i class="fa fa-times-circle"></i></a>
+																</div>
+															</div>
+														@endforeach
+														<?php if(count($wishlist)>0) { $display = "none"; } else { $display = "block"; } ?>
+														<div class="no-wish-bg" style="display:{{$display}}">
+															<h5>NO PRODUCTS</h5>
+														</div>
+											 </div>
+											</div> 
+											</div>
+										@endif
 									</li>
 									<li>
 										@if(isset($all_cart))
@@ -310,3 +328,4 @@
 			</div>
 		</header>
 		<!--  End Header  -->
+		

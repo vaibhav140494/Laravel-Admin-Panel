@@ -157,13 +157,13 @@
 											<ul class="social">
 												<li><a href="{{url('storage/products/'.$prod->image)}}" class="venobox" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
 												@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
-												<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove"><i class="fa fa-minus-circle"></i></a></li>
+												<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
 												@else
-												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
 												@endif
 												<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 											</ul>
-											 <span class="product-new-label">Sale</span> -->
+											 <span class="product-new-label">Sale</span> 
 										</div>
 										
 										<ul class="rating">
@@ -340,9 +340,9 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							{{--@foreach($all_category as $cat)
+							@foreach($all_category as $cat)
 								<div class="item text-center" style="padding: 0 10px;"> <a href="{{route('frontend.subcategory.list',[$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt="" class="img-thumbnail" width="70" height="70"/></a> </div>
-							@endforeach--}}
+							@endforeach
 							
 						</div>
 					</div>

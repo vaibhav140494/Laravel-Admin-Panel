@@ -111,9 +111,9 @@
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
 							@endif
 							@if(\Auth::user() && (in_array($product->id,$wished_prod)) )
-							<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$product->id}}" class="remove"><i class="fa fa-minus-circle"></i></a>
+							<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$product->id}}" class="remove-wishlist m-t-8 btn"><i class="fa fa-minus-circle"></i></a>
 							@else
-							<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$product->id}}"><i class="fa fa-shopping-bag"></i></a>
+							<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist m-t-8 btn" pid="{{$product->id}}"><i class="fa fa-shopping-bag"></i></a>
 							@endif
 							<!-- <a class="btn btn-default acc_btn btn_icn"><i class="fa fa-refresh"></i></a> -->
 						</div>
@@ -247,7 +247,7 @@
 										<h3 class="title"><a href="#">{{$prd->product_name}}</a></h3>
 										<div class="price">{{$prd->price}}
 											@if($prd->discouted_price !=$prd->price)
-												<span>{{$prd->disouted_price}}</span>
+												<span>{{$prd->discouted_price}}</span>
 											@endif
 										</div>
 										<a class="add-to-cart" href="#">+ Add To Cart</a>

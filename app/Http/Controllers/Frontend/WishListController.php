@@ -22,17 +22,26 @@ class WishListController extends Controller{
                 'user_id'=>\Auth::user()->id,
                 'product_id'=>$id
             ]);
+            $final_data= parent::__construct();
+            $wishlist=$final_data[3];
+            
+            $response['wishlist']=$wishlist;
             
             if($var){
-                return '<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'.$id.'" class="remove"><i class="fa fa-minus-circle"></i></a>';
+                $str='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'.$id.'" class="remove-wishlist m-t-8 btn " id="'.$id.'"><i class="fa fa-minus-circle"></i></a>';
+                $response['tag']=$str;
+                echo json_encode($response);
             }
             else{
-                return '<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="'.$id.'"><i class="fa fa-shopping-bag"></i></a>';
+                $str='<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist m-t-8 btn" pid="'.$id.'"><i class="fa fa-shopping-bag"></i></a>';
+                $response['tag']=$str;
+                echo json_encode($response);
             } 
             //return redirect()->route('frontend.index');
         }
         else{
-            return 0;
+              $response['msg']="fail";
+              echo json_encode($response);
         }
     }
 
@@ -45,17 +54,27 @@ class WishListController extends Controller{
             ['product_id','=',$id]
             ])->delete();
             //dd($var);
+            $final_data= parent::__construct();
+            $wishlist=$final_data[3];
+            $response['wishlist']=$wishlist;
             if($var == 1){
-                return '<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="'.$id.'"><i class="fa fa-shopping-bag"></i></a>';
+                $str='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'.$id.'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+                $response['tag']=$str;
+                echo json_encode($response);
             }
             else{
-                return '<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'.$id.'" class="remove"><i class="fa fa-minus-circle"></i></a>';
+                $str='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'.$id.'" class="remove-wishlist m-t-8 btn"><i class="fa fa-minus-circle"></i></a>';
+                $response['tag']=$str;
+                echo json_encode($response);
             }       
         //return redirect()->route('frontend.index');    
     }
 
     public function list($id)
     {
+        $final_data= parent::__construct();
+        $all_cart=$final_data[2];
+        $wishlist=$final_data[3];
         $wished_products = DB::table('products')
                          ->join('wishlist','products.id','=','wishlist.product_id')
                          ->select('products.id','products.image','products.product_name','products.price','products.discouted_price')
@@ -64,7 +83,9 @@ class WishListController extends Controller{
         //dd($wished_products);                 
 
         return view('frontend_user.wishlist')->with([
-            'wished_products'=>$wished_products
+            'wished_products'=>$wished_products,
+            'wishlist'=>$wishlist,
+            'all_cart'=>$all_cart
         ]);
     }
 

@@ -18,20 +18,18 @@ class ProductsController extends Controller
     public $all_category; 
     public $all_subcategory;
     public $all_cart;
-    public function __construct()
-    {
-        $final_data= parent::__construct();
-        $this->all_category=$final_data[0];
-        $this->all_subcategory=$final_data[1];
-        $this->all_cart=$final_data[2];
-        // dd($final_data[2]);
-    }
+    public $wishlist;
+    
 
     public function getProd($id,$cid)
     {
-        $all_category=$this->all_category;
-        $all_subcategory=$this->all_subcategory;
-        $all_cart=$this->all_cart;
+        
+        $final_data= parent::__construct();
+        $all_category=$final_data[0];
+        $all_subcategory=$final_data[1];
+        $all_cart=$final_data[2];
+        $wishlist=$final_data[3];
+        
         // dd($final_data[2]);
         $subcategory=Subcategory::find($id);
         $category=Category::find($cid);
@@ -47,15 +45,18 @@ class ProductsController extends Controller
                       ->toArray();
                     //dd($wished_prod); 
         }
-        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod'));
+        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','wishlist'));
     }
 
     public function detailProd($id,$subid,$cid)
     {
         
-        $all_category=$this->all_category;
-        $all_subcategory=$this->all_subcategory;
-        $all_cart=$this->all_cart;
+        $final_data= parent::__construct();
+        $all_category=$final_data[0];
+        $all_subcategory=$final_data[1];
+        $all_cart=$final_data[2];
+        $wishlist=$final_data[3];
+        
         $category=Category::find($cid);
         $subcategory=Subcategory::find($subid);
        
@@ -94,7 +95,7 @@ class ProductsController extends Controller
         // dd($all_products);
         $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
         
-        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','all_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod'));
+        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','all_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','wishlist'));
     }
 
     public function storeReview(Request $req)

@@ -3200,8 +3200,8 @@ input:focus, textarea:focus {
 .pd_btn {
 	margin-bottom: 38px;
 }
-.pd_btn .add,
-.pd_btn .remove
+.pd_btn .add-wishlist,
+.pd_btn .remove-wishlist
  {
 	background: #fff;
 	color: #ff546e!important;
@@ -3210,8 +3210,8 @@ input:focus, textarea:focus {
 	margin-left: 10px;
 	transition: .5s;
 }
-.pd_btn .add:hover,
-.pd_btn .remove:hover {
+.pd_btn .add-wishlist:hover,
+.pd_btn .remove-wishlist:hover {
 	background: #ff546e;
 	color: #fff!important;
 }
@@ -3449,3 +3449,6 @@ input:focus, textarea:focus {
 	color:#FFCC36;
   }
   
+.m-t-8 {
+	margin-top: -8px;
+}
