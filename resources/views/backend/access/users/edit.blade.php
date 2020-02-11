@@ -145,6 +145,45 @@
                         </div><!--col-lg-3-->
                     </div><!--form control-->
 
+                    {{-- Multiple Address Field--}}
+                   <div class="form-group"> 
+                        <button class="btn btn-primary pull-right" style="margin-right:60px;">Add Address</button>
+                    </div>
+                    @if($multiple_address)
+                    <?php $checked=false; ?>
+                    <div class="address-container">
+                        @foreach ($multiple_address as $mulAddr)
+                            <div class="form-group">
+                                {{ Form::label('Multiple_address',"Multiple Address", ['class' => 'col-lg-2 control-label required']) }}
+                                <div class="address_display">
+                                    <div class=" offset-md-3 col-md-1">
+                                   @if($user->default_address == $mulAddr->id)
+                                   <?php //$checked=true; ?>
+                                    <input type="radio" name="address" value="{{$mulAddr->id}}" id="{{$mulAddr->id}}" checked> 
+                                   @else
+                                   <?php $checked=false; ?>
+                                   <input type="radio" name="address" value="{{$mulAddr->id}}" id="{{$mulAddr->id}}" checked> 
+                                   @endif
+                                       
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>{{$user->first_name}}</span>
+                                        <span>{{$user->last_name}}</span>
+                                        <p style="margin:0 auto;">{{$mulAddr->address}}</p>
+                                        <p style="margin:0 auto;">{{$mulAddr->pincode}}</p> 
+                                        <p style="margin:0 auto;">{{$mulAddr->city}}</p>
+                                        <p style="margin:0 auto;">{{$mulAddr->state}}</p> 
+                                        <p style="margin:0 auto;">{{$mulAddr->country}}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                    <span><a href="{{route('admin.access.user.address.edit',[$mulAddr->id])}}" style="color:#000;" id="address_edit" name="{{$mulAddr->id}}"><i class="fa fa-pencil" style="font-size:18px;margin-right:10px;" ></i></a></span>
+                                    <span><a href="javascript:void(0)" id="address_delete" name="{{$mulAddr->id}}"  uid="{{$user->id}}" style="color:#000;"><i class="fa fa-trash" style="font-size:18px;margin-right:10px;"></i></a></span></div>
+                                </div>
+                            </div>
+                        @endforeach  
+                        </div>
+                    @endif
                 @endif
                 <div class="edit-form-btn">
                     {{ link_to_route('admin.access.user.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-md']) }}
@@ -173,6 +212,52 @@
         window.onload = function () {
             Backend.Users.windowloadhandler();
         };
-
+        $(document).ready(function(){
+            $(document).on('click','#address_delete',function(){
+                var id=$(this).attr('name');
+                var uid=$(this).attr('uid');
+                var div='';
+                // alert(radio);
+                 radio_val = $("input[name='address']:checked"). val();
+                 if(radio_val == id)
+                 {
+                    bootbox.alert("please select default addres");
+                    return false;
+                }
+                console.log($('.address-container').html());
+                // var url='{{route("admin.access.user.address.delete",[$id])}}';
+                // alert(url);
+                
+                bootbox.confirm("Do you really want to delete record?", function(result) {
+                    if(result){
+                        $.ajax({
+                            url:'{{route("admin.access.user.address.delete")}}',
+                            type:'post',
+                            dataType:'json',
+                            data:{'id':id,'uid':uid},
+                            success:function(data)
+                            {
+                                if(data['message']==true)
+                                {
+                                    user=data['user'];
+                                    address=data['data'];
+                                    bootbox.alert(' addres deleted successfully');
+                                    $.each(address,function(k,value){
+                                        console.log(value.id);
+                                        div+='<div class="form-group">{{ Form::label("Multiple_address","Multiple Address", ["class" => "col-lg-2 control-label required"]) }}<div class="address_display"><div class=" offset-md-3 col-md-1"><input type="radio" name="address" value="'+value.id+'" id="'+value.id+'"> </div><div class="col-md-6"><span>'+user.first_name+'</span> <span>'+user.last_name+'</span><p style="margin:0 auto;">'+value.address+'</p><p style="margin:0 auto;">'+value.pincode+'</p><p style="margin:0 auto;">'+value.city+'</p><p style="margin:0 auto;">'+value.state+'</p><p style="margin:0 auto;">'+value.country+'</p></div><div class="col-md-2"><span><a href="" style="color:#000;" id="address_edit" name="'+value.id+'"><i class="fa fa-pencil" style="font-size:18px;margin-right:10px;" ></i></a></span><span><a href="javascript:void(0)" id="address_delete" name="'+value.id+'" style="color:#000;"><i class="fa fa-trash" style="font-size:18px;margin-right:10px;"></i></a></span></div></div></div>';
+                                    });
+                                    console.log(div);
+                                    $('.address-container').html(div);
+                                }
+                                else
+                                {
+                                    bootbox.alert(' addres is not deleted deleted ');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        });
     </script>
 @endsection

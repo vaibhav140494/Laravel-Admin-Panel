@@ -21,7 +21,7 @@ Route::post('/register/store', 'RegisterController@store')->name('register.store
 Route::get('/register/{id}/edit', 'RegisterController@edit')->name('register.edit');
 Route::post('/register/{id}/update', 'RegisterController@update')->name('register.update');
 
-
+Route::group(['middleware' => 'auth'], function () {
 ///Category controller routes
 Route::get('categories','CategoriesController@index')->name('category.list');
 Route::get('/categories/search','CategoriesController@getAllCat')->name('category.list.ajax');
@@ -41,6 +41,8 @@ Route::get('product/details/reviews/store','ProductsController@storeReview')->na
 Route::get('cart/add','CartController@add')->name('cart.add');
 Route::get('cart/show','CartController@show')->name('cart.show');
 Route::get('cart/remove','CartController@remove')->name('cart.remove');
+
+});
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

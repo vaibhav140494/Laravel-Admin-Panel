@@ -9,18 +9,22 @@ use App\Models\Subcategory\Subcategory;
 
 class SubcategoriesController extends Controller
 {
+    public function __construct()
+  {      
+      parent::__construct();
+  }
     public function getSub($id)
     {
-        // dd("hello");
-        $final_data= parent::__construct();
-        $all_category=$final_data[0];
-        $all_subcategory=$final_data[1];
-        $all_cart=$final_data[2];
+        $all_category=$this->final_data[0];
+      $all_subcategory=$this->final_data[1];
+      $all_cart=$this->final_data[2];
+      $category_featured=$this->final_data[3];
+        $catarr=$this->catarr;
 
         $categories=Category::find($id);
         $subcategory=Subcategory::where('category_id',$id)->get();
         // dd($category->category_name);
-        return view('frontend_user.subcategory-list',compact('categories','subcategory','all_category','all_subcategory','all_cart'));
+        return view('frontend_user.subcategory-list',compact('categories','subcategory','all_category','all_subcategory','all_cart','category_featured'));
     }
     public function getAll(Request $request)
     {

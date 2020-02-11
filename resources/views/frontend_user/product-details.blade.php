@@ -1,6 +1,5 @@
-@include('frontend_user.header')
-		
 
+@include('frontend_user.header')
 	<!-- Page item Area -->
 	<div id="page_item_area">
 		<div class="container">
@@ -106,10 +105,11 @@
 						<!-- Product Action -->
 						<div class="pd_btn fix">
 							@if($product ->quantity > 0)
-							<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn">add to cart</a>
+							<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn-product">add to cart</a>
 							@else
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
 							@endif
+
 							@if(\Auth::user() && (in_array($product->id,$wished_prod)) )
 							<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$product->id}}" class="remove"><i class="fa fa-minus-circle"></i></a>
 							@else
@@ -276,41 +276,92 @@ $(document).ready(function(){
 		text: "share with: ",
 		url: "{{route('frontend.product.details',[$product ->id,$subcategory->id,$category->id])}}"
   	});
-	//   $('#cart-btn').click(function(){
-	// 	var value=$('#prod_qty').val();
-	// 	var id=$(this).attr('name');
+	  $('#cart-btn-product').click(function(){
+		var value=$('#prod_qty').val();
+		var id=$(this).attr('name');
+		// console.log(id);
+		if(value==0)
+		{
+			alert("please select Quantity");
+			return false;
+		}	
+		// alert(id);
+		$.ajax({
+						url:'{{route("frontend.cart.add")}}',
+						method:'get',
+						dataType:'json',
+						data:{'value':value,'id':id},
+						success:function(response)
+						{
+							if(response['login']==false)
+							{
+								var route="{{route('frontend.user.login')}}";
+								window.location.replace(route);
+							}
+							// console.log("hello");	
+							// if(response['message']=='replace')
+							// {
+							// 	//console.log(response['data_replace']);
+							// 	// console.log($(this).parent().html());
+							// 	// $(this).html(response['data_replace']);
+							// 	//   console.log($(this).html());
+							// 	// $(this).attr('data-tip','view-cart');
+							// 	// console.log("hello");
+							// 	  return true;
+								
+							// }
+							if(response['message']=="replace")
+							{
+							}
+							if((response['message']=="success") || (response['message']=="replace"))
+							{
+								// alert("hello");
+								$("#success-alert-add-cart").fadeTo(1000, 500).slideUp(500, function() {
+      							$("#success-alert-add-cart").slideUp(500);
+								});
+								// $('#'+pid).html(response['data_replace']);
+								// console.log($('#'+pid).html());
+								// console.log('#'+pid);
 
-	// 	if(value==0)
-	// 	{
-	// 		alert("please select Quantity");
-	// 		return false;
-	// 	}	
-	// 	// alert(id);
-	// 	$.ajax({
-	// 		url:'{{route("frontend.cart.add")}}',
-	// 		method:'get',
-	// 		dataType:'json',
-	// 		data:{'value':value,'id':id},
-	// 		success:function(response)
-	// 		{
-	// 			if(response['login']==false)
-	// 			{
-	// 				var route="{{route('frontend.user.login')}}";
-	// 				window.location.replace(route);
-	// 			}
-	// 			if(response['message']=="success")
-	// 			{
-	// 				alert("product added to cart successfully");
-	// 				return false;
-	// 			}
-	// 			if(response['fail']=="fail")
-	// 			{
-	// 				alert("can not added to cart");
-	// 				return false;
-	// 			}
-	// 		}
-	// 	});
-	// });	
+								$('#cart-count').text(response['cart'].length);
+								var cart=response['cart'];
+								var div='';
+								var total=0;
+								
+								$.each(cart,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
+									// console.log(route);
+									var prodname= value.product_name;
+									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+
+									 total+=value.quantity * value.gross_amount;
+								});
+								$('.mc-pro-list').html(div);
+								$('#cart-subtotal').text(total);
+								if(response['cart'].length==0)
+								{
+									$('.mc-subtotal').hide();
+									$('.mc-button').hide();
+									$('.mc-pro-list').text('No products in your cart!!!');
+								}
+								else
+								{
+									$('.mc-subtotal').show();
+									$('.mc-button').show();
+									// console.log("hello");
+								}
+								
+
+							}
+							if(response['fail']=="fail")
+							{
+								alert("can not added to cart");
+								return false;
+							}
+						}
+					});
+	});	
   
 	$('#prod_qty').change(function(){
 		// alert("hello");

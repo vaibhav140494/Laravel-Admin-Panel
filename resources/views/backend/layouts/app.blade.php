@@ -84,6 +84,7 @@
         @yield('before-scripts')
         {{ Html::script(mix('js/backend.js')) }}
         {{ Html::script(mix('js/backend-custom.js')) }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
         @yield('after-scripts')
     </body>
 </html>

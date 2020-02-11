@@ -43,7 +43,7 @@
 										</thead>
 										<tbody>
 											@foreach($cart_product as $cp)
-												<tr>
+												<tr id="{{$cp->id}}">
 													<td><span class="cp_no">{{$cp->id}}</span></td>
 													<td><a href="{{url('storage/products/'.$cp->image)}}"  class="cp_img venobox"><img src=" {{url('storage/products/'.$cp->image)}}" alt="" /></a></td>
 													<td><a href="javascript:void(0)"  class="cp_title">{{$cp->product_name}}</a></td>
@@ -54,7 +54,7 @@
 														</div>
 													</td>
 													<td><p class="cp_price">{{$cp->price}}</p></td>
-													<td><p class="cpp_total">{{$cp->total_amount}}</p></td>
+													<td><p class="cpp_total" id="{{$cp->product_id}}">{{$cp->total_amount}}</p></td>
 													<?php $total +=$cp->total_amount; ?>
 													<td><a class="btn btn-default cp_remove" pid="{{$cp->id}}"><i class="fa fa-trash"></i></a></td>
 												</tr>
@@ -113,6 +113,7 @@
 		$('.cart_show_quantity').change(function(){
 			var value=$(this).val();
 			var id=$(this).attr('prodid');
+			// alert(id);
 			// return false;
 			if(value==0)
 			{
@@ -131,44 +132,19 @@
 						var route="{{route('frontend.user.login')}}";
 						window.location.replace(route);
 					}
-					if(response['message']=="success")
+					if(response['message']=="replace")
 					{
-						alert("product added to cart successfully");
-						location.reload(1)
-						return false;
+						var total=response['cart'][0].total_amount;
+						
+						$('#'+id).html(total);
 					}
 					if(response['fail']=="fail")
 					{
-						alert("can not added to cart");
-						return false;
-					}
-				}
-			});
-		});
-		$(document).on('click','.cp_remove',function(){
-			var id=$(this).attr('pid');
 
-			$.ajax({
-				url:'{{route("frontend.cart.remove")}}',
-				method:'get',
-				dataType:'json',
-				data:{'pid':id},
-				success:function(response)
-				{
-					if(response['message']=="success")
-					{
-						alert("product deleted to cart successfully");
-						location.reload(true);
-						return false;
-					}
-					if(response['message']=="fail")
-					{
-						alert("can not deleted from cart");
-						return false;
-					}
+					}return false;
 				}
 			});
-	
 		});
+		
 	});
 </script>

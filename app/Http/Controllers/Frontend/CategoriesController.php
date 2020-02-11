@@ -11,21 +11,26 @@ use App\Models\Product\Product;
 
 class CategoriesController extends Controller
 {
+  public function __construct()
+  {      
+      parent::__construct();
+  }
     public function index()
     {
-      $final_data= parent::__construct();
-        $all_category=$final_data[0];
-        $all_subcategory=$final_data[1];
-        $all_cart=$final_data[2];
+      $all_category=$this->final_data[0];
+      $all_subcategory=$this->final_data[1];
+      $all_cart=$this->final_data[2];
+      $category_featured=$this->final_data[3];
+        $catarr=$this->catarr;
         
+        // dd($all_cart);
 
-      // dd($all_category);
       $category=Category::paginate(6);
       for($i=0;$i<$category->count();$i++){
         $subcategory=Subcategory::where('category_id',$category[$i]->id)->get();
         $sub[$category[$i]->id] = $subcategory->count();
       }
-      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart'));
+      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart','category_featured'));
     }
     public function getAllCat(Request $request)
     {

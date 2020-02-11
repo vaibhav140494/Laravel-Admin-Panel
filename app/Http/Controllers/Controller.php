@@ -10,7 +10,8 @@ use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Order\cart;
 use DB;
-class Controller extends BaseController
+
+abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public $final_data=array();
@@ -18,31 +19,50 @@ class Controller extends BaseController
     public $subcat;
     public $cart;
     public $uid;
+    public $count;
+    public $catarr = Array();
     public function __construct()
     {
-         $this->cat=Category::where('is_active',1)->get();
-        //  dd($cat);
+        $this->cat=Category::where('is_active',1)->get();
         for($i=0;$i<$this->cat->count();$i++)
         {
             $this->subcat[$this->cat[$i]->id]=Subcategory::where('category_id',$this->cat[$i]->id)->where('is_active',1)->get();
         }
-        // $this->uid= $this->middleware('auth')->Auth::user() ;
 
         $this->middleware(function ($request, $next) {
-            $this->uid= \Auth::user()->id;
-    
+            if(\Auth::user()!=null){
+                $this->uid= \Auth::user()->id;
+                $this->cart= DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
+                ->select('cart.*','products.product_name','products.image')
+                ->where('user_id',$this->uid)->get();
+            }
+                //for fetching featured category
+                
+                $this->count = DB::table('products')->selectRaw('products.category_id, count(products.id) as total')
+                ->join('order_details','products.id','=','order_details.product_id')
+                ->groupBy('order_details.product_id')
+                ->orderBy('total','desc')->get();
+                $max = 0;
+                for($i=0;$i<$this->count->count();$i++)
+                {
+                    $this->catarr[$i]=$this->count[$i]->category_id;
+                    if($max<$this->count[$i]->total)
+                    {
+                        $max=$this->count[$i]->total;
+                        $catid=$this->count[$i]->category_id;   
+                    }   
+                }
+                $category_featured = Category::findMany($this->catarr);
+
+                // dd($this->catarr);
+                $this->final_data[0]=$this->cat;
+                $this->final_data[1]=$this->subcat;
+                $this->final_data[2]=$this->cart;
+                $this->final_data[3]=$category_featured;
+                // $this->this->catarr=$this->catarr;
+                // dd($this->cart);
             return $next($request);
         });
-
-        // $this->uid=\Auth::user()->id;
-        $this->cart= DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
-        ->select('cart.*','products.product_name','products.image')
-        ->where('user_id',$this->uid)->get();
-        
-        $this->final_data[0]=$this->cat;
-        $this->final_data[1]=$this->subcat;
-        $this->final_data[2]=$this->cart;
-        return $this->final_data;
     }
 
 
