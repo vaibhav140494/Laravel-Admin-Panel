@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Order\cart;
+use App\Models\Product\Product;
 use DB;
 
 abstract class Controller extends BaseController
@@ -53,12 +54,13 @@ abstract class Controller extends BaseController
                     }   
                 }
                 $category_featured = Category::findMany($this->catarr);
-
-                // dd($this->catarr);
+                $all_products=Product::all();
+                // dd($all_products);
                 $this->final_data[0]=$this->cat;
                 $this->final_data[1]=$this->subcat;
                 $this->final_data[2]=$this->cart;
                 $this->final_data[3]=$category_featured;
+                $this->final_data[5]=$all_products;
                 // $this->this->catarr=$this->catarr;
                 // dd($this->cart);
             return $next($request);

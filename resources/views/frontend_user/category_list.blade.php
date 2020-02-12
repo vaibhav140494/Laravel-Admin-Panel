@@ -45,7 +45,7 @@
 									<div class="col-lg-4 col-md-6 col-sm-6">
 										<div class="single_blog" >
 											<div class="single_blog_img">
-												<a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}"><img src="{{url('frontend/img/blog/1.jpg')}}" alt=""></a>
+												<a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt=""></a>
 											</div>						
 											<div class="blog_content">
 												<ul class="post-meta">
@@ -54,8 +54,7 @@
 												</ul>
 												<h4 class="post_title"><a href="{{route('frontend.subcategory.list',['id'=>$cat->id])}}">{{ $cat->category_name}}</a> </h4>															
 												<p>
-													{{$cat->category_desc}}
-												
+													{{\Illuminate\Support\Str::limit($cat->category_desc, 100, $end='...') }}
 												</p>
 											</div>
 										</div>
@@ -120,7 +119,8 @@
 							var splitarr=route.split('/');
 							splitarr[splitarr.length-1]=id;
 							route1=splitarr[splitarr.length-2]+'/'+splitarr[splitarr.length-1];
-							var imgRoute = "{{url('frontend/img/blog/1.jpg')}}";
+							var imgRoute = "{{url('storage/category/')}}";
+							imgRoute+='/'+value.category_image;
 							
 							innerdiv+='<div class="col-lg-4 col-md-6 col-sm-6"><div class="single_blog"><div class="single_blog_img"><a href="'+route1+'"><img src="'+imgRoute+'" alt=""></a></div><div class="blog_content"><ul class="post-meta"><li><i class="ti-eye"></i><a href="#"> '+subarray[value.id]+' Subcategories</a></li></ul><h4 class="post_title"><a href="'+route1+'">'+ value.category_name+'</a></h4><p>'+value.category_desc+'</p></div></div></div><br>';
 							console.log(innerdiv);

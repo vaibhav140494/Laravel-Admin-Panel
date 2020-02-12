@@ -22,7 +22,7 @@ use App\Repositories\Backend\Access\Role\RoleRepository;
 use App\Repositories\Backend\Access\User\UserRepository;
 use DB;
 use Illuminate\Http\Request;
-
+use Validator;
 /**
  * Class UserController.
  */
@@ -122,7 +122,6 @@ class UserController extends Controller
     {
         
         $user->default_address=$request->input('address');
-        // dd($user->default_address);
         $this->users->update($user, $request);
 
         return new RedirectResponse(route('admin.access.user.index'), ['flash_success' => trans('alerts.backend.users.updated')]);
@@ -141,50 +140,102 @@ class UserController extends Controller
         return new RedirectResponse(route('admin.access.user.index'), ['flash_success' => trans('alerts.backend.users.deleted')]);
     }
 
+    public function addAddress($id)
+    {
+        // dd($id);
+        return view('backend.access.users.add_address',compact('id'));
+    }
+
+    public function storeAddress(Request $req,$id)
+    {
+        $input =$req->except("_token");
+        $rules = array(
+            'contact_person_no'=>'required',
+            'city'=> 'required|string',
+            'pincode'=>'required|Numeric',
+            'state'=>'required|string',
+            'country'=>'required|string',
+            'address'=>'required',
+            
+        );
+        $param=$input;
+        $validator = Validator::make($param,$rules);
+
+       if($validator->fails())
+       {
+        return redirect()->route('admin.access.user.address.add',$id)->withErrors($validator, 'register');
+        }
+        else{
+        
+        // $id=\Auth::user()->id;
+        $multiple_addr = new MultipleAddress;
+        $multiple_addr->contact_person = $req->input('contact_person');
+        $multiple_addr->contact_person_no = $req->input('contact_person_no');
+            $multiple_addr->city = $req->input('city');
+            $multiple_addr->state = $req->input('state');
+            $multiple_addr->country = $req->input('country');
+            $multiple_addr->address = $req->input('address');
+            $multiple_addr->pincode = $req->input('pincode');
+            $multiple_addr->user_id = $id;
+            $multiple_addr->save();
+            if($req->input('mk_default_address_admin')=='on')
+            {
+                $user = User::find($id);
+                $user->default_address = $multiple_addr->id;
+                $user->save();
+                // dd($user);
+            }
+            // dd($multiple_addr);
+            return redirect()->route('admin.access.user.edit',[$id])->with('message','Address Updated Successfully');
+        }
+    }
+
     public function editAddress($id)
     {
         $multiple_adder=MultipleAddress::find($id);
-        // dd($multiple_adder);
         return view('backend.access.users.edit_address',compact('multiple_adder'));
-
     }
 
     public function updateAddress($id,Request $req)
     {
-        $multiple_adder=MultipleAddress::find($id);
-        $multiple_adder->contact_person=$req->input('contact_person');
-        $multiple_adder->contact_person_no=$req->input('contact_person_no');
-        $multiple_adder->city=$req->input('city');
-        $multiple_adder->state=$req->input('state');
-        $multiple_adder->country=$req->input('country');
-        $multiple_adder->pincode=$req->input('pincode');
-        $multiple_adder->save();
+        $multiple_adder = MultipleAddress::find($id);
+        $multiple_adder->contact_person = $req->input('contact_person');
+        $multiple_adder->contact_person_no = $req->input('contact_person_no');
+        $multiple_adder->city = $req->input('city');
+        $multiple_adder->state = $req->input('state');
+        $multiple_adder->address = $req->input('address');
+        $multiple_adder->country = $req->input('country');
+        $multiple_adder->pincode = $req->input('pincode');
+        $ans = $multiple_adder->save();
+        if($ans)
+        {
+            $msg="User address edited successfully";
+        }
+        else
+        {
+            $msg="error";
+        }
         return redirect()->route('admin.access.user.edit',[$multiple_adder->user_id]);
-        // dd($multiple_adder);
     }
     public function deleteAddress(Request $req)
     {
-        // dd("hello");
-        // $req=Request::all();
         $id=$req->input('id');
         $uid=$req->input('uid');
-        // dd($uid);
+        $radio_id = $req->input('radio_val');
         $multiple_addr=MultipleAddress::find($id);
-        // dd($multiple_addr);
 
-         $msg=$multiple_addr->delete(); 
+        $msg=$multiple_addr->delete(); 
 
-
-        //  dd($msg);
         if($msg)
         {
-            $response['message']=true;
+            $response['message'] = true;
             $address_data = MultipleAddress::where('user_id',$uid)->get();
-            // dd($address_data);
-            $user=User::find($uid);
-            $response['data']=$address_data;
-            $response['user']=$user;
             
+            $user = User::find($uid);
+            $user->default_address=$radio_id;
+            $user->save();
+            $response['data'] = $address_data;
+            $response['user'] = $user;            
         }
         else
         {

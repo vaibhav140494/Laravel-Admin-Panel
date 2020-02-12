@@ -22,7 +22,7 @@
 		
 		<!-- Cart Page -->
 		<div class="cart_page_area">
-			<div class="container">
+			<div class="container cart-display-msg">
 				@if($cart_product->count()>0)
 					<div class="row">
 						<div class="col-sm-12">
@@ -91,9 +91,9 @@
 						
 						<div class="col-md-4 col-xs-12 cart-checkout-process text-right">
 							<div class="wrap">
-								<p><span>Subtotal</span><span> &#x20b9; {{$total}}</span></p>
-								<p><span>Discount</span><span> &#x20b9; 0</span></p>
-								<h4><span>Grand total</span><span> &#x20b9;{{$total}}</span></h4>
+								<p><span>Subtotal&nbsp; &#x20b9;</span><span id="subtotal">{{$total}}</span></p>
+								<p><span>Discount &#x20b9;</span><span id="discount">  0</span></p>
+								<h4><span>Grand total &#x20b9;</span><span id="grandtotal"> {{$total}}</span></h4>
 								<a href="#" class="btn border-btn">process to checkout</a>
 							</div>
 						</div>
@@ -134,9 +134,18 @@
 					}
 					if(response['message']=="replace")
 					{
-						var total=response['cart'][0].total_amount;
+						var count=0;
+						var cart = response['cart'];
+						$.each(cart,function(k,v){
+
+							var total=v.total_amount;
+							count+=total;
+							$('#'+v.product_id).html(total);
+						});
+						$('#subtotal').html(count);
+						var dis=$('#discount').text();
+						$('#grandtotal').html(count-dis);
 						
-						$('#'+id).html(total);
 					}
 					if(response['fail']=="fail")
 					{

@@ -69,11 +69,11 @@ class SubcategoriesController extends Controller
      */
     public function create(CreateSubcategoryRequest $request,$id)
     {
+        // dd($id);
 
         $category=Category::find($id);
         // dd($this->catid);
         // dd($category->idate);
-        // dd($cid);
         return  view('backend.subcategories.create',compact('category'));
     }
     /**
@@ -110,7 +110,7 @@ class SubcategoriesController extends Controller
      */
     public function edit(Subcategory $subcategory, EditSubcategoryRequest $request)
     {
-
+        // dd($subcategory);
         // dd($request);
         // $category=Category::find($id);    
         // dd($cat);   

@@ -221,8 +221,8 @@
 				<div class="rp_title text-center"><h3>Related products</h3></div>
 				
 				<div class="row">
-					@if(isset($all_products))
-						@foreach($all_products as $prd)
+					@if(isset($related_products))
+						@foreach($related_products as $prd)
 						
 							<div class="col-lg-3 col-md-4 col-sm-6">
 								<div class="product-grid">

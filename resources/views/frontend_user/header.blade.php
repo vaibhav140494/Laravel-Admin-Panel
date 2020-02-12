@@ -51,36 +51,31 @@
 								<li class="account_area"><a href="#"> My Orders</a></li>
 								<li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li>
 								<!-- <li>
-										<div class="cart_menu_area">
-											<div class="cart_icon">
-												<span>Profile</span>
-												 <span class="cart_number">2</span> -->
-											<!-- </div> -->
-											
-											
-											<!-- Mini Cart Wrapper -->	
-											<!-- <div class=" user-profile" style="visibility: hidden;">
-												<div class="close-button">
-															<span>
-																<i class="fa fa-times-circle" aria-hidden="true" ></i>
-															</span>
-														</div>
-													<div class="user-header">
-														
-														<h3>Welcome {{\Auth::user()->first_name}}</h3>
-													</div>
-													<div class="user_footer">
-														<div class="pull-left">
-														
-															
-															<a href="{{route('frontend.register.edit',['id'=>\Auth::user()->id])}}" class="btn btn-primary">Edit Profile</a>
-														</div>
-														<div class="pull-right">
-															<a href="{{route('frontend.logout')}}" class="btn btn-danger">Sign out</a>
-														</div>
-													</div>
-												</div>											
-											</div>	 
+									<div class="cart_menu_area">
+										<div class="cart_icon">
+											<span>Profile</span>
+										</div>
+										
+										<div class=" user-profile" style="visibility: hidden;">
+											<div class="close-button">
+												<span>
+													<i class="fa fa-times-circle" aria-hidden="true" ></i>
+												</span>
+											</div>
+											<div class="user-header">
+													
+												<h3>Welcome {{\Auth::user()->first_name}}</h3>
+											</div>
+											<div class="user_footer">
+												<div class="pull-left">
+													<a href="{{route('frontend.register.edit',['id'=>\Auth::user()->id])}}" class="btn btn-primary">Edit Profile</a>
+												</div>
+												<div class="pull-right">
+													<a href="{{route('frontend.logout')}}" class="btn btn-danger">Sign out</a>
+												</div>
+											</div>
+										</div>											
+									</div>	 
 										
 								</li> -->
 
@@ -95,7 +90,6 @@
 					</div>
 				</div>
 			</div> <!--  HEADER START  -->
-			
 			<div class="header_btm_area">
 				<div class="container">
 					<div class="row">		
@@ -119,7 +113,7 @@
 															<div class="mm-column mm-column-link float-left">
 																<h3>{{$cat->category_name}}</h3>
 																@foreach($all_subcategory[$cat->id] as $sub)
-																	<a href="#">{{$sub->subcategory_name}}</a>
+																	<a href="{{route('frontend.products.list',[$sub->id,$cat->id])}}">{{$sub->subcategory_name}}</a>
 																	<!-- <a href="#">Laptops</a>
 																	<a href="#">Speakers</a>
 																	<a href="#">Camera</a>
@@ -151,13 +145,11 @@
 												</div>
 											</li> 
 											<li><a href="#">Products <i class="fa fa-angle-down"></i></a>
-												
 												<ul class="sub-menu">
-													<li><a href="#">Laptops</a></li>
-													<li><a href="#">Moiles</a></li>
-													<li><a href="#">Shirts</a></li>
-													<li><a href="#">Jeans</a></li>
-													<li><a href="#">Washing Machine</a></li>
+												
+												@foreach($all_products as $prod)
+													<li><a href="{{route('frontend.product.details',[$prod->id,$prod->subcategory_id,$prod->category_id])}}">{{$prod->product_name}}</a></li>
+												@endforeach	
 												</ul>
 											</li>
 											<!-- <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
@@ -224,7 +216,7 @@
 											<li><a href="#">contact</a></li>
 											<li><a href="#">about</a></li>
 
-					</ul>
+										</ul>
 									</nav>
 								</div> <!--  End mobile-menu -->						
 							</div>
@@ -233,21 +225,6 @@
 						<div class="col-xs-12 col-sm-12 col-md-2">
 							<div class="right_menu pull-right">
 								<ul class="nav">
-									<!-- <li>
-										<div class="search_icon">
-											<a href="#modal" data-remodal-target="modal"><i class="ti-search search_btn"></i></a>
-											
-											<div class="search-box remodal" data-remodal-id="modal">
-												<button data-remodal-action="close" class="remodal-close"></button>
-												<form action="#" method="Post">
-													<div class="input-group">
-														<input type="text" class="form-control"  placeholder="enter keyword"/>				
-														<button type="submit" class="btn btn-default"><i class="ti-search"></i></button>			
-													</div>
-												</form>
-											</div>
-										</div>
-									</li> -->
 									@if(\Auth::user()!=null)
 										<li>
 											<div class="wishlist_manu_area">
@@ -284,9 +261,9 @@
 																		<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
 																		<div class="mc-pro-details fix">
 																			<a href="#">{{$allcrt->product_name}}</a>
-																			<p>{{$allcrt->quantity}}x &#x20b9;{{$allcrt->gross_amount}}</p>
+																			<p>{{$allcrt->quantity}} x &#x20b9;{{$allcrt->gross_amount}}</p>
 																			<?php $total+=$allcrt->total_amount;?>
-																			<a class="pro-del cp_remove" href="javascript:void(0)" pid="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
+																			<a class="pro-del cp_remove" href="javascript:void(0)"  prodid="{{$allcrt->product_id}}" pid="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
 																		</div>
 																	</div>
 																@endforeach

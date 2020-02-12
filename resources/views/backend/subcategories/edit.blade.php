@@ -17,6 +17,7 @@
 
                 <div class="box-tools pull-right">
                     @include('backend.subcategories.partials.subcategories-header-buttons')
+                    
                 </div><!--box-tools pull-right-->
             </div><!--box-header with-border-->
 
@@ -25,7 +26,7 @@
                     {{-- Including Form blade file --}}
                     @include("backend.subcategories.form")
                     <div class="edit-form-btn">
-                        {{ link_to_route('admin.categories.id.get', trans('buttons.general.cancel'), ['id'=>$category->id], ['class' => 'btn btn-danger btn-md']) }}
+                        {{ link_to_route('admin.categories.id.get', trans('buttons.general.cancel'), ['id'=>6], ['class' => 'btn btn-danger btn-md']) }}
                         {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-primary btn-md']) }}
                         <div class="clearfix"></div>
                     </div><!--edit-form-btn-->

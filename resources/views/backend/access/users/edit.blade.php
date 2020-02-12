@@ -8,10 +8,9 @@
         <small>{{ trans('labels.backend.access.users.edit') }}</small>
     </h1>
 @endsection
-
 @section('content')
     {{ Form::model($user, ['route' => ['admin.access.user.update', $user], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH']) }}
-
+        
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('labels.backend.access.users.edit') }}</h3>
@@ -146,42 +145,43 @@
                     </div><!--form control-->
 
                     {{-- Multiple Address Field--}}
-                   <div class="form-group"> 
-                        <button class="btn btn-primary pull-right" style="margin-right:60px;">Add Address</button>
+                    <div class="form-group"> 
+                        <a href="{{route('admin.access.user.address.add',[$user->id])}}" class="btn btn-primary pull-right" style="margin-right:60px;">Add Address</a>
                     </div>
                     @if($multiple_address)
-                    <?php $checked=false; ?>
-                    <div class="address-container">
-                        @foreach ($multiple_address as $mulAddr)
-                            <div class="form-group">
-                                {{ Form::label('Multiple_address',"Multiple Address", ['class' => 'col-lg-2 control-label required']) }}
-                                <div class="address_display">
-                                    <div class=" offset-md-3 col-md-1">
-                                   @if($user->default_address == $mulAddr->id)
-                                   <?php //$checked=true; ?>
-                                    <input type="radio" name="address" value="{{$mulAddr->id}}" id="{{$mulAddr->id}}" checked> 
-                                   @else
-                                   <?php $checked=false; ?>
-                                   <input type="radio" name="address" value="{{$mulAddr->id}}" id="{{$mulAddr->id}}" checked> 
-                                   @endif
-                                       
+                        <?php $checked=false; ?>
+                        <div class="address-container">
+                            @foreach ($multiple_address as $mulAddr)
+                                <div class="form-group">
+                                    {{ Form::label('Multiple_address',"Multiple Address", ['class' => 'col-lg-2 control-label required']) }}
+                                    <div class="address_display">
+                                        <div class=" offset-md-3 col-md-1">
                                         
+                                        <input type="radio" name="address" value="{{$mulAddr->id}}" id="{{$mulAddr->id}}" <?php echo ($user->default_address == $mulAddr->id) ? "checked": " " ;  ?>> 
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>{{$user->first_name}}</span>
+                                            <span>{{$user->last_name}}</span>
+                                            <p style="margin:0 auto;">{{$mulAddr->address}}</p>
+                                            <p style="margin:0 auto;">{{$mulAddr->pincode}}</p> 
+                                            <p style="margin:0 auto;">{{$mulAddr->city}}</p>
+                                            <p style="margin:0 auto;">{{$mulAddr->state}}</p> 
+                                            <p style="margin:0 auto;">{{$mulAddr->country}}</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                        <span><a href="{{route('admin.access.user.address.edit',[$mulAddr->id])}}" style="color:#000;" id="address_edit" name="{{$mulAddr->id}}"><i class="fa fa-pencil" style="font-size:18px;margin-right:10px;" ></i></a></span>
+                                        <span><a href="javascript:void(0)" id="address_delete" name="{{$mulAddr->id}}"  uid="{{$user->id}}" style="color:#000;"><i class="fa fa-trash" style="font-size:18px;margin-right:10px;"></i></a></span></div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <span>{{$user->first_name}}</span>
-                                        <span>{{$user->last_name}}</span>
-                                        <p style="margin:0 auto;">{{$mulAddr->address}}</p>
-                                        <p style="margin:0 auto;">{{$mulAddr->pincode}}</p> 
-                                        <p style="margin:0 auto;">{{$mulAddr->city}}</p>
-                                        <p style="margin:0 auto;">{{$mulAddr->state}}</p> 
-                                        <p style="margin:0 auto;">{{$mulAddr->country}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                    <span><a href="{{route('admin.access.user.address.edit',[$mulAddr->id])}}" style="color:#000;" id="address_edit" name="{{$mulAddr->id}}"><i class="fa fa-pencil" style="font-size:18px;margin-right:10px;" ></i></a></span>
-                                    <span><a href="javascript:void(0)" id="address_delete" name="{{$mulAddr->id}}"  uid="{{$user->id}}" style="color:#000;"><i class="fa fa-trash" style="font-size:18px;margin-right:10px;"></i></a></span></div>
                                 </div>
-                            </div>
-                        @endforeach  
+                            @endforeach 
+
+
+                            {{-- Add form popupp--}}
+                            <!-- Trigger/Open The Modal -->
+                            <!-- <button id="myBtn">Open Modal</button> -->
+
+                            
                         </div>
                     @endif
                 @endif
@@ -204,6 +204,7 @@
 
 @section('after-scripts')
     <script type="text/javascript">
+    
         Backend.Utils.documentReady(function(){
             csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             Backend.Users.selectors.getPremissionURL = "{{ route('admin.get.permission') }}";
@@ -212,13 +213,18 @@
         window.onload = function () {
             Backend.Users.windowloadhandler();
         };
+ 
         $(document).ready(function(){
+           
+
             $(document).on('click','#address_delete',function(){
                 var id=$(this).attr('name');
                 var uid=$(this).attr('uid');
+
                 var div='';
-                // alert(radio);
                  radio_val = $("input[name='address']:checked"). val();
+                // alert(radio_val);
+                 
                  if(radio_val == id)
                  {
                     bootbox.alert("please select default addres");
@@ -234,20 +240,29 @@
                             url:'{{route("admin.access.user.address.delete")}}',
                             type:'post',
                             dataType:'json',
-                            data:{'id':id,'uid':uid},
+                            data:{'id':id,'uid':uid,'radio_val':radio_val},
                             success:function(data)
                             {
                                 if(data['message']==true)
                                 {
                                     user=data['user'];
                                     address=data['data'];
+                                    checked=" ";
+                                    checkid = " ";
                                     bootbox.alert(' addres deleted successfully');
                                     $.each(address,function(k,value){
                                         console.log(value.id);
+
+                                        if(user.default_address==value.id){
+                                            checked="checked";
+                                            checkid=value.id;
+                                        }   
+
                                         div+='<div class="form-group">{{ Form::label("Multiple_address","Multiple Address", ["class" => "col-lg-2 control-label required"]) }}<div class="address_display"><div class=" offset-md-3 col-md-1"><input type="radio" name="address" value="'+value.id+'" id="'+value.id+'"> </div><div class="col-md-6"><span>'+user.first_name+'</span> <span>'+user.last_name+'</span><p style="margin:0 auto;">'+value.address+'</p><p style="margin:0 auto;">'+value.pincode+'</p><p style="margin:0 auto;">'+value.city+'</p><p style="margin:0 auto;">'+value.state+'</p><p style="margin:0 auto;">'+value.country+'</p></div><div class="col-md-2"><span><a href="" style="color:#000;" id="address_edit" name="'+value.id+'"><i class="fa fa-pencil" style="font-size:18px;margin-right:10px;" ></i></a></span><span><a href="javascript:void(0)" id="address_delete" name="'+value.id+'" style="color:#000;"><i class="fa fa-trash" style="font-size:18px;margin-right:10px;"></i></a></span></div></div></div>';
                                     });
-                                    console.log(div);
                                     $('.address-container').html(div);
+                                    $("#"+checkid).prop("checked", true);
+
                                 }
                                 else
                                 {
@@ -258,6 +273,8 @@
                     }
                 });
             });
+    
         });
+
     </script>
 @endsection

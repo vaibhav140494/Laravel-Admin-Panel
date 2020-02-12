@@ -2595,7 +2595,16 @@ input:focus, textarea:focus {
 	padding: 22px 23px;
 	text-align: left;
 }
- #register-form input[type=text], input[type=password],input[type=number],.textarea , input[type=email],input[type=date]{
+
+ #register-form  input[type=text], input[type=password],input[type=number],.textarea , input[type=email],input[type=date]{
+	width: 100%;
+  padding: 15px;
+  /* margin: 5px 0 22px 0; */
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+#add-address-form  input[type=text], input[type=password],input[type=number],.textarea , input[type=email],input[type=date]{
 	width: 100%;
   padding: 15px;
   /* margin: 5px 0 22px 0; */
@@ -2624,7 +2633,6 @@ input:focus, textarea:focus {
 	margin-top:10px;
 	text-transform: capitalize;
 	margin-bottom: 20px;
-	margin-left: 35%;
 }
 .login-link{
 	padding: 8px 20px;
@@ -3448,4 +3456,10 @@ input:focus, textarea:focus {
   .rating-stars ul > li.star.selected > i.fa {
 	color:#FFCC36;
   }
+  
+
+
+
+
+  
   

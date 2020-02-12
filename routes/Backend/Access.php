@@ -63,6 +63,8 @@ Route::group([
             Route::post('users/address/delete','UserController@deleteAddress')->name('user.address.delete');    
             Route::get('users/address/edit/{id}','UserController@editAddress')->name('user.address.edit');
             Route::patch('users/address/{id}/update','UserController@updateAddress')->name('user.address.update');
+            Route::get('users/address/add/{id}','UserController@addAddress')->name('user.address.add');
+            Route::post('users/address/{id}/store','UserController@storeAddress')->name('user.address.store');
         });
 
         /*

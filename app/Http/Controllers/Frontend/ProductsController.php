@@ -33,6 +33,8 @@ class ProductsController extends Controller
         $all_subcategory=$this->final_data[1];
         $all_cart=$this->final_data[2];
         $category_featured=$this->final_data[3];
+        $all_products=$this->final_data[5];
+        
         $catarr=$this->catarr;
         // echo "<pre>"; print_r($this->uid); exit;
 
@@ -57,7 +59,7 @@ class ProductsController extends Controller
                     //dd($wished_prod); 
         }
 
-        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','category_featured'));
+        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products'));
     }
 
     public function detailProd($id,$subid,$cid)
@@ -67,6 +69,8 @@ class ProductsController extends Controller
         $all_subcategory=$this->final_data[1];
         $all_cart=$this->final_data[2];
         $category_featured=$this->final_data[3];
+        $all_products=$this->final_data[5];
+        // dd($all_products);
         $catarr=$this->catarr;
             // dd($all_cart);
 
@@ -103,15 +107,16 @@ class ProductsController extends Controller
         ->orderBy('productreviews.rating','desc')->limit(4)->get();
         // dd($users_product_reviews);
        
-        $all_products=DB::table('products')->
+        $related_products=DB::table('products')->
         leftjoin('productreviews','products.id','=','productreviews.product_id')->select('products.*','productreviews.product_id','productreviews.user_id','productreviews.rating','productreviews.review')
         ->where('products.category_id',$cid)
         ->where('products.id','<>',$id)
         ->orderBy('rating','desc')->get()->keyBy('subcategory_id');
-        // dd($all_products);
+        // dd($related_products);
+
         $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
         
-        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','all_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured'));
+        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','related_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products'));
     }
 
     public function storeReview(Request $req)

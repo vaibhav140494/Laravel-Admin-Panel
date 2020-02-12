@@ -10,19 +10,13 @@ use DB;
 
 class CartController extends Controller
 {
-    // public $all_cart;
     public function __construct()
     {
         parent::__construct();
-        // $this->all_cart=$final_data[2];
-        // dd($final_data[2]);
     }
     public function add(Request $req)
     {   
-        // $final_data= parent::__construct();
         $all_cart=$this->final_data[2];
-        // $total_cart=$all_cart;
-        // dd($all_cart);
         if(\Auth::user()==null)
         {
             $response['login']=false;
@@ -37,13 +31,9 @@ class CartController extends Controller
 
                 }
                 $id=$req->input('id');
-                
-                // // $cart=DB::table('cart')->join('products','cart.product_id','=','products.id')
-                // ->select('cart.*,products.*')->get();
                 $cart1 = cart::where('product_id',$id)
                 ->where('user_id',\Auth::user()->id)->get()->first();
         
-                // $response['data']=$cart1;
                 if($cart1)
                 {   
                     if($cart1->quantity!=$value)
@@ -52,20 +42,8 @@ class CartController extends Controller
                         $cart1->total_amount=$value * $cart1->gross_amount;
                         $cart1->save();
                         $response['cart']=$cart1;
-                        // dd($cart1);
                     }
                     $response['message']='replace';
-                    // echo "helo";
-                    // $cart1->quantity=$value;
-                    // $cart1->total_amount= $value * $cart1->gross_amount;
-                    // dd($cart1->total_amount);
-                    // if($cart1->save())
-                    // {
-                    //     // $response['data']=$cart1;
-                    //     $response['message']="success";
-
-                    // }    
-                    // $response['data']=$all_cart;
                     $response['data_replace'] = '<a href="'.route('frontend.cart.show').'"  name="'.$cart1->product_id.'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>';
                 }
                 else
@@ -91,7 +69,6 @@ class CartController extends Controller
             {
                 $response['fail']='fail';
             }
-            // DB::table('cart')->join('products')
             $total_cart= DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
             ->select('cart.*','products.product_name','products.image')
             ->where('user_id',\Auth::user()->id)->get();
@@ -101,37 +78,35 @@ class CartController extends Controller
     }
     public function show()
     {
-        // $id=\Auth::user()->id;
-        // dd(\Auth::user()->id);
-        // $final_data= parent::__construct();
         $all_category=$this->final_data[0];
         $all_subcategory=$this->final_data[1];
         $all_cart=$this->final_data[2];
         $category_featured=$this->final_data[3];
+        $all_products=$this->final_data[5];
+
         $catarr=$this->catarr;
-        // dd($all_cart);
 
         $cart_product=DB::table('products')
         ->join('cart','cart.product_id','=','products.id')
         ->where('cart.user_id',\Auth::user()->id)
         ->select('products.*','cart.*')->get();
 
-        return view('frontend_user.cart',compact('cart_product','all_category','all_subcategory','all_cart','category_featured'));
+        return view('frontend_user.cart',compact('cart_product','all_category','all_subcategory','all_cart','category_featured','all_products'));
     }
 
     public function remove(Request $req)
     {
-        // $total_cart=$this->all_cart;
         if($req->ajax())
         {
             $id=$req->input('pid');
-            // dd($id);
             $cart=cart::find($id);
+             $pid=$cart->product_id;
             $ans=$cart->delete();
             
             if($ans)
             {
                 $response['message']="success";
+                $response['data_replace']='<a href="javascript:void(0)"  name="'.$pid.'" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a>';
             }
             else
             {

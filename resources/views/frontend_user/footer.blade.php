@@ -155,7 +155,9 @@
 				$(document).on('click','.cart-btn',function(){
 					var value=$('#prod_qty').val();
 					var pid=$(this).attr('name');
+					var a=this;
 					// $(this).attr('id',pid);
+					var subtotal=	$('.mc-subtotal').html();
 					
 					if(value==0)
 					{
@@ -174,33 +176,18 @@
 								var route="{{route('frontend.user.login')}}";
 								window.location.replace(route);
 							}
-							if(response['message']=='replace')
-							{
-								//console.log(response['data_replace']);
-								// console.log($(this).parent().html());
-								// $(this).html(response['data_replace']);
-								//   console.log($(this).html());
-								// $(this).attr('data-tip','view-cart');
-								//   return true;
-								
-								$(this).parent().html(response['data_replace']);
-								console.log($(this).html());
-
-							}
 							if(response['message']=="success")
 							{
-								$(this).html(response['data_replace']);
+								
+								$(a).replaceWith(response['data_replace']);
 
 								$("#success-alert-add-cart").fadeTo(1000, 500).slideUp(500, function() {
-      							$("#success-alert-add-cart").slideUp(500);
+      								$("#success-alert-add-cart").slideUp(500);
 								});
-								// $('#'+pid).html(response['data_replace']);
-								// console.log($(response['data_replace']));
-								// console.log('#'+pid);
 
 								$('#cart-count').text(response['cart'].length);
 								var cart=response['cart'];
-								var div='';
+								var div='<div class="mc-pro-list fix">';
 								var total=0;
 								
 								$.each(cart,function(key,value){
@@ -212,23 +199,11 @@
 
 									 total+=value.quantity * value.gross_amount;
 								});
-								$('.mc-pro-list').html(div);
-								$('#cart-subtotal').text(total);
-								if(response['cart'].length==0)
-								{
-									// console.log("null");
-									$('.mc-subtotal').hide();
-									$('.mc-button').hide();
-									$('.mc-pro-list').text('No products in your cart!!!');
-								}
-								else
-								{
-									$('.mc-subtotal').show();
-									$('.mc-button').show();
-									// console.log("hello");
-								}
-								
+								div+='</div>';
+								div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal">  '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
 
+								$('.mini-cart-wrapper').html(div);
+								
 							}
 							if(response['fail']=="fail")
 							{
@@ -241,9 +216,9 @@
 
 				$(document).on('click','.cp_remove',function(){
 					var id=$(this).attr('pid');
-					// $(this).parent().html("hello");
-					// console.log($(this).parent().html());
-					// return false;
+					var a=$(this).attr('prodid');
+					alert(a);
+					console.log(a);
 					$.ajax({
 						url:'{{route("frontend.cart.remove")}}',
 						method:'get',
@@ -257,36 +232,38 @@
 									$("#success-alert-remove-cart").slideUp(500);
 									$('#'+id).remove();
 								});
+								// console.log("hello");
+								// console.log(response['data_replace']);
+								// $(a).replaceWith(response['data_replace']);
 								$('#cart-count').text(response['cart'].length);
 								
 								var cart=response['cart'];
-								var div='';
+								var div='<div class="mc-pro-list fix">';
 								total=0;
-								$.each(cart,function(key,value){
-									var route ='{{url("storage/products/")}}';
-									route +='/'+value.image;
-									// console.log(route);
-									// var prodname= values.product_name;
-									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
-									//  console.log(div);
-									total+=value.quantity * value.gross_amount;
-								});
+								console.log($('#'+a).html(response['data_replace']));
+								$('#'+a).html(response['data_replace']);
+								if(cart.length > 0)
+								{							
+									$.each(cart,function(key,value){
+										var route ='{{url("storage/products/")}}';
+										route +='/'+value.image;
+										// console.log(route);
+										// var prodname= values.product_name;
+										div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+										//  console.log(div);
+										total+=value.quantity * value.gross_amount;
+									});
+									div+='</div>';
+									div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal">  '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
 
-								$('.mc-pro-list').html(div);
-								$('#cart-subtotal').text(total);
-								if(response['cart'].length==0)
-								{
-									$('.mc-subtotal').hide();
-									$('.mc-button').hide();
-									$('.mc-pro-list').text('No products in your cart!!!');
+									$('.mini-cart-wrapper').html(div);
 								}
 								else
 								{
-									$('.mc-subtotal').show();
-									$('.mc-button').show();
+									$('.mini-cart-wrapper').html("No Products in your cart!!");
+									$('.cart-display-msg').html("No Products in your cart!!");
 								}
-
-									
+	
 								return true;
 							}
 							if(response['message']=="fail")

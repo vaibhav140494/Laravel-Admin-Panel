@@ -28,7 +28,7 @@
 						<!-- Single blog -->
 						<div class="single_blog">
 							<div class="single_blog_img">
-								<a href="#"><img src=" {{url('frontend/img/blog/1-full.jpg')}}" alt=""></a>
+								<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt=""></a>
 								<div class="blog_date text-center">
 									
 								</div>
@@ -186,7 +186,7 @@
 				url:"{{route('frontend.subcategory.list.ajax')}}",
 				method:'get',
 				dataType:'json',
-				data:{'str':str,'id':id},
+				data:{'str':str,'id':cid},
 				success: function(response)
 				{
 					// console.log(response);

@@ -155,13 +155,18 @@
 												<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
 											</a>
 											<ul class="social">
+											
 												<li><a href="{{url('storage/products/'.$prod->image)}}" class="venobox" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-												@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+												@if(\Auth::user() && (in_array($prod->id,$wished_prod)))
 												<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove"><i class="fa fa-minus-circle"></i></a></li>
 												@else
 												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
 												@endif
+												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+												<li id="{{$prod->id}}"><a href="{{route('frontend.cart.show')}}"  name="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
+												@else
 												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												@endif
 											</ul>
 											<!-- <span class="product-new-label">Sale</span> -->
 										</div>
@@ -341,9 +346,9 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="brand_slide owl-carousel">
-							{{--@foreach($all_category as $cat)
+							@foreach($all_category as $cat)
 								<div class="item text-center" style="padding: 0 10px;"> <a href="{{route('frontend.subcategory.list',[$cat->id])}}"><img src="{{url('storage/category/'.$cat->category_image)}}" alt="" class="img-thumbnail" width="70" height="70"/></a> </div>
-							@endforeach--}}
+							@endforeach
 							
 						</div>
 					</div>
