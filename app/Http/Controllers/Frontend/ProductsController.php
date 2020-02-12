@@ -18,6 +18,7 @@ class ProductsController extends Controller
     // public $all_category; 
     // public $all_subcategory;
     // public $all_cart;
+    //   public $wishlist;
     // public $final_data;
     public function __construct()
     {
@@ -35,6 +36,7 @@ class ProductsController extends Controller
         $category_featured=$this->final_data[3];
         $all_products=$this->final_data[5];
         
+        $wishlist=$this->final_data[4];
         $catarr=$this->catarr;
         // echo "<pre>"; print_r($this->uid); exit;
 
@@ -59,7 +61,7 @@ class ProductsController extends Controller
                     //dd($wished_prod); 
         }
 
-        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products'));
+        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist'));
     }
 
     public function detailProd($id,$subid,$cid)
@@ -71,6 +73,7 @@ class ProductsController extends Controller
         $category_featured=$this->final_data[3];
         $all_products=$this->final_data[5];
         // dd($all_products);
+        $wishlist=$this->final_data[4];
         $catarr=$this->catarr;
             // dd($all_cart);
 
@@ -116,7 +119,7 @@ class ProductsController extends Controller
 
         $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
         
-        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','related_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products'));
+        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','related_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist'));
     }
 
     public function storeReview(Request $req)

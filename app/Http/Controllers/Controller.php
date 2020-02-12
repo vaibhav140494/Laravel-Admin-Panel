@@ -20,6 +20,7 @@ abstract class Controller extends BaseController
     public $subcat;
     public $cart;
     public $uid;
+    public $wishlist;
     public $count;
     public $catarr = Array();
     public function __construct()
@@ -36,6 +37,10 @@ abstract class Controller extends BaseController
                 $this->cart= DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
                 ->select('cart.*','products.product_name','products.image')
                 ->where('user_id',$this->uid)->get();
+                $this->wishlist= DB::table('wishlist')->leftjoin('products','wishlist.product_id','=','products.id')
+                ->select('wishlist.*','products.product_name','products.image','products.price')
+                ->where('user_id',$this->uid)->get();
+                
             }
                 //for fetching featured category
                 
@@ -61,6 +66,7 @@ abstract class Controller extends BaseController
                 $this->final_data[2]=$this->cart;
                 $this->final_data[3]=$category_featured;
                 $this->final_data[5]=$all_products;
+                $this->final_data[4]=$this->wishlist;
                 // $this->this->catarr=$this->catarr;
                 // dd($this->cart);
             return $next($request);

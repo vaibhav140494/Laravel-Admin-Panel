@@ -33,6 +33,7 @@ class OfferRepository extends BaseRepository
                 config('module.offers.table').'.offer_name',
                 config('module.offers.table').'.offer_code',
                 config('module.offers.table').'.offer_type',
+                config('module.offers.table').'.offer_value',
                 config('module.offers.table').'.offer_desc',
                 config('module.offers.table').'.min_order_value',
                 config('module.offers.table').'.max_discount',

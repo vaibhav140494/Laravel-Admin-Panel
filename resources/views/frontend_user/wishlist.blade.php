@@ -36,7 +36,7 @@
 						</thead>
 						<tbody>
 							@foreach($wished_products as $product)
-							<tr class="disp" id="{{$product->id}}">
+							<tr class="disp" rmid="{{$product->id}}">
 								<td><span class="cart-number">1</span></td>
 								<td><a href="#" class="cp_img"><img src=" {{url('storage/products/'.$product->image)}}" alt="" /></a></td>
 								<td><a href="#" class="cart-pro-title">{{$product->product_name}}</a></td>
@@ -72,19 +72,40 @@
 						data:{id:uid},
 						success:function(response){
 							if(response){
+								var res = JSON.parse(response);
+								console.log(res.tag);
+								if(res.msg=='success')
+									{	console.log(uid);
+										//$('#'+uid).remove();
+										$("[rmid="+uid+"]").remove();
+										
+									}
+									var wlist = res.wishlist;
+								 	var count = wlist.length;
+									 var str='';
+									$('.wishlist_number').html(count);
+									$.each(wlist,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
 									
-								$('#'+uid).remove();
-								if(!$("tr").hasClass("disp"))
-								{
-									$('.no-wishlist').css("display", "block");									
+									str += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.price+'</p><a class="pro-del remove-wish"" href="javascript:void(0)" pid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									});
+									$('.mc-pro-list').html(str);
+									if(!$("tr").hasClass("disp"))
+										{
+											$('.no-wishlist').css("display", "block");									
+										}
+										if(count==0)
+										{
+											$('.mc-pro-list').append("<h5>NO PRODCUTS</h5>");							
+										}
+									}
 								}
-							}
-						}
+							});
+				 		 } 
 					});
-				  } 
 				});
 			});
-		});
 	</script>
 
 @include('frontend_user.footer')

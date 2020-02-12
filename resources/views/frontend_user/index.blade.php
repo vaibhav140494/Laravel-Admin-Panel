@@ -157,10 +157,10 @@
 											<ul class="social">
 											
 												<li><a href="{{url('storage/products/'.$prod->image)}}" class="venobox" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-												@if(\Auth::user() && (in_array($prod->id,$wished_prod)))
-												<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove"><i class="fa fa-minus-circle"></i></a></li>
+												@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+												<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
 												@else
-												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
 												@endif
 												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
 												<li id="{{$prod->id}}"><a href="{{route('frontend.cart.show')}}"  name="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
@@ -168,7 +168,7 @@
 												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 												@endif
 											</ul>
-											<!-- <span class="product-new-label">Sale</span> -->
+											 <span class="product-new-label">Sale</span> 
 										</div>
 										
 										<ul class="rating">

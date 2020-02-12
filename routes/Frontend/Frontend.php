@@ -29,10 +29,15 @@ Route::get('/categories/search','CategoriesController@getAllCat')->name('categor
 ///Subcategory controller routes
 Route::get('subcategories/{id}','SubcategoriesController@getSub')->name('subcategory.list');
 Route::get('/subcategories/search/subcat','SubcategoriesController@getAll')->name('subcategory.list.ajax');
+
+//wish-list routes
 Route::get('/wishlist/add','WishListController@add')->name('wishlist.add');
 Route::get('/wishlist/remove','WishListController@remove')->name('wishlist.remove');
 Route::get('/wishlist/list/{uid}','WishListController@list')->name('wishlist.list');
 
+
+//offer-controller routes
+Route::get('/offer/check','offerController@offerValidation')->name('offer.ckeck');
 ////Product controller routes
 Route::get('products/{id}/{cid}','ProductsController@getProd')->name('products.list');
 Route::get('product/details/{id}/{subid}/{cid}','ProductsController@detailProd')->name('product.details');

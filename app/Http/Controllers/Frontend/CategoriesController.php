@@ -23,6 +23,7 @@ class CategoriesController extends Controller
       $category_featured=$this->final_data[3];
       $all_products=$this->final_data[5];
 
+      $wishlist=$this->final_data[4];
         $catarr=$this->catarr;
         
         // dd($all_cart);
@@ -32,7 +33,7 @@ class CategoriesController extends Controller
         $subcategory=Subcategory::where('category_id',$category[$i]->id)->get();
         $sub[$category[$i]->id] = $subcategory->count();
       }
-      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart','category_featured','all_products'));
+      return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart','category_featured','all_products','wishlist'));
     }
     public function getAllCat(Request $request)
     {

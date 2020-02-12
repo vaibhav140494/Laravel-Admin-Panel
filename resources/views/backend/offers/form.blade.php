@@ -22,9 +22,17 @@
 
         <div class="col-lg-10">
             <select name="offer_type" id="offer_type" class="form-control box-size">
+                
                 <option value="1">FLAT DISCOUNT</option>
                 <option value="2">PERCENTAGE DISCOUNT</option>
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ Form::label('offer_value', trans('labels.backend.offers.table.offer_value'), ['class' => 'col-lg-2 control-label required']) }}
+
+        <div class="col-lg-10">
+        {{ Form::number('offer_value', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.offers.table.offer_value'), 'required' => 'required']) }}
         </div>
     </div>
     <div class="form-group">

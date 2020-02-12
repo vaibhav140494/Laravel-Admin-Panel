@@ -22,7 +22,7 @@ class CreateSupportticketsTable extends Migration
             $table->bigInteger('topic_id')->unsigned();      
             $table->string('discription',255);
             $table->string('admin_comment',255);
-            $table->enum('status', ['Generated', 'Processed','Removed','Closed']);       
+            $table->enum('status', ['Generated', 'Processed','Removed','Closed'])->default('Generated');       
             $table->timestamps();
         });
     }

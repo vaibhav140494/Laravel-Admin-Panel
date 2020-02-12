@@ -74,6 +74,8 @@
 		<!--  FOOTER END  -->
 
 	@include('frontend_user.script')
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js" integrity="sha256-vHsV98JlYVo7h9eo1BQrqWgGQDt6prGrUbKAlHfP+0Y=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" integrity="sha256-sfG8c9ILUB8EXQ5muswfjZsKICbRIJUG/kBogvvV5sY=" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(function(){
 				$("#success-alert-add-cart").hide();
@@ -86,23 +88,54 @@
 					// alert("hello");
 					$('.user-profile').css('visibility','hidden');
 				});	
-				$(document).on('click','.remove',function(){
+				$(document).on('click','.remove-wishlist',function(){
 					var uid = $(this).attr('pid');
 					var el 	= this;
 
 					$.ajax({
 						url:'{{route("frontend.wishlist.remove")}}',
 						type:'GET',
+						dataType:'JSON',
 						data:{id:uid},
 						success:function(response){
 							if(response){
-								$(el).replaceWith(response);
-							}
+								
+        						var res = response;
+								console.log(res);
+								
+								// $(el).replaceWith();
+								var str='';
+								//var tag = res['tag'];
+								if(res.tag == 'add'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								if(res.tag == 'remove'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								 
+								 console.log(res.wishlist);
+								 var wlist = res.wishlist;
+								 var count = wlist.length;
+								 $('.wishlist_number').html(count);
+								 $.each(wlist,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
+									str += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.price+'</p><a class="pro-del remove-wish"" href="javascript:void(0)" pid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									});
+								$('.mc-pro-list').html(str);
+								if(count==0)
+								{
+											
+									$('.mc-pro-list').append("<h5>NO PRODCUTS</h5>");							
+								}
+							};
 							
 						}
 					});
 				});
-				$(document).on('click','.add',function(){
+				$(document).on('click','.add-wishlist',function(){
 					var uid=$(this).attr('pid');
 					var el = this;
 
@@ -112,9 +145,42 @@
 						data:{id:uid},
 						success:function(response){
 							if(response){
-								$(el).replaceWith(response);
+								var res = JSON.parse(response);
+								console.log(res.tag);
+								
+								
+									if(res.msg=='fail')
+									{	
+										window. location. href="http://127.0.0.1:8000/user/login";
+									}
+								else{
+									var str='';
+									
+								//var tag = res['tag'];
+								if(res.tag == 'remove'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								if(res.tag == 'add'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								 
+								 console.log(res.wishlist);
+								 var wlist = res.wishlist;
+								 var count = wlist.length;
+								 $('.wishlist_number').html(count);
+								 $.each(wlist,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
+									str += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.price+'</p><a class="pro-del remove-wish"" href="javascript:void(0)" pid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									});
+									$('.mc-pro-list').html(str);
+								}
+								
+								 };
 							}
-						}
+						
 					});
 				});
 				// $('#prod_qty').change(function(){
@@ -275,6 +341,69 @@
 					});
 	
 				});
+				$(document).on('click','.remove-wish',function(){
+					var uid=$(this).attr('pid');
+					var el = this;
+					
+
+					bootbox.confirm("are you sure?", function(result){
+					if(result){	
+					$.ajax({
+						url:'{{route("frontend.wishlist.remove")}}',
+						type:'GET',
+						dataType:'json',
+						data:{id:uid},
+						success:function(response){
+							if(response){
+
+        						var res = response;
+								console.log(res);
+							
+								
+								//var tag = res['tag'];
+								if(res.msg=='success')
+									{	console.log(uid);
+										//$('#'+uid).remove();
+										$("[rmid="+uid+"]").remove();
+										
+									}
+								if(res.tag == 'add'){
+										var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+										$("[pid="+uid+"]").replaceWith(tagstr);
+								}
+								if(res.tag == 'remove'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
+									$("[pid="+uid+"]").replaceWith(tagstr);
+								} 
+								 console.log(res.wishlist);
+								 var wlist = res.wishlist;
+								 var str='';
+								 var count = wlist.length;
+								 $.each(wlist,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
+									str += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.price+'</p><a class="pro-del remove-wish"" href="javascript:void(0)" pid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									});
+									$('.mc-pro-list').html(str);
+								 	$('.wishlist_number').html(count);
+									 if(count==0)
+									{
+											
+									$('.mc-pro-list').append("<h5>NO PRODCUTS</h5>");							
+									}
+								if(!$("tr").hasClass("disp"))
+										{
+											$('.no-wishlist').css("display", "block");		
+																		
+										}
+								
+							}
+						}
+					});
+				  } 
+				});
+			//});
+			});
 			
 		</script>
 	</body>

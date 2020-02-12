@@ -20,13 +20,13 @@ class SubcategoriesController extends Controller
       $all_cart=$this->final_data[2];
       $category_featured=$this->final_data[3];
       $all_products=$this->final_data[5];
-
+      $wishlist=$this->final_data[4];
         $catarr=$this->catarr;
 
         $categories=Category::find($id);
         $subcategory=Subcategory::where('category_id',$id)->get();
         // dd($category->category_name);
-        return view('frontend_user.subcategory-list',compact('categories','subcategory','all_category','all_subcategory','all_cart','category_featured','all_products'));
+        return view('frontend_user.subcategory-list',compact('categories','subcategory','all_category','all_subcategory','all_cart','category_featured','all_products','wishlist'));
     }
     public function getAll(Request $request)
     {

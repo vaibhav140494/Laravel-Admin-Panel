@@ -59,6 +59,7 @@ class CartController extends Controller
                     $cart->quantity=$value;
                     $cart->total_amount=$total;
                     $cart->save();
+                    //dd($cart);
                     $response['cart']=$cart;
                     $response['message']='replace';
                     $response['data_replace'] = '<a href="'.route('frontend.cart.show').'"  name="'.$cart->product_id.'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>';

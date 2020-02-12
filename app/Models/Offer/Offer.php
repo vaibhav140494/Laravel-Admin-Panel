@@ -30,7 +30,7 @@ class Offer extends Model
      * Mass Assignable fields of model
      * @var array
      */
-    protected $fillable = ['offer_name','offer_code','offer_type','offer_desc','min_order_value','max_discount','min_offer_amount','is_active','no_of_counts','start_date','end_date'
+    protected $fillable = ['offer_name','offer_code','offer_type','offer_value','offer_desc','min_order_value','max_discount','min_offer_amount','is_active','no_of_counts','start_date','end_date'
 
     ];
 

@@ -25,6 +25,7 @@
                             <th>{{ trans('labels.backend.offers.table.offer_name') }}</th>
                             <th>{{ trans('labels.backend.offers.table.offer_code') }}</th>
                             <th>{{ trans('labels.backend.offers.table.offer_type') }}</th>
+                            <th>{{ trans('labels.backend.offers.table.offer_value') }}</th>
                             <th>{{ trans('labels.backend.offers.table.offer_desc') }}</th>
                             <th>{{ trans('labels.backend.offers.table.min_order_value') }}</th>
                             <th>{{ trans('labels.backend.offers.table.max_discount') }}</th>
@@ -40,6 +41,7 @@
                     </thead>
                     <thead class="transparent-bg">
                         <tr>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -88,6 +90,7 @@
                     {data: 'offer_name', name: '{{config('module.offers.table')}}.offer_name'},
                     {data: 'offer_code', name: '{{config('module.offers.table')}}.offer_code'},
                     {data: 'offer_type', name: '{{config('module.offers.table')}}.offer_type'},
+                    {data: 'offer_value', name: '{{config('module.offers.table')}}.offer_value'},
                     {data: 'offer_desc', name: '{{config('module.offers.table')}}.offer_desc'},
                     {data: 'min_order_value', name: '{{config('module.offers.table')}}.min_order_value'},
                     {data: 'max_discount', name: '{{config('module.offers.table')}}.max_discount'},

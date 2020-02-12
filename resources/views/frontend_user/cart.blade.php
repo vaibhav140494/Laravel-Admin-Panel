@@ -80,10 +80,11 @@
 									<div class="cuppon-wrap">
 										<h4>Discount Code</h4>
 										<p>Enter your coupon code if you have</p>
-										<form action="#" class="cuppon-form">
-											<input type="text" />
-											<button class="btn border-btn">apply coupon</button>
-										</form>
+										
+											<input type="text" id="offer" name="offer"/>
+											<h6 id='offer-invalid' style="margin-bottom:10px;"></h6>
+											<button class="btn border-btn" id="offer-btn">apply coupon</button>
+										
 									</div>
 								</div>
 							</div>
@@ -91,9 +92,9 @@
 						
 						<div class="col-md-4 col-xs-12 cart-checkout-process text-right">
 							<div class="wrap">
-								<p><span>Subtotal&nbsp; &#x20b9;</span><span id="subtotal">{{$total}}</span></p>
-								<p><span>Discount &#x20b9;</span><span id="discount">  0</span></p>
-								<h4><span>Grand total &#x20b9;</span><span id="grandtotal"> {{$total}}</span></h4>
+								<p><span>Subtotal &#x20b9;</span><span id="subtotal">{{$total}}</span></p>
+								<p><span>Discount &#x20b9;</span><span id="discount">0</span></p>
+								<h4><span>Grand total &#x20b9;</span><span id="discounted_price">{{$total}}</span></h4>
 								<a href="#" class="btn border-btn">process to checkout</a>
 							</div>
 						</div>
@@ -155,5 +156,38 @@
 			});
 		});
 		
+		$('#offer-btn').click(function(){
+                    var code=$('#offer').val();
+					var total=$('#subtotal').html();
+					console.log(code);
+					console.log(total);
+					$.ajax({
+						url:'{{route("frontend.offer.ckeck")}}',
+						method:'get',
+						dataType:'json',
+						data:{'code':code,'total':total},
+						success:function(response){
+							var res = response;
+							var str='';
+							var text = res.error;
+							var success = res.success;
+							var discount = res.discount;
+							var discounted_price = res.discounted_price;
+							console.log(text);
+							str+='<h6 id="offer-invalid" style="color:red;margin-bottom:10px;"></h6>';
+							console.log(str);
+							if(text){	
+							$('#offer-invalid').text(text);
+							$("#offer-invalid").css("color", "red");
+							}
+							if(success){
+							$('#offer-invalid').text(success);
+							$("#offer-invalid").css("color", "green");
+							$("#discount").html(discount);
+							$("#discounted_price").html(discounted_price);	
+							}
+						}
+					});
+	});
 	});
 </script>
