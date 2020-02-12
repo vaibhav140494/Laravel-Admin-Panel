@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models\Access\User\Traits\Attribute;
-
+use App\Models\Access\User\MultipleAddress;
+use DB;
 /**
  * Class UserAttribute.
  */
@@ -119,7 +120,7 @@ trait UserAttribute
     public function getEditButtonAttribute($class)
     {
         if (access()->allow('edit-user')) {
-            return '<a class="'.$class.'" href="'.route('admin.access.user.edit', $this).'">
+            return '<a class="'.$class.'" href="'.route('admin.access.user.edit', $this->id).'">
                     <i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-pencil"></i>
                 </a>';
         }

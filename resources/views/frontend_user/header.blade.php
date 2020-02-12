@@ -49,40 +49,40 @@
 								@if (\Auth::user()!='')
 								
 								<li class="account_area"><a href="#"> My Orders</a></li>
-								<!-- <li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li> -->
-								<li>
+								<li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li>
+								<!-- <li>
 										<div class="cart_menu_area">
 											<div class="cart_icon">
 												<span>Profile</span>
-												<!-- <span class="cart_number">2</span> -->
-											</div>
+												 <span class="cart_number">2</span> -->
+											<!-- </div> -->
 											
 											
 											<!-- Mini Cart Wrapper -->	
-											<div class=" user-profile" style="visibility: hidden;">
-											<div class="close-button">
-														<span>
-															<i class="fa fa-times-circle" aria-hidden="true" ></i>
-														</span>
-													</div>
-												<div class="user-header">
-													
-													<h3>Welcome {{\Auth::user()->first_name}}</h3>
-												</div>
-												<div class="user_footer">
-													<div class="pull-left">
-													
+											<!-- <div class=" user-profile" style="visibility: hidden;">
+												<div class="close-button">
+															<span>
+																<i class="fa fa-times-circle" aria-hidden="true" ></i>
+															</span>
+														</div>
+													<div class="user-header">
 														
-														<a href="{{route('frontend.register.edit',['id'=>\Auth::user()->id])}}" class="btn btn-primary">Edit Profile</a>
+														<h3>Welcome {{\Auth::user()->first_name}}</h3>
 													</div>
-													<div class="pull-right">
-														<a href="{{route('frontend.logout')}}" class="btn btn-danger">Sign out</a>
+													<div class="user_footer">
+														<div class="pull-left">
+														
+															
+															<a href="{{route('frontend.register.edit',['id'=>\Auth::user()->id])}}" class="btn btn-primary">Edit Profile</a>
+														</div>
+														<div class="pull-right">
+															<a href="{{route('frontend.logout')}}" class="btn btn-danger">Sign out</a>
+														</div>
 													</div>
-												</div>
-											</div>											
-										</div>	
+												</div>											
+											</div>	 
 										
-									</li>
+								</li> -->
 
 
 								@else
@@ -112,7 +112,7 @@
 											</li>									
 											
 											<li><a href="#">Categories <i class="fa fa-angle-down"></i></a>
-												
+											
 												<div class="mega-menu mm-3-column mm-left">
 														@if(isset($all_category) && isset($all_subcategory))
 														@foreach($all_category as $cat)
@@ -225,6 +225,7 @@
 											<li><a href="#">about</a></li>
 
 										</ul>
+					</ul>
 									</nav>
 								</div> <!--  End mobile-menu -->						
 							</div>
@@ -252,6 +253,7 @@
 									
 									<li>
 										@if(isset($wishlist))
+									
 										<div class="wishlist_manu_area" style="align:center">
 											<div class="wishlist_icon">
 												<a href="{{route('frontend.wishlist.list',[\Auth::user()->id])}}"><i class="fa fa-heart" aria-hidden="true"></i></a>
@@ -288,44 +290,61 @@
 											<div class="cart_menu_area">
 												<div class="cart_icon">
 													<a href="{{route('frontend.cart.show')}}"><i class="ti-shopping-cart-full" aria-hidden="true"></i></a>
-													<span class="cart_number">{{$all_cart->count()}}</span>
+													<span class="cart_number" id="cart-count">   @if($all_cart) {{$all_cart->count()}} @else 0 @endif</span>
 												</div>
 												<!-- Mini Cart Wrapper -->
+												
 												<div class="mini-cart-wrapper">
 													<!-- Product List -->
-													<div class="mc-pro-list fix">
-														@foreach($all_cart as $allcrt)
-															<div class="mc-sin-pro fix">
-																<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
-																<div class="mc-pro-details fix">
-																	<a href="#">{{$allcrt->product_name}}</a>
-																	<p>{{$allcrt->quantity}}x &#x20b9;{{$allcrt->gross_amount}}</p>
-																	<?php $total+=$allcrt->total_amount;?>
-																	<a class="pro-del cp_remove" href="javascript:void(0)" name="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
-																</div>
+													
+														@if($all_cart)
+															@if($all_cart->count()>0)
+															<div class="mc-pro-list fix">
+																@foreach($all_cart as $allcrt)
+																	<div class="mc-sin-pro fix">
+																		<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
+																		<div class="mc-pro-details fix">
+																			<a href="#">{{$allcrt->product_name}}</a>
+																			<p>{{$allcrt->quantity}}x &#x20b9;{{$allcrt->gross_amount}}</p>
+																			<?php $total+=$allcrt->total_amount;?>
+																			<a class="pro-del cp_remove" href="javascript:void(0)" pid="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
+																		</div>
+																	</div>
+																@endforeach
 															</div>
-														@endforeach
-													</div>
-													<!-- Sub Total -->
-													<div class="mc-subtotal fix">
-														<h4>Subtotal <span> &#x20b9; {{$total}}</span></h4>
-													</div>
-													<!-- Cart Button -->
-													<div class="mc-button">
-														<a href="#" class="checkout_btn">checkout</a>
-													</div>
-												</div>											
-											</div>	
-										@endif
-									</li>
+
+															<!-- Sub Total -->
+															<div class="mc-subtotal fix">
+																<h4>Subtotal &#x20b9;<span id="cart-subtotal">  {{$total}}</span></h4>
+															</div>
+															<!-- Cart Button -->
+															<div class="mc-button">
+																<a href="#" class="checkout_btn">checkout</a>
+															</div>
+													
+														@else
+															<span id="empty cart">No products in your cart!!!</span>
+														@endif		
+													@endif
+												</div>
+											</div>
+										@endif 
+										</li>
 									@endif
+
 								</ul>
 							</div>	
 						</div><!--  End Col -->	
-						
 					</div>
 				</div>
 			</div>
 		</header>
+		<div class="alert alert-success text-center" id="success-alert-add-cart" style="position:fixed;top:5%;z-index:10;left:0; right:0;display:none;">
+			<!-- <button	 type="button" class="close text-center" data-dismiss="alert" >x</button> -->
+			<strong> Product is added to your Cart.</strong>
+		</div>
+		<div class="alert alert-success text-center" id="success-alert-remove-cart" style="position:fixed;top:5%;z-index:10;left:0; right:0;display:none;">
+			<!-- <button	 type="button" class="close text-center" data-dismiss="alert">x</button> -->
+			<strong> Product is removed from your Cart.</strong>
+		</div>
 		<!--  End Header  -->
-		

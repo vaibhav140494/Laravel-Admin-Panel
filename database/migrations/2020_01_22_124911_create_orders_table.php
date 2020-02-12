@@ -25,11 +25,11 @@ class CreateOrdersTable extends Migration
             ->onDelete('cascade');
             $table->string('order_id',20);
             $table->string('instructions',255);
-            $table->integer('gross_amount');
-            $table->integer('tax_amount');
-            $table->integer('total_amount');
-            $table->integer('discount');
-            $table->enum('status', ['placed', 'confirmed','dispatched','delivered','returned','refunded']);
+            $table->float('gross_amount');
+            $table->float('tax_amount');
+            $table->float('total_amount');
+            $table->float('discount');
+            $table->enum('status', ['placed', 'confirmed','dispatched','delivered','returned','refunded','canceled'])->default('placed');
             $table->boolean('type')->comment('0-pickup and 1-delivery');
             $table->timestamps();
         });

@@ -18,10 +18,11 @@ class CreateOffersTable extends Migration
             $table->string('offer_name',100);
             $table->string('offer_code',100);
             $table->boolean('offer_type')->comment('0-flat and 1-percentage');
+            $table->integer('offer_value');
             $table->string('offer_desc',255);
-            $table->integer('min_order_value');
-            $table->integer('max_discount');
-            $table->integer('min_offer_amount');
+            $table->float('min_order_value');
+            $table->float('max_discount');
+            $table->float('min_offer_amount');
             $table->boolean('is_active');
             $table->date('start_date')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->date('end_date');

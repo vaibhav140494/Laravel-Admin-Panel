@@ -29,9 +29,9 @@ class CreateCartTable extends Migration
                   ->onDelete('cascade');
             $table->string('cart_id',20);
             $table->integer('quantity');
-            $table->integer('gross_amount');
-            $table->integer('tax_amount');
-            $table->integer('total_amount');                
+            $table->float('gross_amount');
+            $table->float('tax_amount');
+            $table->float('total_amount');                
             $table->timestamps();
         });
     }

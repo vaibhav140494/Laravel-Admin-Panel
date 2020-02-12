@@ -60,6 +60,9 @@ Route::group([
                 Route::get('delete', 'UserStatusController@delete')->name('user.delete-permanently');
                 Route::get('restore', 'UserStatusController@restore')->name('user.restore');
             });
+            Route::post('users/address/delete','UserController@deleteAddress')->name('user.address.delete');    
+            Route::get('users/address/edit/{id}','UserController@editAddress')->name('user.address.edit');
+            Route::patch('users/address/{id}/update','UserController@updateAddress')->name('user.address.update');
         });
 
         /*

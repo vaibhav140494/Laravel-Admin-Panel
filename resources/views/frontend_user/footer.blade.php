@@ -41,18 +41,6 @@
 							</div>
 						</div> <!--  End Col -->	
 						@endif
-						<!-- <div class="col-lg-4 col-sm-6">
-							<div class="single_ftr">
-								<h4 class="sf_title">Join Us Newsletter</h4>
-								<div class="newsletter_form">
-									<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Aenean lobortis  </p>
-									<form method="post" action="#" class="form-inline">				
-										<input name="EMAIL" id="email" placeholder="Enter Your Email" class="form-control" type="email">
-										<button type="submit" class="btn btn-default"><i class="fa fa-paper-plane-o"></i></button>
-									</form>
-								</div>
-							</div>
-						</div>  End Col -->
 						
 					</div>
 				</div>
@@ -90,7 +78,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" integrity="sha256-sfG8c9ILUB8EXQ5muswfjZsKICbRIJUG/kBogvvV5sY=" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(function(){
-				
+				$("#success-alert-add-cart").hide();
+				$("#success-alert-remove-cart").hide();
 				// alert($('.cart_icon').offset());
 				$('.cart_menu_area').click(function(){
 					$('.user-profile').css('visibility','visible');
@@ -117,7 +106,15 @@
 								// $(el).replaceWith();
 								var str='';
 								//var tag = res['tag'];
-								 $(el).replaceWith(res.tag);
+								if(res.tag == 'add'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								if(res.tag == 'remove'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								 
 								 console.log(res.wishlist);
 								 var wlist = res.wishlist;
 								 var count = wlist.length;
@@ -158,8 +155,17 @@
 									}
 								else{
 									var str='';
+									
 								//var tag = res['tag'];
-								 $(el).replaceWith(res.tag);
+								if(res.tag == 'remove'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								if(res.tag == 'add'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+									$(el).replaceWith(tagstr);
+								}
+								 
 								 console.log(res.wishlist);
 								 var wlist = res.wishlist;
 								 var count = wlist.length;
@@ -186,7 +192,6 @@
 
 				// 	$prod=0;
 						
-						
 				// 	?>	
 					
 				// 	 if(<?php // echo $prod; ?> < value)
@@ -206,17 +211,18 @@
 				// 	 <?php
 				// 	}
 				// 	 ?>
-				// $('.cart_menu_area').click(function(){
-				// 	$('.user-profile').css('visibility','visible');
-				// });	
-				// $('.close-button').click(function(){
-				// 	// alert("hello");
-				// 	$('.user-profile').css('visibility','hidden');
-				// });	
+					$('.cart_menu_area').click(function(){
+						$('.user-profile').css('visibility','visible');
+					});	
+					$('.close-button').click(function(){
+						$('.user-profile').css('visibility','hidden');
+					});	
 
-				$('.cart-btn').click(function(){
+				$(document).on('click','.cart-btn',function(){
 					var value=$('#prod_qty').val();
-					var id=$(this).attr('name');
+					var pid=$(this).attr('name');
+					// $(this).attr('id',pid);
+					
 					if(value==0)
 					{
 						alert("please select Quantity");
@@ -226,7 +232,7 @@
 						url:'{{route("frontend.cart.add")}}',
 						method:'get',
 						dataType:'json',
-						data:{'value':value,'id':id},
+						data:{'value':value,'id':pid},
 						success:function(response)
 						{
 							if(response['login']==false)
@@ -234,11 +240,61 @@
 								var route="{{route('frontend.user.login')}}";
 								window.location.replace(route);
 							}
+							if(response['message']=='replace')
+							{
+								//console.log(response['data_replace']);
+								// console.log($(this).parent().html());
+								// $(this).html(response['data_replace']);
+								//   console.log($(this).html());
+								// $(this).attr('data-tip','view-cart');
+								//   return true;
+								
+								$(this).parent().html(response['data_replace']);
+								console.log($(this).html());
+
+							}
 							if(response['message']=="success")
 							{
-								alert("product added to cart successfully");
-								location.reload(true);	
-								return false;
+								$(this).html(response['data_replace']);
+
+								$("#success-alert-add-cart").fadeTo(1000, 500).slideUp(500, function() {
+      							$("#success-alert-add-cart").slideUp(500);
+								});
+								// $('#'+pid).html(response['data_replace']);
+								// console.log($(response['data_replace']));
+								// console.log('#'+pid);
+
+								$('#cart-count').text(response['cart'].length);
+								var cart=response['cart'];
+								var div='';
+								var total=0;
+								
+								$.each(cart,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
+									// console.log(route);
+									var prodname= value.product_name;
+									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+
+									 total+=value.quantity * value.gross_amount;
+								});
+								$('.mc-pro-list').html(div);
+								$('#cart-subtotal').text(total);
+								if(response['cart'].length==0)
+								{
+									// console.log("null");
+									$('.mc-subtotal').hide();
+									$('.mc-button').hide();
+									$('.mc-pro-list').text('No products in your cart!!!');
+								}
+								else
+								{
+									$('.mc-subtotal').show();
+									$('.mc-button').show();
+									// console.log("hello");
+								}
+								
+
 							}
 							if(response['fail']=="fail")
 							{
@@ -248,8 +304,12 @@
 						}
 					});
 				});	
+
 				$(document).on('click','.cp_remove',function(){
-					var id=$(this).attr('name');
+					var id=$(this).attr('pid');
+					// $(this).parent().html("hello");
+					// console.log($(this).parent().html());
+					// return false;
 					$.ajax({
 						url:'{{route("frontend.cart.remove")}}',
 						method:'get',
@@ -259,9 +319,41 @@
 						{
 							if(response['message']=="success")
 							{
-								alert("product deleted to cart successfully");
-								location.reload(true);
-								return false;
+								$("#success-alert-remove-cart").fadeTo(1000, 500).slideUp(500, function() {
+									$("#success-alert-remove-cart").slideUp(500);
+									$('#'+id).remove();
+								});
+								$('#cart-count').text(response['cart'].length);
+								
+								var cart=response['cart'];
+								var div='';
+								total=0;
+								$.each(cart,function(key,value){
+									var route ='{{url("storage/products/")}}';
+									route +='/'+value.image;
+									// console.log(route);
+									// var prodname= values.product_name;
+									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									//  console.log(div);
+									total+=value.quantity * value.gross_amount;
+								});
+
+								$('.mc-pro-list').html(div);
+								$('#cart-subtotal').text(total);
+								if(response['cart'].length==0)
+								{
+									$('.mc-subtotal').hide();
+									$('.mc-button').hide();
+									$('.mc-pro-list').text('No products in your cart!!!');
+								}
+								else
+								{
+									$('.mc-subtotal').show();
+									$('.mc-button').show();
+								}
+
+									
+								return true;
 							}
 							if(response['message']=="fail")
 							{
@@ -270,6 +362,7 @@
 							}
 						}
 					});
+	
 				});
 				$(document).on('click','.remove-wish',function(){
 					var uid=$(this).attr('pid');
@@ -291,7 +384,20 @@
 							
 								
 								//var tag = res['tag'];
-								 $("[pid="+uid+"]").replaceWith(res.tag);
+								if(res.msg=='success')
+									{	console.log(uid);
+										//$('#'+uid).remove();
+										$("[rmid="+uid+"]").remove();
+										
+									}
+								if(res.tag == 'add'){
+										var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
+										$("[pid="+uid+"]").replaceWith(tagstr);
+								}
+								if(res.tag == 'remove'){
+									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
+									$("[pid="+uid+"]").replaceWith(tagstr);
+								} 
 								 console.log(res.wishlist);
 								 var wlist = res.wishlist;
 								 var str='';
@@ -304,17 +410,24 @@
 									$('.mc-pro-list').html(str);
 								 	$('.wishlist_number').html(count);
 									 if(count==0)
-								{
+									{
 											
 									$('.mc-pro-list').append("<h5>NO PRODCUTS</h5>");							
-								}
+									}
+								if(!$("tr").hasClass("disp"))
+										{
+											$('.no-wishlist').css("display", "block");		
+																		
+										}
+								
 							}
 						}
 					});
 				  } 
 				});
+			//});
 			});
-			});
+			
 		</script>
 	</body>
 </html>

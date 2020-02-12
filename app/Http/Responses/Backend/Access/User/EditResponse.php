@@ -10,6 +10,7 @@ class EditResponse implements Responsable
      * @var \App\Models\Access\User\User
      */
     protected $user;
+    protected $multiple_address;
 
     /**
      * @var \App\Models\Access\Permission\Permission
@@ -24,11 +25,12 @@ class EditResponse implements Responsable
     /**
      * @param \App\Models\Access\User\User $user
      */
-    public function __construct($user, $roles, $permissions)
+    public function __construct($user, $roles, $permissions,$user_addresses)
     {
         $this->user = $user;
         $this->roles = $roles;
         $this->permissions = $permissions;
+        $this->multiple_address=$user_addresses;
     }
 
     /**
@@ -49,6 +51,7 @@ class EditResponse implements Responsable
             'roles'           => $this->roles,
             'userPermissions' => $userPermissions,
             'permissions'     => $permissions,
+            'multiple_address'=> $this->multiple_address,
         ]);
     }
 }

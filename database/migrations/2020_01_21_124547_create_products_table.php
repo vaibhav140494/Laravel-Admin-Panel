@@ -26,9 +26,9 @@ class CreateProductsTable extends Migration
             $table->integer('sku');
             $table->string('product_name',50);
             $table->integer('quantity');
-            $table->integer('type');
-            $table->integer('price');
-            $table->integer('discouted_price');
+            $table->integer('type')->default(1)->comment('1-simple and 2-congigurable');
+            $table->float('price');
+            $table->float('discouted_price');
             $table->string('image');
             $table->text('specification');
             $table->timestamps();

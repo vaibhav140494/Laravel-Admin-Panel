@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order\wishList;
+use App\Models\Product\Product;
 use DB;
 
 
 class WishListController extends Controller{
-    
+    public function __construct()
+    {      
+        parent::__construct();
+    }
     public function add(Request $request)
     {
         if(\Auth::user())
@@ -22,19 +26,22 @@ class WishListController extends Controller{
                 'user_id'=>\Auth::user()->id,
                 'product_id'=>$id
             ]);
-            $final_data= parent::__construct();
-            $wishlist=$final_data[3];
-            
+            $data = DB::table('wishlist')->leftjoin('products','wishlist.product_id','=','products.id')
+            ->select('wishlist.*','products.product_name','products.image','products.price')
+            ->where('user_id',$this->uid)->get();
+            //$wishlist=$this->final_data[4];
+            $wishlist=$data;
+           // dd($wishlist);
             $response['wishlist']=$wishlist;
             
             if($var){
-                $str='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'.$id.'" class="remove-wishlist m-t-8 btn " id="'.$id.'"><i class="fa fa-minus-circle"></i></a>';
-                $response['tag']=$str;
+                
+                $response['tag']="remove";
                 echo json_encode($response);
             }
             else{
-                $str='<a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist m-t-8 btn" pid="'.$id.'"><i class="fa fa-shopping-bag"></i></a>';
-                $response['tag']=$str;
+                
+                $response['tag']="add";
                 echo json_encode($response);
             } 
             //return redirect()->route('frontend.index');
@@ -54,17 +61,21 @@ class WishListController extends Controller{
             ['product_id','=',$id]
             ])->delete();
             //dd($var);
-            $final_data= parent::__construct();
-            $wishlist=$final_data[3];
+            $data = DB::table('wishlist')->leftjoin('products','wishlist.product_id','=','products.id')
+            ->select('wishlist.*','products.product_name','products.image','products.price')
+            ->where('user_id',$this->uid)->get();
+            $wishlist=$data;
             $response['wishlist']=$wishlist;
             if($var == 1){
-                $str='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'.$id.'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
-                $response['tag']=$str;
+                
+                $response['tag']="add";
+                $response['msg']="success";
                 echo json_encode($response);
             }
             else{
-                $str='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'.$id.'" class="remove-wishlist m-t-8 btn"><i class="fa fa-minus-circle"></i></a>';
-                $response['tag']=$str;
+                
+                $response['tag']="remove";
+                $response['msg']="fail";
                 echo json_encode($response);
             }       
         //return redirect()->route('frontend.index');    
@@ -72,9 +83,9 @@ class WishListController extends Controller{
 
     public function list($id)
     {
-        $final_data= parent::__construct();
-        $all_cart=$final_data[2];
-        $wishlist=$final_data[3];
+        $all_cart=$this->final_data[2];
+        $category_featured=$this->final_data[3];
+        $wishlist=$this->final_data[4];
         $wished_products = DB::table('products')
                          ->join('wishlist','products.id','=','wishlist.product_id')
                          ->select('products.id','products.image','products.product_name','products.price','products.discouted_price')
@@ -85,7 +96,8 @@ class WishListController extends Controller{
         return view('frontend_user.wishlist')->with([
             'wished_products'=>$wished_products,
             'wishlist'=>$wishlist,
-            'all_cart'=>$all_cart
+            'all_cart'=>$all_cart,
+            'category_featured'=>$category_featured
         ]);
     }
 

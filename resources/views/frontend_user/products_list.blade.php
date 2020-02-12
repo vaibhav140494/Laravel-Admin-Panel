@@ -51,7 +51,7 @@
 											@endif
 											<!-- <li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li> -->
 											<!-- <li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li> -->
-											<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+											<li id="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 										</ul>
 										<!-- <span class="product-new-label">-20%</span>				 -->
 									</div>

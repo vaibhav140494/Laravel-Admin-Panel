@@ -161,7 +161,7 @@
 												@else
 												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
 												@endif
-												<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 											</ul>
 											 <span class="product-new-label">Sale</span> 
 										</div>
@@ -171,6 +171,7 @@
 												@if($product_review[$i]->product_id==$prod->id)
 													@for($j=0;$j<$product_review[$i]->rating;$j++)
 													<li class="fa fa-star"></li>
+													
 													@endfor
 												@endif
 											@endfor
@@ -253,7 +254,7 @@
 											<ul class="social">
 												<li><a  class="venobox"href="{{url('storage/products/'.$prod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
 												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-												<li><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												<li id="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 											</ul>
 										</div>
 										<ul class="rating">

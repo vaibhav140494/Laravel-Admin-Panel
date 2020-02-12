@@ -296,6 +296,7 @@ return [
 		"offer_name" => "Offer Name",
 		"offer_code" => "Offer Code",
 		"offer_type" => "Offer Type",
+		"offer_value"=> "Offer Value",
 		"offer_desc" => "Offer Desc",
 		"min_order_value" => "Min Order value",
 		"max_discount" => "Max Discount",

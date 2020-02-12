@@ -39,6 +39,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'multiple_address_id',
         'first_name',
         'last_name',
         'addrss',

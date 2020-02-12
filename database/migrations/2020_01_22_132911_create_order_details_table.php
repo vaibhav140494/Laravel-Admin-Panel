@@ -23,10 +23,10 @@ class CreateOrderDetailsTable extends Migration
             $table->foreign('order_id')
             ->references('id')->on('orders')
             ->onDelete('cascade');
-            $table->integer('quntity');
-            $table->integer('gross_amount');
-            $table->integer('tax_amount');
-            $table->integer('total_amount');
+            $table->float('quntity');
+            $table->float('gross_amount');
+            $table->float('tax_amount');
+            $table->float('total_amount');
             $table->timestamps();
         });
     }
