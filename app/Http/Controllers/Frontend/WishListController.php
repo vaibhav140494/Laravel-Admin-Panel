@@ -86,6 +86,7 @@ class WishListController extends Controller{
         $all_cart=$this->final_data[2];
         $category_featured=$this->final_data[3];
         $wishlist=$this->final_data[4];
+        $all_products=$this->final_data[5];
         $wished_products = DB::table('products')
                          ->join('wishlist','products.id','=','wishlist.product_id')
                          ->select('products.id','products.image','products.product_name','products.price','products.discouted_price')
@@ -97,7 +98,8 @@ class WishListController extends Controller{
             'wished_products'=>$wished_products,
             'wishlist'=>$wishlist,
             'all_cart'=>$all_cart,
-            'category_featured'=>$category_featured
+            'category_featured'=>$category_featured,
+            'all_products'=>$all_products
         ]);
     }
 

@@ -50,6 +50,7 @@ Route::get('cart/show','CartController@show')->name('cart.show');
 Route::get('cart/remove','CartController@remove')->name('cart.remove');
 
 
+Route::get('/checkout','CartController@checkout')->name('checkout');
 // });
 /*
  * These frontend controllers require the user to be logged in
