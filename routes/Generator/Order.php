@@ -9,6 +9,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::resource('orders', 'OrdersController');
         //For Datatable
         Route::post('orders/get', 'OrdersTableController')->name('orders.get');
+        Route::get('view/order/details/{id}','OrdersController@viewOrder')->name('view.order');
     });
     
 });

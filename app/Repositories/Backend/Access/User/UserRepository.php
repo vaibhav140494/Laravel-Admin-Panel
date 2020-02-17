@@ -59,22 +59,22 @@ class UserRepository extends BaseRepository
          * Note: You must return deleted_at or the User getActionButtonsAttribute won't
          * be able to differentiate what buttons to show for each row.
          */
-        $dataTableQuery = $this->query()
-            ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
-            ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
-            ->select([
-                config('access.users_table').'.id',
-                config('access.users_table').'.first_name',
-                config('access.users_table').'.last_name',
-                config('access.users_table').'.email',
-                config('access.users_table').'.status',
-                config('access.users_table').'.confirmed',
-                config('access.users_table').'.created_at',
-                config('access.users_table').'.updated_at',
-                config('access.users_table').'.deleted_at',
-                DB::raw('GROUP_CONCAT(roles.name) as roles'),
-            ])
-            ->groupBy('users.id');
+            $dataTableQuery = $this->query()
+                ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
+                ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
+                ->select([
+                    config('access.users_table').'.id',
+                    config('access.users_table').'.first_name',
+                    config('access.users_table').'.last_name',
+                    config('access.users_table').'.email',
+                    config('access.users_table').'.status',
+                    config('access.users_table').'.confirmed',
+                    config('access.users_table').'.created_at',
+                    config('access.users_table').'.updated_at',
+                    config('access.users_table').'.deleted_at',
+                    DB::raw('GROUP_CONCAT(roles.name) as roles'),
+                ])
+                ->groupBy('users.id');
 
         if ($trashed == 'true') {
             return $dataTableQuery->onlyTrashed();

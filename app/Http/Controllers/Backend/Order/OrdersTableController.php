@@ -36,14 +36,22 @@ class OrdersTableController extends Controller
      */
     public function __invoke(ManageOrderRequest $request)
     {
-        return Datatables::of($this->order->getForDataTable())
+
+        $ans = Datatables::of($this->order->getForDataTable())
             ->escapeColumns(['id'])
             ->addColumn('created_at', function ($order) {
                 return Carbon::parse($order->created_at)->toDateString();
             })
-            ->addColumn('actions', function ($order) {
-                return $order->action_buttons;
+            ->addColumn('full_name',function($order){
+                return $order->full_name;
             })
-            ->make(true);
+            ->addColumn('actions', function ($order) {
+                $route=url('admin/view/order/details/'.$order->id);
+                return '<a href="'.$route.'" class="btn btn-flat btn-default">
+                <i data-toggle="tooltip" data-placement="top" title="View Order Details" class="fa fa-eye"></i>
+                </a>';
+            })
+            ->make(true); 
+            return $ans;
     }
 }

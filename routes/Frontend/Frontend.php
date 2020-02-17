@@ -49,6 +49,7 @@ Route::get('cart/add','CartController@add')->name('cart.add');
 Route::get('cart/show','CartController@show')->name('cart.show');
 Route::get('cart/remove','CartController@remove')->name('cart.remove');
 
+
 // });
 /*
  * These frontend controllers require the user to be logged in

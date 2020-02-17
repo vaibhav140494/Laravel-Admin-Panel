@@ -245,7 +245,7 @@
 							if(response['message']=="success")
 							{
 								
-								$(a).replaceWith(response['data_replace']);
+								$('[name='+pid+']').replaceWith(response['data_replace']);
 
 								$("#success-alert-add-cart").fadeTo(1000, 500).slideUp(500, function() {
       								$("#success-alert-add-cart").slideUp(500);
@@ -261,9 +261,9 @@
 									route +='/'+value.image;
 									// console.log(route);
 									var prodname= value.product_name;
-									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.price+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'" prodid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
 
-									 total+=value.quantity * value.gross_amount;
+									 total+=value.total_amount;
 								});
 								div+='</div>';
 								div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal">  '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
@@ -283,7 +283,8 @@
 				$(document).on('click','.cp_remove',function(){
 					var id=$(this).attr('pid');
 					var a=$(this).attr('prodid');
-					alert(a);
+					// alert(a);
+					// dt=$('#'+a).html();
 					console.log(a);
 					$.ajax({
 						url:'{{route("frontend.cart.remove")}}',
@@ -306,23 +307,25 @@
 								var cart=response['cart'];
 								var div='<div class="mc-pro-list fix">';
 								total=0;
-								console.log($('#'+a).html(response['data_replace']));
-								$('#'+a).html(response['data_replace']);
+								
+								$("[prid="+a+"]").replaceWith(response['data_replace']);
+								
 								if(cart.length > 0)
 								{							
 									$.each(cart,function(key,value){
 										var route ='{{url("storage/products/")}}';
 										route +='/'+value.image;
-										// console.log(route);
-										// var prodname= values.product_name;
-										div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
-										//  console.log(div);
-										total+=value.quantity * value.gross_amount;
+										div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.price+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'" prodid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+										total+=value.total_amount;
+
 									});
 									div+='</div>';
 									div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal">  '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
 
 									$('.mini-cart-wrapper').html(div);
+									$('#subtotal').html(total);
+									var dis=$('#discount').text();
+									$('#discounted_price').html(total - dis);
 								}
 								else
 								{

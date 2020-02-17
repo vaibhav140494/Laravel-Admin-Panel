@@ -290,17 +290,19 @@
 													
 														@if($all_cart)
 															@if($all_cart->count()>0)
-															<div class="mc-pro-list fix">
-																@foreach($all_cart as $allcrt)
-																	<div class="mc-sin-pro fix">
-																		<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
-																		<div class="mc-pro-details fix">
-																			<a href="#">{{$allcrt->product_name}}</a>
-																			<p>{{$allcrt->quantity}} x &#x20b9;{{$allcrt->gross_amount}}</p>
-																			<?php $total+=$allcrt->total_amount;?>
-																			<a class="pro-del cp_remove" href="javascript:void(0)"  prodid="{{$allcrt->product_id}}" pid="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
+																<div class="mc-pro-list fix">
+																	@foreach($all_cart as $allcrt)																
+																		<div class="mc-sin-pro fix">
+																			<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$allcrt->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>
+																			<div class="mc-pro-details fix">
+																				<a href="#">{{$allcrt->product_name}}</a>
+																		
+																				<p>{{$allcrt->quantity}} x &#x20b9;{{$allcrt->price}}</p>
+																				<?php $total+=$allcrt->total_amount;?>	
+																																
+																				<a class="pro-del cp_remove" href="javascript:void(0)"  prodid="{{$allcrt->product_id}}" pid="{{$allcrt->id}}"><i class="fa fa-times-circle"></i></a>
+																			</div>
 																		</div>
-																	</div>
 																@endforeach
 															</div>
 

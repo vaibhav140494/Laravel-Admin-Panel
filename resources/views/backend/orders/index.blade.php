@@ -22,18 +22,16 @@
                     <thead>
                         <tr>
                             <th>{{ trans('labels.backend.orders.table.id') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.user_id') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.offer_id') }}</th>
                             <th>{{ trans('labels.backend.orders.table.order_id') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.instructions') }}</th>
+                            <th>Customer Name</th>
+                            <th>Contact No</th>
                             <th>{{ trans('labels.backend.orders.table.gross_amount') }}</th>
                             <th>{{ trans('labels.backend.orders.table.tax_amount') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.total_amount') }}</th>
                             <th>{{ trans('labels.backend.orders.table.discount') }}</th>
+                            <th>{{ trans('labels.backend.orders.table.total_amount') }}</th>
+                            <th>offer_code</th>
                             <th>{{ trans('labels.backend.orders.table.status') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.type') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.createdat') }}</th>
-                            <th>{{ trans('labels.backend.orders.table.updatedat') }}</th>
+                           
                             <th>{{ trans('labels.general.actions') }}</th>
                         </tr>
                     </thead>
@@ -50,9 +48,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                          
                         </tr>
                     </thead>
                 </table>
@@ -82,22 +78,19 @@
                     type: 'post'
                 },
                 columns: [
-                    {data: 'id', name: '{{config('module.orders.table')}}.id'},
-                    {data: 'user_id', name: '{{config('module.orders.table')}}.user_id'},
-                    {data: 'offer_id', name: '{{config('module.orders.table')}}.offer_id'},
+                    {data: 'id', name: 'id'},
                     {data: 'order_id', name: '{{config('module.orders.table')}}.order_id'},
-                    {data: 'instructions', name: '{{config('module.orders.table')}}.instructions'},
+                    {data: 'full_name', name: '{{config('module.orders.table')}}.full_name'},
+                    {data: 'phone_no', name: '{{config('module.orders.table')}}.phone_no'},
                     {data: 'gross_amount', name: '{{config('module.orders.table')}}.gross_amount'},
                     {data: 'tax_amount', name: '{{config('module.orders.table')}}.tax_amount'},
-                    {data: 'total_amount', name: '{{config('module.orders.table')}}.total_amount'},
                     {data: 'discount', name: '{{config('module.orders.table')}}.discount'},
+                    {data: 'total_amount', name: '{{config('module.orders.table')}}.total_amount'},
+                    {data: 'offer_code', name: '{{config('module.orders.table')}}.offer_code'},
                     {data: 'status', name: '{{config('module.orders.table')}}.status'},
-                    {data: 'type', name: '{{config('module.orders.table')}}.type'},
-                    {data: 'created_at', name: '{{config('module.orders.table')}}.created_at'},
-                    {data: 'updated_at', name: '{{config('module.orders.table')}}.updated_at'},
-                    {data: 'actions', name: 'actions', searchable: false, sortable: false}
+                    {data: 'actions', name: 'actions'}
                 ],
-                order: [[0, "asc"]],
+                order: [[0, "asc"]],    
                 searchDelay: 500,
                 dom: 'lBfrtip',
                 buttons: {
