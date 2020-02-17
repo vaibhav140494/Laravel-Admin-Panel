@@ -126,7 +126,39 @@
                             </div>
                         </div>
                     </div>
-
+                    <form  method="POST" action="{{route('admin.update.order.status')}}" enctype="multipart/form-data"  id="form">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="order_id" value="{{$orders->id}}">
+                        <div class="row gutter-20">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="state" class="control-label"> Order Status</label>
+                                    <select class="form-control" id="status" name="status">
+                                        {{--@if($users[0]['type'] == '2')--}}
+                                            <option value="placed" id="0" <?php  echo ($orders->status=="placed") ? "selected" : '' ?>>Order Placed</option>
+                                            <option value="confirmed"  id="1" <?php  echo ($orders->status=="confirmed") ? "selected" : "" ?>>Order Confirmed</option>
+                                            <option value="dispatched" id="2"  <?php echo ($orders->status=="dispatched") ? "selected" : "" ?>>Order Dispatched</option>
+                                            <option value="delivered"  id="3" <?php  echo ($orders->status=="delivered") ? "selected" : "" ?>>Order Delivered</option>
+                                            <option value="returned" id="4"  <?php  echo ($orders->status=="returned") ? "selected" : "" ?>> Order Returned</option>
+                                            <option value="refunded"  id="5" <?php  echo ($orders->status=="refunded") ? "selected" : "" ?>>Order Refunded</option>
+                                            <option value="cancelled" id="6"  <?php  echo ($orders->status=="cancelled") ? "selected" : "" ?>>Order Cancelled</option>
+                                        {{--@else--}}
+                                        <!--     <option value="0" <?php  //echo ($users[0]['status']==0) ? "selected" : "" ?>>Order Placed</option>
+                                            <option value="1" <?php // echo ($users[0]['status']==1) ? "selected" : "" ?>>Order Confirmed</option>
+                                            <option value="2" <?php  //echo ($users[0]['status']==2) ? "selected" : "" ?>>Order is being Prepared</option>
+                                            <option value="3" <?php  //echo ($users[0]['status']==3) ? "selected" : "" ?>>Order is Ready</option>
+                                            <option value="5" <?php  //echo ($users[0]['status']==5) ? "selected" : "" ?>>Order Delivered</option> -->
+                                        {{--@endif--}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="submit"  class="update_status btn btn-warning mtp5">Update</button>
+                        </div>
+                    </form>
                    
                     <div class="col-sm-12" style="margin-top: 20px;">
                         <div class="table-responsive">
@@ -184,42 +216,50 @@ $( function () {
     } 
 );
 $(document).ready(function(){
+        var selected= $('#status :selected').attr('id');
+        $('#status > option').each(function() {
+            id=$(this).attr('id');
+            // alert(id);
+            if(selected > id ){
+                $('#'+id).attr('disabled',true);
+            }
+        });
     setTimeout(function(){ $(".m-section__content").fadeOut("slow"); }, 3000);
 
-    $(".update_status").on("click", function(){
-        if(confirm('Are you sure you want to update order status?'))
-        {
-            var oid = $(this).attr("oid");
-            var status = $( "#status option:selected" ).val();
-            // var status = $(this).attr("statusId");
-            $.ajax({
-                type: "POST",
-                url: "<?php echo url('/'); ?>/orders/updateStatus/"+oid,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": oid,
-                    "status": status
-                },
-                success: function (result) {
-                    console.log(result);
-                    if(result.status == 200)
-                    {
-                        sessionStorage.reloadAfterPageLoad = 1;
-                        window.location.href = "<?php echo url('/'); ?>/orders/viewOrder/"+oid;
-                    }
-                    else
-                    {
-                        sessionStorage.reloadAfterPageLoad = 2;
-                        window.location.href = "<?php echo url('/'); ?>/orders/viewOrder/"+oid;
-                    }
-                }
-            });
-        }
-        else
-        {
-            return false;
-        }
-    });
+    // $(".update_status").on("click", function(){
+    //     if(confirm('Are you sure you want to update order status?'))
+    //     {
+    //         var oid = $(this).attr("oid");
+    //         var status = $( "#status option:selected" ).val();
+    //         // var status = $(this).attr("statusId");
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "<?php //echo url('/'); ?>/orders/updateStatus/"+oid,
+    //             data: {
+    //                 "_token": "{{ csrf_token() }}",
+    //                 "id": oid,
+    //                 "status": status
+    //             },
+    //             success: function (result) {
+    //                 console.log(result);
+    //                 if(result.status == 200)
+    //                 {
+    //                     sessionStorage.reloadAfterPageLoad = 1;
+    //                     window.location.href = "<?php //echo url('/'); ?>/orders/viewOrder/"+oid;
+    //                 }
+    //                 else
+    //                 {
+    //                     sessionStorage.reloadAfterPageLoad = 2;
+    //                     window.location.href = "<?php //echo url('/'); ?>/orders/viewOrder/"+oid;
+    //                 }
+    //             }
+    //         });
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
+    // });
 });
 </script>
 @endsection

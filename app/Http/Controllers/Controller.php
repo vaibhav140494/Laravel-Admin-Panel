@@ -37,11 +37,11 @@ abstract class Controller extends BaseController
                 $this->cart= DB::table('cart')
                 ->leftjoin('products','cart.product_id','=','products.id')
                 ->select('cart.*','products.product_name','products.image','products.price')
-                ->where('user_id',$this->uid)->get();
+                ->where('user_id',$this->uid)
+                ->where('cart.order_id',null)->get();
                 $this->wishlist= DB::table('wishlist')->leftjoin('products','wishlist.product_id','=','products.id')
                 ->select('wishlist.*','products.product_name','products.image','products.price')
                 ->where('user_id',$this->uid)->get();
-                
             }
                 //for fetching featured category
                 

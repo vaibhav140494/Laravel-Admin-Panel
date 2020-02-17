@@ -10,6 +10,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         //For Datatable
         Route::post('orders/get', 'OrdersTableController')->name('orders.get');
         Route::get('view/order/details/{id}','OrdersController@viewOrder')->name('view.order');
+        Route::post('update/order/status','OrdersController@updateStatus')->name('update.order.status');
     });
     
 });
