@@ -92,10 +92,10 @@
 						
 						<div class="col-md-4 col-xs-12 cart-checkout-process text-right">
 							<div class="wrap">
-								<p><span>Subtotal &#x20b9;</span><span id="subtotal">{{$total}}</span></p>
-								<p><span>Discount &#x20b9;</span><span id="discount">0</span></p>
-								<h4><span>Grand total &#x20b9;</span><span id="discounted_price">{{$total}}</span></h4>
-								<a href="#" class="btn border-btn">process to checkout</a>
+								<p><span>Subtotal &#x20b9;</span><span id="subtotal" >{{$total}}</span></p>
+								<p><span>Discount &#x20b9;</span><span id="discount" >0</span></p>
+								<h4><span>Grand total &#x20b9;</span><span id="discounted_price" >{{$total}}</span></h4>
+								<a href="{{route('frontend.checkout')}}" class="btn border-btn cbtn">process to checkout</a>
 							</div>
 						</div>
 						
@@ -189,5 +189,13 @@
 						}
 					});
 	});
+	// $('.cbtn').click(function(){
+	// 	var total=$('#subtotal').html();
+	// 	var discount=$('#discount').html();
+	// 	var dprice=$('#discounted_price').html();
+	// 	
+	// 	window.location.href=url;
+		
+	// });
 	});
 </script>

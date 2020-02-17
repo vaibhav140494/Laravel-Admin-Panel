@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order\cart;
 use App\Models\Product\Product;
+use app\Models\Access\User\MultipleAddress;
 use DB;
-
+use Illuminate\Support\Str;
 class CartController extends Controller
 {
     public function __construct()
@@ -50,6 +51,11 @@ class CartController extends Controller
                 {   
                 
                     $product=Product::find($id);
+                    $cid=DB::table('cart')
+                        ->select('cart_id')
+                        ->where('user_id','=',\Auth::user()->id)
+                        ->get();
+                        //dd($cid);
                     $total = $value * $product->price;
                     $cart=new cart;
                     $cart->product_id=$product->id;
@@ -58,6 +64,17 @@ class CartController extends Controller
                     $cart->tax_amount=0;
                     $cart->quantity=$value;
                     $cart->total_amount=$total;
+                    //dd($cid);
+                    if($cid->count()>0)
+                    {
+                        $cart->cart_id=$cid[0]->cart_id;
+                    }
+                    else{
+                        //dd('hello');
+                        $cart->cart_id= Str::random(15);
+                        // dd($random);                  
+                    }
+
                     $cart->save();
                     //dd($cart);
                     $response['cart']=$cart;
@@ -121,5 +138,75 @@ class CartController extends Controller
             return json_encode($response);
         }
 
+    }
+    public function checkout()
+    {
+        //dd(\Auth::user()->first_name);
+        //dd($request->input('subtotal'));
+        //dd($discp);
+        $all_category=$this->final_data[0];
+        $all_subcategory=$this->final_data[1];
+        $all_cart=$this->final_data[2];
+        $category_featured=$this->final_data[3];
+        $all_products=$this->final_data[5];
+        $total=0;
+        $address = DB::table('multiple_address')
+                    ->where('user_id','=',\Auth::user()->id)
+                    ->get();
+                   //dd($address);
+        $checkout_prod = DB::table('cart')
+                        ->join('products','products.id','=','cart.product_id')
+                        ->select('products.product_name','products.price','cart.quantity','cart.offer_id')
+                        ->where('cart.user_id','=',\Auth::user()->id)
+                        ->get();
+
+                        foreach($checkout_prod as $product)
+                        {
+                            $total+=($product->price) * ($product->quantity);
+                        }
+                  if($checkout_prod[0]->offer_id)      
+                 {
+                     $offer = DB::table('offers')
+                        ->where('id','=',$checkout_prod[0]->offer_id)
+                        ->get();
+                       // dd($offer);
+                 
+               
+                if($offer[0]->offer_type == 1 )
+                {
+                    $discount = $offer[0]->offer_value;
+                    $discounted_price = $total-$discount;
+                    
+                }
+                else{
+                    $discount = $total * ($offer[0]->offer_value)/100;
+                    if($discount > $offer[0]->max_discount)
+                    {
+                        $discount=$offer[0]->max_discount;
+                    }
+                    if($discount < $offer[0]->min_offer_amount)
+                    {
+                        $discount=$offer[0]->min_offer_amount;
+                    }
+                    $discounted_price = $total-$discount;
+                   // dd($discounted_price);
+                    
+                }    
+            }  
+            else{
+                $discount=0;
+                $discounted_price=$total;
+            }                 
+                       // dd($checkout_prod);
+        return view('frontend_user.checkout')->with([
+                'address'=>$address,
+                'checkout_prod'=>$checkout_prod,
+                'all_category'=>$all_category,
+                'all_products'=>$all_products,
+                'total'=>$total,
+                'discount'=>$discount,
+                'discounted_price'=>$discounted_price
+
+        ]);                            
     }
 }

@@ -100,7 +100,7 @@ class FrontendController extends Controller
         ->select('users.first_name as fname' ,'users.last_name as lname','productreviews.*')
         ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
 
-        return view('frontend_user.index', compact('category_featured','all_category','product','featured_prod','product_review','product_review_random','all_subcategory','all_cart','wished_prod','all_products','cart_item','wishlist'));
+        return view('frontend_user.index', compact('category_featured','all_category','product','featured_prod','product_review','product_review_random','all_subcategory','all_cart','wished_prod','all_products','cart_item','wishlist','category'));
     }
 
     /**

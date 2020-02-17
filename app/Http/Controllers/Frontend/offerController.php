@@ -8,6 +8,7 @@ use App\Models\Order\Order;
 use Carbon\Carbon;
 use DB;
 use App\Models\Offer\Offer;
+use App\Models\Order\cart;
 
 class offerController extends Controller
 {
@@ -52,7 +53,9 @@ class offerController extends Controller
                            }
                            else{
                             $response['success']="offer applide";
-
+                            DB::table('cart')
+                                ->where('user_id','=',\Auth::user()->id)
+                                ->update(['offer_id'=>$offer[0]->id]);
                             if($offer[0]->offer_type == 1 )
                             {
                                 $discount = $offer[0]->offer_value;
