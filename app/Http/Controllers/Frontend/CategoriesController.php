@@ -15,35 +15,37 @@ class CategoriesController extends Controller
   {      
       parent::__construct();
   }
+
+  //For category listing
     public function index()
     {
-      $all_category=$this->final_data[0];
-      $all_subcategory=$this->final_data[1];
-      $all_cart=$this->final_data[2];
-      $category_featured=$this->final_data[3];
-      $all_products=$this->final_data[5];
+      $all_category = $this->final_data[0];
+      $all_subcategory = $this->final_data[1];
+      $all_cart = $this->final_data[2];
+      $category_featured = $this->final_data[3];
+      $all_products = $this->final_data[5];
+      $wishlist = $this->final_data[4];
+        $catarr = $this->catarr;
 
-      $wishlist=$this->final_data[4];
-        $catarr=$this->catarr;
-        
-        // dd($all_cart);
-
-      $category=Category::paginate(6);
+      $category = Category::paginate(6);
       for($i=0;$i<$category->count();$i++){
         $subcategory=Subcategory::where('category_id',$category[$i]->id)->get();
         $sub[$category[$i]->id] = $subcategory->count();
       }
       return view('frontend_user.category_list',compact('category','sub','all_category','all_subcategory','all_cart','category_featured','all_products','wishlist'));
     }
+
+    //For searching category using ajax
+
     public function getAllCat(Request $request)
     {
         if($request->ajax())
         {
-            $param= $request->input('str');
+            $param = $request->input('str');
             $subcategory;
             if(($param!='') && (strlen($param)>=1))
             {
-                $cat=Category::where('category_name','like','%'.$param.'%')
+                $cat = Category::where('category_name','like','%'.$param.'%')
                 ->get();;
                 for($i=0;$i<$cat->count();$i++){
                     $subcategory=Subcategory::where('category_id',$cat[$i]->id)->get();

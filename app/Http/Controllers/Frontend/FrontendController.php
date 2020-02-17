@@ -31,38 +31,17 @@ class FrontendController extends Controller
     
     public function index()
     {
-        // $final_data = parent::__construct();
-        // dd($final_data);
-        $all_category=$this->final_data[0];
-        $all_subcategory=$this->final_data[1];
-        $all_cart=$this->final_data[2];
-        $category_featured=$this->final_data[3];
-        $all_products=$this->final_data[5];
-        $wishlist=$this->final_data[4];
-        $catarr=$this->catarr;
-         $product=Product::all();
-
-        // //for fetching featured category
-        
-        // $count = DB::table('products')->selectRaw('products.category_id, count(products.id) as total')
-        // ->join('order_details','products.id','=','order_details.product_id')
-        // ->groupBy('order_details.product_id')
-        // ->orderBy('total','desc')->get();
-        // $max = 0;
-        // $catarr = Array();
-        // for($i=0;$i<$count->count();$i++)
-        // {
-        //     $catarr[$i]=$count[$i]->category_id;
-        //     if($max<$count[$i]->total)
-        //     {
-        //         $max=$count[$i]->total;
-        //         $catid=$count[$i]->category_id;   
-        //     }   
-        // }
-        // $category_featured = Category::findMany($catarr);
+        $all_category = $this->final_data[0];
+        $all_subcategory = $this->final_data[1];
+        $all_cart = $this->final_data[2];
+        $category_featured = $this->final_data[3];
+        $all_products = $this->final_data[5];
+        $wishlist = $this->final_data[4];
+        $catarr = $this->catarr;
+         $product = Product::all();
         $category = Category::all();
         $featured_prod = Product::findMany($catarr);
-        // dd($catarr);
+        // dd($all_cart);
         $product_review = productReviews::all();
         if(\Auth::user())
         {
@@ -75,23 +54,21 @@ class FrontendController extends Controller
         }     
         $cart_item='';
         if(\Auth::user()){
-        $cart_item=DB::table('cart')
+        $cart_item = DB::table('cart')
         ->select('product_id')
         ->where('user_id','=',\Auth::user()->id) 
         ->get()
         ->pluck('product_id')
         ->toArray();
         }
-        //fetching featured PROductss
-        // dd($cart_item);
+
+        //fetching featured Productss
         $featured_prod = DB::table('products')
         ->leftjoin('categories','products.category_id','=','categories.id')
         ->whereIn('categories.id',$catarr)
         ->where('is_active',1)
         ->select('products.*')->get();
-        // dd($featured_prod);
         $product_review = productReviews::selectRaw('avg(rating) as avg')->groupby('user_id')->get();
-        // dd($product_review);     
         
         //  fetching user Reviews  
 
@@ -115,4 +92,3 @@ class FrontendController extends Controller
     }
    
 }
-// select *from users where user_id in(select user_id from productreviews where rating in(5,4));

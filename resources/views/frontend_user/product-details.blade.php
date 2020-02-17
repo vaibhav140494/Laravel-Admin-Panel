@@ -325,7 +325,7 @@ $(document).ready(function(){
 
 								$('#cart-count').text(response['cart'].length);
 								var cart=response['cart'];
-								var div='';
+								var div='<div class="mc-pro-list fix">';
 								var total=0;
 								
 								$.each(cart,function(key,value){
@@ -333,18 +333,14 @@ $(document).ready(function(){
 									route +='/'+value.image;
 									// console.log(route);
 									var prodname= value.product_name;
-									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.gross_amount+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
+									 div += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.quantity+'x &#x20b9;'+value.price+'</p><a class="pro-del cp_remove" href="javascript:void(0)" pid="'+value.id+'"><i class="fa fa-times-circle"></i></a></div></div>';
 
-									 total+=value.quantity * value.gross_amount;
+									 total+=value.total_amount;
 								});
-								$('.mc-pro-list').html(div);
-								$('#cart-subtotal').text(total);
-								if(response['cart'].length==0)
-								{
-									$('.mc-subtotal').hide();
-									$('.mc-button').hide();
-									$('.mc-pro-list').text('No products in your cart!!!');
-								}
+								div+='</div>';
+								div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal"> '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
+
+								$('.mini-cart-wrapper').html(div);
 								else
 								{
 									$('.mc-subtotal').show();

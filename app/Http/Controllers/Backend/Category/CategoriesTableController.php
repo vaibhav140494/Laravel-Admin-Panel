@@ -39,18 +39,12 @@ class CategoriesTableController extends Controller
     {
         return Datatables::of($this->category->getForDataTable())
             ->escapeColumns(['id'])
-            ->addColumn('category_image', function ($category) {
-                // dd(url('/'));
-                
+            ->addColumn('category_image', function ($category) {                
                 $url=url('storage/category/'.$category->category_image);
-                // dd($url);
-                // dd();
                 return '<img src="'.$url.'" border="0" width="70" height="70" class="img-thumbnail" align="center" />';
                 
             })
             ->addColumn('category_name', function ($category) {
-                // echo $category->id;
-                // $path="http://127.0.0.1:8000/admin/categories/".$category->id."/get";
                 $path=url('/admin/categories/'.$category->id.'/get');
                 return '<a href="'.$path.'" style="color:#000;">'.$category->category_name. '</a> ';
             })

@@ -145,7 +145,7 @@
 						});
 						$('#subtotal').html(count);
 						var dis=$('#discount').text();
-						$('#grandtotal').html(count-dis);
+						$('#discounted_price').html(count - dis);
 						
 					}
 					if(response['fail']=="fail")

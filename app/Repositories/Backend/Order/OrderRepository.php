@@ -27,22 +27,37 @@ class OrderRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        return $this->query()
-            ->select([
-                config('module.orders.table').'.id',
-                config('module.orders.table').'.user_id',
-                config('module.orders.table').'.offer_id',
-                config('module.orders.table').'.order_id',
-                config('module.orders.table').'.instructions',
-                config('module.orders.table').'.gross_amount',
-                config('module.orders.table').'.tax_amount',
-                config('module.orders.table').'.total_amount',
-                config('module.orders.table').'.discount',
-                config('module.orders.table').'.status',
-                config('module.orders.table').'.type',
-                config('module.orders.table').'.created_at',
-                config('module.orders.table').'.updated_at',
-            ]);
+        // $order=DB::table('orders')
+        // ->leftjoin('users','users.id','=','orders.user_id')
+        // ->leftjoin('offers','offers.id','=','orders.offer_id')
+        // ->select('orders.*',\DB::raw("CONCAT(users.first_name,' ',users.last_name) as full_name"),'users.phone_no','offers.offer_code')
+        // ->get();
+        $order2=Order::all();
+        // dd($order[0]);
+        $order= $this->query()
+        ->leftjoin('users','users.id','=','orders.user_id')
+        ->leftjoin('offers','offers.id','=','orders.offer_id')
+        ->select([
+            config('module.orders.table').'.id',
+            // DB::raw('orders.id as id'),
+            // config('module.orders.table').'.user_id',
+            config('module.orders.table').'.order_id',
+            DB::raw('CONCAT(users.first_name," ",users.last_name) as full_name'),
+            // config('module.orders.table').'.instructions',
+            DB::raw('CONCAT(users.phone_no) as phone_no'),
+            config('module.orders.table').'.gross_amount',
+            config('module.orders.table').'.tax_amount',
+            config('module.orders.table').'.total_amount',
+            config('module.orders.table').'.discount',
+            config('module.orders.table').'.status',
+            config('module.orders.table').'.type',
+            DB::raw('CONCAT(offers.offer_code) as offer_code'),
+            config('module.orders.table').'.created_at',
+            // config('module.orders.table').'.updated_at',
+
+        ]);
+        // dd($order);
+        return $order;
     }
 
     /**

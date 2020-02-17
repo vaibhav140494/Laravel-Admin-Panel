@@ -13,30 +13,35 @@ class SubcategoriesController extends Controller
   {      
       parent::__construct();
   }
+
+  //Category wise subcategory Listingg
     public function getSub($id)
     {
-        $all_category=$this->final_data[0];
-      $all_subcategory=$this->final_data[1];
-      $all_cart=$this->final_data[2];
-      $category_featured=$this->final_data[3];
-      $all_products=$this->final_data[5];
-      $wishlist=$this->final_data[4];
-        $catarr=$this->catarr;
+        $all_category = $this->final_data[0];
+        $all_subcategory = $this->final_data[1];
+        $all_cart = $this->final_data[2];
+        $category_featured = $this->final_data[3];
+        $all_products = $this->final_data[5];
+        $wishlist = $this->final_data[4];
+        $catarr = $this->catarr;
 
         $categories=Category::find($id);
         $subcategory=Subcategory::where('category_id',$id)->get();
-        // dd($category->category_name);
+
         return view('frontend_user.subcategory-list',compact('categories','subcategory','all_category','all_subcategory','all_cart','category_featured','all_products','wishlist'));
     }
+
+//Subcategory search using ajax
+
     public function getAll(Request $request)
     {
         if($request->ajax())
         {
-            $param= $request->input('str');
-            $id=$request->input('id');
+            $param = $request->input('str');
+            $id = $request->input('id');
             if(($param!='') && (strlen($param)>=1))
             {
-                $sub=Subcategory::where('subcategory_name','like','%'.$param.'%')->where('category_id',$id)
+                $sub = Subcategory::where('subcategory_name','like','%'.$param.'%')->where('category_id',$id)
                 ->get()->toArray();
                 if(count($sub)==0){
                 $response['error'] ="sorry no sub category found";

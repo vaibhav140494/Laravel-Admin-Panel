@@ -51,8 +51,11 @@
 											@endif
 											<!-- <li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li> -->
 											<!-- <li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li> -->
-											<li id="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
-										</ul>
+											@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+												<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
+												@else
+												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												@endif										</ul>
 										<!-- <span class="product-new-label">-20%</span>				 -->
 									</div>
 									<ul class="rating">

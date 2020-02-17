@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Backend\Order;
 
 use App\Models\Order\Order;
+use App\Models\User\User;
+use App\Models\User\multipleAddress;
+use App\Models\Order\orderDetails;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
@@ -16,6 +19,7 @@ use App\Http\Requests\Backend\Order\StoreOrderRequest;
 use App\Http\Requests\Backend\Order\EditOrderRequest;
 use App\Http\Requests\Backend\Order\UpdateOrderRequest;
 use App\Http\Requests\Backend\Order\DeleteOrderRequest;
+use DB;
 
 /**
  * OrdersController
@@ -112,6 +116,24 @@ class OrdersController extends Controller
         $this->repository->delete($order);
         //returning with successfull message
         return new RedirectResponse(route('admin.orders.index'), ['flash_success' => trans('alerts.backend.orders.deleted')]);
+    }
+
+    public function viewOrder($id)
+    {
+        $orders= DB::table('orders')
+        ->leftjoin('users','users.id','=','orders.user_id')
+        ->join('order_details','orders.id','=','order_details.order_id')
+        ->leftjoin('multiple_address','users.default_address','=','multiple_address.id')
+        ->select('orders.*',DB::raw('sum(order_details.total_amount) as total_amount'),DB::raw('sum(order_details.tax_amount) as tax_amount'),DB::raw('CONCAT(users.first_name," ",users.last_name) as user_name'),'users.phone_no','multiple_address.country','multiple_address.state','multiple_address.city','multiple_address.address','multiple_address.pincode')
+        ->where('orders.id',$id)->get()->first();
+
+        $order_details=DB::table('orders')
+        ->join('order_details','orders.id','=','order_details.order_id')
+        ->join('products','products.id','=','order_details.product_id')
+        ->select('orders.*','order_details.product_id','order_details.id as ordersdetails_id','order_details.quntity','order_details.gross_amount','order_details.tax_amount','order_details.total_amount','products.product_name')
+        ->where('orders.id',$id)
+        ->get();
+        return view('backend.orders.view_order_details',compact('order_details','orders'));
     }
     
 }
