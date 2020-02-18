@@ -49,8 +49,11 @@ Route::get('cart/add','CartController@add')->name('cart.add');
 Route::get('cart/show','CartController@show')->name('cart.show');
 Route::get('cart/remove','CartController@remove')->name('cart.remove');
 
-
+//for checkout page
 Route::get('/checkout','CartController@checkout')->name('checkout');
+
+//for place order
+Route::get('/placeorder','OrderController@placeOrder')->name('placeorder');
 // });
 /*
  * These frontend controllers require the user to be logged in

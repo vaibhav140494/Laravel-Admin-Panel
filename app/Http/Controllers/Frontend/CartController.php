@@ -176,7 +176,7 @@ class CartController extends Controller
                    //dd($address);
         $checkout_prod = DB::table('cart')
                         ->join('products','products.id','=','cart.product_id')
-                        ->select('products.product_name','products.price','cart.quantity','cart.offer_id')
+                        ->select('products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount')
                         ->where('cart.user_id','=',\Auth::user()->id)
                         ->get();
 
@@ -184,6 +184,7 @@ class CartController extends Controller
                         {
                             $total+=($product->price) * ($product->quantity);
                         }
+                        $total+=$total*($checkout_prod[0]->tax_amount)/100;
                   if($checkout_prod[0]->offer_id)      
                  {
                      $offer = DB::table('offers')
