@@ -191,7 +191,11 @@
 												{{$prod->price}}
 												@endif
 											</div>
-											<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+												<a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>
+											@else
+												<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@endif
 										</div>
 									</div>
 								</div>
@@ -282,10 +286,13 @@
 												@else
 													{{$prod->price}}
 												@endif
-											
 												
 											</div>
-											<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+												<a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>
+											@else
+												<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@endif
 										</div>
 									</div>
 								</div><!-- End Col -->

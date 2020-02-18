@@ -72,25 +72,26 @@
 							@endif
 						</div>
 						@if($product ->type==2)
-							<div class="pd_img_size fix">
-								<h4>size:</h4>
-								<a href="#">s</a>
-								<a href="#">m</a>
-								<a href="#">l</a>
-								<a href="#">xl</a>
-								<a href="#">xxl</a>
-							</div>
+							@foreach($product_variation as $pv)
+								<div class="pd_clr_qntty_dtls fix">
+
+									<h4>{{ $pv->variation_name }}</h4>
+									<ul>
+									@foreach($product_variation_values[$pv->id] as $pvvalues)
+										<li >{{$pvvalues->variation_value}}</li>
+									@endforeach
+									</ul>
+								</div>
+							@endforeach
 							@endif
 
 							<div class="pd_clr_qntty_dtls fix">
-							@if($product ->type==2)
-								<div class="pd_clr">
+								<!-- <div class="pd_clr">
 									<h4>color:</h4>
 									<a href="#" class="active" style="background: #ffac9a;">color 1</a>
 									<a href="#" style="background: #ddd;">color 2</a>
 									<a href="#" style="background: #000000;">color 3</a>
-								</div>
-							@endif
+								</div> -->
 							<div class="pd_qntty_area">
 								@if($product ->quantity > 0)
 									<h4>quantity:</h4>
@@ -341,13 +342,6 @@ $(document).ready(function(){
 								div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal"> '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
 
 								$('.mini-cart-wrapper').html(div);
-								else
-								{
-									$('.mc-subtotal').show();
-									$('.mc-button').show();
-									// console.log("hello");
-								}
-								
 
 							}
 							if(response['fail']=="fail")

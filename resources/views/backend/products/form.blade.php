@@ -92,7 +92,7 @@
         </div>
     </div>
     <div class="form-group">
-         {{ Form::label('image',trans('labels.backend.products.table.image'), ['class' => 'col-lg-2 control-label required']) }}    
+         {{ Form::label('image',trans('labels.backend.products.table.image'), ['class' => 'col-lg-2 control-label']) }}    
          <div class="col-lg-10">
             {{ Form::file('image', [ 'required' => 'required']) }}
                 @if( isset($products))

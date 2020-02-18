@@ -11,7 +11,6 @@
 
 @section('content')
     {{ Form::open([ 'route' => array('admin.access.user.address.store',$id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'add-address','enctype' => 'multipart/form-data']) }}
-
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">Add Address</h3>
@@ -27,19 +26,21 @@
     <div class="form-group">
         <!-- Create Your Field Label Here -->
         <!-- Look Below Example for reference -->
-         {{ Form::label('contact_person', 'Contact Person', ['class' => 'col-lg-2 control-label required']) }} 
+         {{ Form::label('contact_person', 'Contact Person', ['class' => 'col-lg-2 control-label']) }} 
 
         <div class="col-lg-10">
             <!-- Create Your Input Field Here -->
             <!-- Look Below Example for reference -->
            
             {{ Form::text('contact_person', null, ['class' => 'form-control box-size', 'placeholder' => 'Contact Person Name']) }} 
+            
+
         </div><!--col-lg-10-->
     </div><!--form-group-->
     <div class="form-group">
         <!-- Create Your Field Label Here -->
         <!-- Look Below Example for reference -->
-         {{ Form::label('contact_person_no', 'Contact Person No', ['class' => 'col-lg-2 control-label required']) }} 
+         {{ Form::label('contact_person_no', 'Contact Person No', ['class' => 'col-lg-2 control-label ']) }} 
 
         <div class="col-lg-10">
             <!-- Create Your Input Field Here -->
@@ -58,6 +59,7 @@
             <!-- Look Below Example for reference -->
            
             {{ Form::text('country', null, ['class' => 'form-control box-size', 'placeholder' => 'Country', 'required' => 'required']) }} 
+            <span style="color:red;">{{$errors->register->first('country') ?? ''}}</span>
         </div><!--col-lg-10-->
     </div><!--form-group-->
     <div class="form-group">
@@ -70,6 +72,7 @@
             <!-- Look Below Example for reference -->
            
             {{ Form::text('state', null, ['class' => 'form-control box-size', 'placeholder' => 'State', 'required' => 'required']) }} 
+            <span style="color:red;">{{$errors->register->first('state') ?? ''}}</span>
         </div><!--col-lg-10-->
     </div><!--form-group-->
     <div class="form-group">
@@ -82,6 +85,7 @@
             <!-- Look Below Example for reference -->
            
             {{ Form::text('city', null, ['class' => 'form-control box-size', 'placeholder' => 'city', 'required' => 'required']) }} 
+            <span style="color:red;">{{$errors->register->first('city') ?? ''}}</span>
         </div><!--col-lg-10-->
     </div><!--form-group-->
     <div class="form-group">
@@ -93,6 +97,7 @@
             <!-- Create Your Input Field Here -->
             <!-- Look Below Example for reference -->
             {{ Form::textarea('address', null,['class' => 'form-control box-size', 'placeholder' => 'Address']) }}
+            <span style="color:red;">{{$errors->register->first('address') ?? ''}}</span>
         </div><!--col-lg-10-->
     </div><!--form-group-->
     <div class="form-group">
@@ -104,7 +109,8 @@
             <!-- Create Your Input Field Here -->
             <!-- Look Below Example for reference -->
            
-            {{ Form::text('pincode', null, ['class' => 'form-control box-size', 'placeholder' => 'Pincode', 'required' => 'required']) }} 
+            {{ Form::number('pincode', null, ['class' => 'form-control box-size', 'placeholder' => 'Pincode', 'required' => 'required']) }} 
+            <span style="color:red;">{{$errors->register->first('pincode') ?? ''}}</span>
         </div><!--col-lg-10-->
     </div><!--form-group-->
     <div class="form-group">

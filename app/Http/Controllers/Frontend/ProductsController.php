@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Product\Product;
+use App\Models\Product\variationMaster;
+use App\Models\Product\variationValues;
 use App\Models\Order\wishList;
 use App\Models\Product\productReviews;
 use DB;
@@ -75,6 +77,17 @@ class ProductsController extends Controller
         select('products.*','productreviews.product_id','productreviews.user_id','productreviews.rating','productreviews.review',\DB::raw("ROUND(AVG(rating),2) as avg_rating",'category_featured'))
         ->get()->first();
 
+        $product_variation=array();
+        $product_variation_values=array();
+        if($product->type==2)
+        {
+            $product_variation = variationMaster::where('product_id',$product->id)->get();
+            foreach($product_variation as $pv)
+            {
+                $product_variation_values[$pv->id]= variationValues::where('variation_id',$pv->id)->get();
+            }
+            // dd($product_variation_values[1]);
+        }
         if(\Auth::user())
         {
             $wished_prod = DB::table('wishlist')
@@ -101,7 +114,7 @@ class ProductsController extends Controller
 
         $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
         
-        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','related_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist'));
+        return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','related_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist','product_variation','product_variation_values'));
     }
 
     //For store product review using ajax

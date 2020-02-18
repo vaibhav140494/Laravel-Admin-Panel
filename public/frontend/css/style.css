@@ -383,7 +383,13 @@ input:focus, textarea:focus {
 
 
 /* -------- Header Css -------- */
-
+/* #header_area{
+position: fixed;
+    top: 0;
+    width: 100%;
+	z-index:100;
+	background-color: #fff;
+} */
 .header_top_area {
 	font-size: 14px;
 	background: #fff;
@@ -436,6 +442,7 @@ input:focus, textarea:focus {
 	color: #777;
 }
 .header_btm_area{
+	
 	padding: 15px 0;
 }
 
@@ -594,7 +601,12 @@ input:focus, textarea:focus {
 	display: inline-block;
 	transition:.5s;
 	margin-right: 10px;
-	
+}
+.user_profile_area{
+	position: relative;
+	display: inline-block;
+	transition:.5s;
+	margin-right: 10px;
 }
 .cart_icon,.wishlist_icon {
 	display: inline-block;
@@ -625,6 +637,8 @@ input:focus, textarea:focus {
 
 .mini-cart-wrapper,.mini-wishlist-wrapper{
 	width:250px;
+	height: 300px;
+	overflow-y: auto;
 	position: absolute;
 	top: 40px;
 	left: -135px;

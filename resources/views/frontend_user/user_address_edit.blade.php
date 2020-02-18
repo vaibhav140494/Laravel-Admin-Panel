@@ -9,7 +9,7 @@
             <div class="col-sm-6 text-right">
                 <ul class="p_items">
                     <li><a href="{{url('/')}}">home</a></li>
-                    <li><span>Edit profile</span></li>
+                    <li><a href="{{route('frontend.register.edit',[\Auth::user()->id])}}">Edit Profile</a></li>
                     <li><span>Add Address</span></li>
                 </ul>					
             </div>	
@@ -30,7 +30,7 @@
                     <!-- <span style="color:red;">{{$errors->register->first('contact_person') ?? ''}}</span> -->
                 </div>
                 <div class="form-group">
-                    <input type="text" name="contact_person_no" placeholder="Enter Contact Person No" value="{{$multiple_addr->contact_person_no}}">
+                    <input type="number" name="contact_person_no" placeholder="Enter Contact Person No" value="{{$multiple_addr->contact_person_no}}">
                     <!-- <span style="color:red;">{{$errors->register->first('last_name') ?? ''}}</span> -->
                 </div>
                 <div class="form-group">

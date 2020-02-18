@@ -8,6 +8,7 @@ use App\Repositories\Frontend\Access\User\UserRepository;
 use Illuminate\Http\Request;
 use App\Models\Access\User\MultipleAddress;
 use App\Models\Access\User\User;
+use App\Http\Responses\RedirectResponse;
 use Validator;
 
 
@@ -91,21 +92,24 @@ class ProfileController extends Controller
             $multiple_addr->user_id=$user->id;
            
             $multiple_addr->save();
+            // dd($multiple_addr);
             if($req->input('mk_default_address_chkbx')=='on')
             {
-                $user->default_address =   $multiple_addr->id;
+                
+                $user->default_address =  $multiple_addr->id;
+                // dd($user);
             }
-            // dd($user);
             $user->save();
             // dd($multiple_addr);
-            
-            return redirect($path);
+            return new RedirectResponse(route('frontend.register.edit',[$user->id]), ['flash_success' => "Address added succefully"]);
+            // return redirect($path);
         }
     }
 
     public function editAddress($id)
     {
         $multiple_addr =MultipleAddress::find($id);
+        // dd($multiple_addr);
         return view('frontend_user.user_address_edit',compact('multiple_addr'));
     }
 
@@ -113,6 +117,7 @@ class ProfileController extends Controller
         {
             $path=$req->input('hiddenurl');
             $user=\Auth::user();
+           
             $multiple_addr=MultipleAddress::find($id);
             $multiple_addr->contact_person=$req->input('contact_person');
             $multiple_addr->contact_person_no=$req->input('contact_person_no');
@@ -124,6 +129,8 @@ class ProfileController extends Controller
             $multiple_addr->user_id=$user->id;
             
             $multiple_addr->save();
+            
+            
             return redirect($path);
         }
 
@@ -134,7 +141,6 @@ class ProfileController extends Controller
             $id=$req->input('id');
             $uid=$req->input('uid');
             $radioid=$req->input('radio_val');
-             dd($radioid);    
             $multiple_addr=MultipleAddress::find($id);
              $msg = $multiple_addr->delete();
              if($msg)
