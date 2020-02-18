@@ -23,6 +23,7 @@
 
 	<!-- Checkout Page -->
 	<section class="checkout_page">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
@@ -110,7 +111,7 @@
                         </div>
 						
                         <div class="qc-button">
-                            <a href="#" class="btn border-btn" tabindex="0">Place Order</a>
+                            <a href="{{route('frontend.placeorder')}}" class="btn border-btn" tabindex="0">Place Order</a>
                         </div>
                     </div>
 					

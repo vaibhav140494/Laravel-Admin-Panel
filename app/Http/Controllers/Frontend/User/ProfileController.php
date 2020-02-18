@@ -134,7 +134,7 @@ class ProfileController extends Controller
             $id=$req->input('id');
             $uid=$req->input('uid');
             $radioid=$req->input('radio_val');
-             dd($radioid);    
+             // dd($radioid);    
             $multiple_addr=MultipleAddress::find($id);
              $msg = $multiple_addr->delete();
              if($msg)
