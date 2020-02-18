@@ -136,4 +136,12 @@ class OrdersController extends Controller
         return view('backend.orders.view_order_details',compact('order_details','orders'));
     }
     
+    public function updateStatus(Request $request)
+    {   
+        $id=$request->input('order_id');
+        $order=Order::find($id);
+        $order->status= $request->input('status');
+        $order->save();
+        return redirect()->route('admin.view.order',[$order->id]);
+    }
 }

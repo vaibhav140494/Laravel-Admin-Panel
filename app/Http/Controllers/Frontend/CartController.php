@@ -40,7 +40,8 @@ class CartController extends Controller
                 $id=$req->input('id');
                 $cart1 = cart::where('product_id',$id)
                 ->where('user_id',\Auth::user()->id)->get()->first();
-                $productPrice=Product::select('price')->where('id',$id)->get()->first();
+                $productPrice=Product::select('price')->where('id',$id)
+                ->get()->first();
                 if($cart1)
                 {   
                    if($cart1->quantity != $value)
@@ -101,7 +102,8 @@ class CartController extends Controller
             }
             $total_cart = DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
             ->select('cart.*','products.product_name','products.image','products.price')
-            ->where('user_id',\Auth::user()->id)->get();
+            ->where('user_id',\Auth::user()->id)
+            ->where('cart.order_id',null)->get();
             $response['cart']=$total_cart;
         }
         return json_encode($response);
@@ -121,6 +123,7 @@ class CartController extends Controller
         $cart_product = DB::table('products')
         ->join('cart','cart.product_id','=','products.id')
         ->where('cart.user_id',\Auth::user()->id)
+        ->where('cart.order_id',null)
         ->select('products.*','cart.*')->get();
 
         return view('frontend_user.cart',compact('cart_product','all_category','all_subcategory','all_cart','category_featured','all_products'));
@@ -148,7 +151,8 @@ class CartController extends Controller
             }
             $total_cart = DB::table('cart')->leftjoin('products','cart.product_id','=','products.id')
             ->select('cart.*','products.product_name','products.image','products.price')
-            ->where('user_id',\Auth::user()->id)->get();
+            ->where('user_id',\Auth::user()->id)
+            ->where('cart.order_id',null)->get();
             $response['cart']=$total_cart;
 
             return json_encode($response);
