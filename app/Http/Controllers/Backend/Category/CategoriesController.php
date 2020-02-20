@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
 use App\Http\Responses\ViewResponse;
+use Image;
 use App\Http\Responses\Backend\Category\CreateResponse;
 use App\Http\Responses\Backend\Category\EditResponse;
 use App\Repositories\Backend\Category\CategoryRepository;
@@ -75,7 +76,11 @@ class CategoriesController extends Controller
              //$destinationPath = public_path('storage/category');
             //  dd($destinationPath);
             //The [public/storage] directory has been linked.
-            $path = $request->category_image->move(public_path('storage/category'), $imageName);
+            $img=Image::make($request->category_image);
+            $img->fit(400,300);
+            $var=public_path('storage/category');
+            $path = $img->save($var."/".$imageName);
+            //$path = $request->category_image->move(public_path('storage/category'), $imageName);
             
             // dd($path);
             //$split=explode("/",$path);
@@ -113,11 +118,16 @@ class CategoriesController extends Controller
         //Update the model using repository update method
         // dd($request->file('category_image'));
         if ($request->hasFile('category_image')) {
-            $destinationPath = '/home/inex5/Laravel-Admin-Panel/public/img/categories';
-            $path = $request->file('category_image')->store('public/category');
-            $split=explode("/",$path);
-            $input['category_image']=$split[2];
+            $imageName = time().'.'.$request->category_image->getClientOriginalExtension();
+             //$destinationPath = public_path('storage/category');
+            //  dd($destinationPath);
+            //The [public/storage] directory has been linked.
+            $img=Image::make($request->category_image);
+            $img->fit(400,300);
+            $var=public_path('storage/category');
+            $path = $img->save($var."/".$imageName);
         }
+        $input['category_image']=$imageName;
         $this->repository->update( $category, $input );
         //return with successfull message
         

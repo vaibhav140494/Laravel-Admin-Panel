@@ -117,6 +117,7 @@ class CartController extends Controller
         $all_subcategory = $this->final_data[1];
         $all_cart = $this->final_data[2];
         $category_featured = $this->final_data[3];
+        $wishlist=$this->final_data[4];
         $all_products = $this->final_data[5];
         $catarr = $this->catarr;
 
@@ -126,7 +127,7 @@ class CartController extends Controller
         ->where('cart.order_id',null)
         ->select('products.*','cart.*')->get();
 
-        return view('frontend_user.cart',compact('cart_product','all_category','all_subcategory','all_cart','category_featured','all_products'));
+        return view('frontend_user.cart',compact('cart_product','all_category','all_subcategory','all_cart','category_featured','all_products','wishlist'));
     }
 
     //Remove From cart
@@ -164,10 +165,12 @@ class CartController extends Controller
         //dd(\Auth::user()->first_name);
         //dd($request->input('subtotal'));
         //dd($discp);
+
         $all_category=$this->final_data[0];
         $all_subcategory=$this->final_data[1];
         $all_cart=$this->final_data[2];
         $category_featured=$this->final_data[3];
+        $wishlist=$this->final_data[4];
         $all_products=$this->final_data[5];
         $total=0;
         $address = DB::table('multiple_address')
@@ -226,7 +229,9 @@ class CartController extends Controller
                 'all_products'=>$all_products,
                 'total'=>$total,
                 'discount'=>$discount,
-                'discounted_price'=>$discounted_price
+                'discounted_price'=>$discounted_price,
+                'all_cart'=>$all_cart,
+                'wishlist'=>$wishlist
 
         ]);                            
     }

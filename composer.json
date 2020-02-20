@@ -27,6 +27,7 @@
         "laravel/ui": "^1.1",
         "laravelcollective/html": "6.0.*",
         "orangehill/iseed": "^2.6",
+        "pbmedia/laravel-ffmpeg": "^5.0",
         "php-ffmpeg/php-ffmpeg": "^0.14.0",
         "spatie/laravel-cors": "^1.6",
         "unisharp/laravel-filemanager": "~1.8",

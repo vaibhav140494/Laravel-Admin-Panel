@@ -2963,6 +2963,9 @@ position: fixed;
 	clear: both;
 	height: 0;
 }
+.rmv_offer{
+	margin-top: 22px;
+}
 .cp_quantity_btn a {
 	float: left;
 	display: block;

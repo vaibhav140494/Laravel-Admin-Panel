@@ -170,6 +170,7 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
+        
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
@@ -182,7 +183,9 @@ return [
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         //DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
+        Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
@@ -256,8 +259,10 @@ return [
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'Captcha'     => Arcanedev\NoCaptcha\Facades\NoCaptcha::class,
         'Form'        => Collective\Html\FormFacade::class,
+        'Image'       => Intervention\Image\Facades\Image::class,
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Html'        => Collective\Html\HtmlFacade::class,
+        'FFMpeg'       => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
         //'Datatables' => Yajra\DataTables\Facades\DataTables::class,
         'Active'      => Krgupta\Active\Facades\Active::class,

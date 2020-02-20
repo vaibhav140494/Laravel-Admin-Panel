@@ -100,4 +100,33 @@ class offerController extends Controller
             echo json_encode($response);
         }        
     } 
+
+    public function removeOffer(Request $request)
+    {
+        $data = DB::table('cart')
+                ->select('offer_id')
+                ->where([
+                    ['order_id','=',NULL],
+                    ['user_id','=',\Auth::user()->id]
+                ])->get();
+
+                if($data[0]->offer_id != NULL)
+                {
+                   $rmoffer = DB::table('cart')
+                            ->where([
+                                ['order_id','=',NULL],
+                                ['user_id','=',\Auth::user()->id],
+                                ['offer_id','=',$data[0]->offer_id]
+                            ])->update(['offer_id'=>NULL]);
+                }
+                //dd($rmoffer);
+                if($rmoffer != 0)
+                {
+                    $response['message']='removed';
+                }
+                else{
+                    $response['message']='failed';
+                }
+                echo json_encode($response);
+    }
 }

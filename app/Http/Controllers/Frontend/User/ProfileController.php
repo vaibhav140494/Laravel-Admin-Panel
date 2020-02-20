@@ -10,6 +10,7 @@ use App\Models\Access\User\MultipleAddress;
 use App\Models\Access\User\User;
 use App\Http\Responses\RedirectResponse;
 use Validator;
+use Illuminate\Support\Facades\Hash;
 
 
 /**
@@ -162,5 +163,45 @@ class ProfileController extends Controller
         return json_encode($response);
 
 
+    }
+    public function getChangePassForm()
+    {
+        return view('frontend_user.changepassword');
+    }
+    public function changePassword(Request $req)
+    {
+        
+        //dd($req->input('oldpass'));
+        $input = $req->except("_token");
+        $rules = array(
+            'oldpass' => 'required',
+            'newpass' => 'required|different:oldpass',
+            'conpass' => 'required|same:newpass'
+        );
+        $param = $input;
+        $validator = Validator::make($param,$rules);
+        if($validator->fails())
+       {
+        return redirect('/user/changepasswordform')->withErrors($validator,'chpass');
+       }
+
+       elseif (!(Hash::check($input['oldpass'], \Auth::user()->password)))
+       {
+           //dd("incorrect");
+           
+           return view('frontend_user.changepassword')->with(
+            [
+                'unauthorized'=>'incorrect'
+            ]
+        );
+       }
+       else{
+        $user = \Auth::user();
+        $user->password = Hash::make($input['newpass']);
+        if($user->save())
+        {
+            return redirect()->route('frontend.index');
+        }
+       }
     }
 }

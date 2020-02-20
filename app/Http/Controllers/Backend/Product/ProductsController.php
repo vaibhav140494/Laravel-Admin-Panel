@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\RedirectResponse;
 use App\Http\Responses\ViewResponse;
 use Carbon\Carbon;
+use Image;
 use App\Http\Responses\Backend\Product\CreateResponse;
 use App\Http\Responses\Backend\Product\EditResponse;
 use App\Repositories\Backend\Product\ProductRepository;
@@ -78,7 +79,10 @@ class ProductsController extends Controller
 
         if ($request->hasFile('image')){
             $imageName = time().'.'.$request->image->getClientOriginalExtension();
-            $path = $request->image->move(public_path('storage/products'), $imageName);
+            $img=Image::make($request->image);
+            $img->fit(400,300);
+            $var=public_path('storage/products');
+            $path = $img->save($var."/".$imageName);
             
         }
         
@@ -114,7 +118,11 @@ class ProductsController extends Controller
         if ($request->hasFile('image')){
             $imageName = time().'.'.$request->image->getClientOriginalExtension();
             //dd($imageName);
-        $path = $request->image->move(public_path('storage/products'), $imageName);
+            $img=Image::make($request->image);
+            $img->fit(400,300);
+            $var=public_path('storage/products');
+            $path = $img->save($var."/".$imageName);
+        //$path = $request->image->move(public_path('storage/products'), $imageName);
             
         }
         

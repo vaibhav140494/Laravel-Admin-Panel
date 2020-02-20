@@ -80,8 +80,15 @@
 									<div class="cuppon-wrap">
 										<h4>Discount Code</h4>
 										<p>Enter your coupon code if you have</p>
-										
+											<div class="row">
+											<div class="col-sm-10">
 											<input type="text" id="offer" name="offer"/>
+											</div>
+											<div class="col-sm-2">
+											<button class="btn border-btn rmv_offer fa fa-minus-circle" id="remove-offer"></button>
+											</div>
+											</div>
+											
 											<h6 id='offer-invalid' style="margin-bottom:10px;"></h6>
 											<button class="btn border-btn" id="offer-btn">apply coupon</button>
 										
@@ -188,6 +195,27 @@
 							}
 						}
 					});
+	});
+	$('#remove-offer').click(function(){
+		var code=$('#offer').val();
+		var total=$('#subtotal').html();
+		$.ajax({
+			url:'{{route("frontend.offer.remove")}}',
+			method:'get',
+			dataType:'json',
+			success:function(response){
+				var msg = response.message;
+				
+				if(msg == 'removed')
+				{
+					$('#offer').val("");
+					$('#offer-invalid').text("offer removed");
+					$("#offer-invalid").css("color", "red");
+					$("#discount").html('0');
+					$("#discounted_price").html(total);
+				}
+			}
+		});
 	});
 	// $('.cbtn').click(function(){
 	// 	var total=$('#subtotal').html();

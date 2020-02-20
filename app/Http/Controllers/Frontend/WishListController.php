@@ -89,7 +89,7 @@ class WishListController extends Controller{
         $all_products=$this->final_data[5];
         $wished_products = DB::table('products')
                          ->join('wishlist','products.id','=','wishlist.product_id')
-                         ->select('products.id','products.image','products.product_name','products.price','products.discouted_price')
+                         ->select('products.id','products.image','products.product_name','products.price','products.quantity','products.discouted_price')
                          ->where('wishlist.user_id','=',$id)
                          ->get();
         //dd($wished_products);                 
