@@ -49,7 +49,7 @@ abstract class Controller extends BaseController
                 //fetching cart and wishlist product id
                 $this->cart_item = DB::table('cart')
                 ->select('product_id')
-                ->where('user_id','=',$this->uid) 
+                ->where('user_id','=',$this->uid)
                 ->get()
                 ->pluck('product_id')
                 ->toArray();
