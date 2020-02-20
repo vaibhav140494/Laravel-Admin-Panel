@@ -18,6 +18,7 @@
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
         "krgupta/active": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/passport": "^7.3.3",

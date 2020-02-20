@@ -20,9 +20,10 @@ class ProductsController extends Controller
     public function __construct()
     {
         parent::__construct();
+
     }
 //Get all product based on subcategory
-    public function getProd($id,$cid)
+    public function getProd($id,$cid,Request $request)
     {
         $all_category = $this->final_data[0];
         $all_subcategory = $this->final_data[1];
@@ -31,32 +32,120 @@ class ProductsController extends Controller
         $all_products = $this->final_data[5];
         $wishlist = $this->final_data[4];
         $catarr = $this->catarr;
+        $cart_item=$this->final_data[6];
+        $wished_prod=$this->final_data[7];
         $subcategory = Subcategory::find($id);
+        
         $category = Category::find($cid);
-        $prod = Product::where('subcategory_id',$subcategory->id)->get();
 
-        if(\Auth::user())
+        $prod = DB::table('products')
+        ->where('products.subcategory_id',$id)
+        ->where('is_active',1)
+        ->leftjoin('productreviews','products.id','=','productreviews.product_id')
+        ->groupBy('products.id')
+        ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'))->orderBy('products.price')->orderBy('products.created_at','desc')->get();
+        if($request->ajax() !=null)
         {
-            $wished_prod = DB::table('wishlist')
-                ->select('product_id')
-                ->where('user_id','=',\Auth::user()->id) 
-                ->get()
-                ->pluck('product_id')
-                ->toArray();
+            $value=$request->input('value');
+
+            $var_array = $request->input('varname');
+                         
+            // dd($var_array);
+            $sort_product=DB::table('products')
+            ->where('products.subcategory_id',$id)
+            ->where('products.is_active',1)
+            ->leftjoin('productreviews','products.id','=','productreviews.product_id')
+            ->leftjoin('variationmaster','variationmaster.product_id','products.id')
+            ->leftjoin('variationvalues','variationvalues.variation_id','variationmaster.id');
+            
+            if($var_array!=null){
+                foreach($var_array as $k){
+                    
+                    if($k['name']=='Size')
+                    {
+                        $sort_product=$sort_product
+                        
+                        ->orWhere('variationvalues.variation_value',$k['value']);
+                    }
+                    if($k['name']=='Resolution')
+                    {
+                        
+                        $sort_product=$sort_product
+                    
+                        ->where('variationvalues.variation_value',$k['value']);
+                    }
+                    if($k['name']=='rating')
+                    {
+                        $sort_product=$sort_product->where('rating','>=',$k['value']);
+                    }
+                    if($k['name']=='exclude')
+                    {
+                        $sort_product=$sort_product->where('products.quantity','>',0);
+                    }
+                } 
+            }
+
+            if($value=='price-desc')
+            {
+                $sort_product=$sort_product->orderBy('products.price','desc');
+            }
+            else if($value=='price-asc')
+            {
+                $sort_product=$sort_product->orderBy('products.price');
+            }
+            else if($value=='name-asc')
+            {
+                $sort_product=$sort_product->orderBy('products.product_name');
+            }
+            else if($value=='name-desc')
+            {
+                $sort_product=$sort_product->orderBy('products.product_name','desc');
+            }
+            else if($value=='latest')
+            {
+                $sort_product=$sort_product->orderBy('products.created_at','desc');
+            }
+            if($value=='rating')
+            {
+                $sort_product=$sort_product->orderBy('rating','desc');
+            }
+            
+            $sort_product=$sort_product->groupBy('products.id')
+            ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'))->get();
+
+            // dd($sort_product);
+
+            foreach($sort_product as $pr){
+                if(isset($cart_item)){
+                    if(in_array($pr->id,$cart_item))
+                        $response['cart '.$pr->id]=true;
+                }
+                if(isset($wished_prod)){
+                    if(in_array($pr->id,$wished_prod))
+                        $response['wish '.$pr->id]=true;
+                }
+            }
+            $response['data']=$sort_product;
+            return json_encode($response);
         }
+        // For fetching subcategories wise product variation
 
-        $cart_item = '';
-
-        if(\Auth::user()){
-        $cart_item = DB::table('cart')
-            ->select('product_id')
-            ->where('user_id','=',\Auth::user()->id) 
-            ->get()
-            ->pluck('product_id')
-            ->toArray();
+        $parr=array();
+        $product_var=Product::where('subcategory_id',$id)->get();
+        for($i=0;$i<$product_var->count();$i++){
+            $parr[$i]=$product_var[$i]->id;
         }
-
-        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist','cart_item'));
+        
+        $product_var= variationMaster::with('variationValues')->whereIn('product_id',[$parr])->get();
+        // dd($parr);
+        // $product_var= DB::table('products')
+        // ->leftjoin('variationmaster','variationmaster.product_id','=','products.id')
+        // ->leftjoin('variationvalues','variationvalues.variation_id','=','variationmaster.id')
+        // ->whereIn('products.id',[$parr])->get();
+       
+        // dd($product_var);
+       
+        return view('frontend_user.products_list',compact('prod','subcategory','category','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist','cart_item','product_var'));
     }
 
     // get  product details 
@@ -68,13 +157,14 @@ class ProductsController extends Controller
         $category_featured = $this->final_data[3];
         $all_products = $this->final_data[5];
         $wishlist = $this->final_data[4];
+        $wished_prod=$this->final_data[7];
+
         $catarr = $this->catarr;
         $category = Category::find($cid);
         $subcategory = Subcategory::find($subid);
-       
         $product = DB::table('products')->leftjoin('productreviews','products.id','=','productreviews.product_id')
-        ->where('products.id',$id)->
-        select('products.*','productreviews.product_id','productreviews.user_id','productreviews.rating','productreviews.review',\DB::raw("ROUND(AVG(rating),2) as avg_rating",'category_featured'))
+        ->where('products.id',$id)
+        ->select('products.*','productreviews.product_id','productreviews.user_id','productreviews.rating','productreviews.review',\DB::raw("ROUND(AVG(rating),2) as avg_rating",'category_featured'))
         ->get()->first();
 
         $product_variation=array();
@@ -87,15 +177,6 @@ class ProductsController extends Controller
                 $product_variation_values[$pv->id]= variationValues::where('variation_id',$pv->id)->get();
             }
             // dd($product_variation_values[1]);
-        }
-        if(\Auth::user())
-        {
-            $wished_prod = DB::table('wishlist')
-                      ->select('product_id')
-                      ->where('user_id','=',\Auth::user()->id) 
-                      ->get()
-                      ->pluck('product_id')
-                      ->toArray();
         }
 
         $count_reviews = productReviews::selectRaw("count(*) as count")->where('product_id',$id)->get()->toArray();
@@ -140,6 +221,19 @@ class ProductsController extends Controller
              echo "fail";
              
         }
+    }
+
+    public function filterProduct(Request $request)
+    {
+        $var_array = $request->input('varname');
+        $exclude = $request->input('exclude');
+        $sort_product=DB::table('products')
+            ->where('products.subcategory_id',$id)
+            ->where('is_active',1)
+            ->leftjoin('productreviews','products.id','=','productreviews.product_id')
+            ->groupBy('products.id')
+            ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'));
+
     }
 
 }

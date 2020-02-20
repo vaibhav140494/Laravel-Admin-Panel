@@ -13,6 +13,7 @@
 						<li><a href="#">home</a></li>
 						<li><a href="{{route('frontend.category.list')}}">{{$category->category_name}}</a></li>
 						<li><a href="{{route('frontend.subcategory.list',[$category->id])}}">{{$subcategory->subcategory_name}}</a></li>
+						<li><a href="{{route('frontend.products.list',[$subcategory->id,$category->id])}}">Products</a></li>
 						<li><span>{{$product->product_name}}</span></li>
 					</ul>					
 				</div>	
@@ -106,7 +107,9 @@
 						<!-- Product Action -->
 						<div class="pd_btn fix">
 							@if($product ->quantity > 0)
-							<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn-product">add to cart</a>
+							<span class="outofstock_msg" >
+							</span>		
+								<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn-product">add to cart</a>
 							@else
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
 							@endif
@@ -354,26 +357,28 @@ $(document).ready(function(){
 	});	
   
 	$('#prod_qty').change(function(){
-		// alert("hello");
+		
 		var value=$(this).val();
-		var id=<?php echo $product ->id;?>;
+		var id=<?php echo $product->id;?>;
 		<?php 
 			if(isset($product))
 			{
-				$prod= $product ->quantity;
+				$prod= $product->quantity;
 		?>
+			
+
 		if(<?php echo $prod; ?> < value)
 		{
-			$('#cart-btn').html("product Out of stock");
-			$('#cart-btn').attr('type','button');
-			$('#cart-btn').css('cursor','not-allowed');
+			$('.acc_btn').hide();
+			$('.outofstock_msg').text('Product out of stock');
+			$('.outofstock_msg').show();
+			
 		}
 		else
 		{
-		$('#cart-btn').html("Add to Cart");
-			$('#cart-btn').removeAttr('type','button');
-		//  $('#cart-btn').attr('href');
-			$('#cart-btn').css('cursor','pointer');
+		$('.acc_btn').html("Add to Cart");
+		$('.acc_btn').show();
+			$('.outofstock_msg').hide();
 		}
 
 	 	<?php

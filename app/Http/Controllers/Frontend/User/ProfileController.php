@@ -138,7 +138,7 @@ class ProfileController extends Controller
     {
         if($req->ajax())
         {
-            $id=$req->input('id');
+        $id=$req->input('id');
             $uid=$req->input('uid');
             $radioid=$req->input('radio_val');
             $multiple_addr=MultipleAddress::find($id);

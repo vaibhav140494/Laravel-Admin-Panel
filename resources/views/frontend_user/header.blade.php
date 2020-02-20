@@ -48,7 +48,7 @@
 								
 								@if (\Auth::user()!='')
 								
-								<li class="account_area"><a href="#"> My Orders</a></li>
+								<li class="account_area"><a href="{{route('frontend.view.order')}}"> My Orders</a></li>
 								<!-- <li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li> -->
 								<li>
 									<div class="user_profile_area">

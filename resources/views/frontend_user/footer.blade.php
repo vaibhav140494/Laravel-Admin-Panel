@@ -248,8 +248,6 @@
 				$(document).on('click','.cp_remove',function(){
 					var id=$(this).attr('pid');
 					var a=$(this).attr('prodid');
-					// alert(a);
-					// dt=$('#'+a).html();
 					$.ajax({
 						url:'{{route("frontend.cart.remove")}}',
 						method:'get',
@@ -369,6 +367,9 @@
 						} 
 					});
 				});
+
+				
+
 			});
 		</script>
 	</body>

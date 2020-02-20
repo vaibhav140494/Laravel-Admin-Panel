@@ -67,4 +67,12 @@ class Product extends Model
     {
         parent::__construct($attributes);
     }
+
+    public function reviews()
+    {
+        
+        return $this->hasMany('App\Models\Product\productReviews');
+    }
+    
+   
 }
