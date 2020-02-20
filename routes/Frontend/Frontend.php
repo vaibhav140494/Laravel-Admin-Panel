@@ -20,7 +20,8 @@ Route::get('/register', 'RegisterController@index')->name('register.show');
 Route::post('/register/store', 'RegisterController@store')->name('register.store');
 Route::get('/register/{id}/edit', 'RegisterController@edit')->name('register.edit');
 Route::post('/register/{id}/update', 'RegisterController@update')->name('register.update');
-
+//change password
+Route::get('/changepassword','ProfileController@getChangePassForm')->name('changepassword');
 
 ///Category controller routes
 Route::get('categories','CategoriesController@index')->name('category.list');
@@ -38,6 +39,7 @@ Route::get('/wishlist/list/{uid}','WishListController@list')->name('wishlist.lis
 
 //offer-controller routes
 Route::get('/offer/check','offerController@offerValidation')->name('offer.ckeck');
+Route::get('/offer/remove','offerController@removeOffer')->name('offer.remove');
 ////Product controller routes
 Route::get('products/{id}/{cid}','ProductsController@getProd')->name('products.list');
 Route::get('product/details/{id}/{subid}/{cid}','ProductsController@detailProd')->name('product.details');
@@ -86,6 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('user/address/store','ProfileController@storeAddress')->name('address.store');
         Route::get('user/address/edit/{id}','ProfileController@editAddress')->name('address.edit');
         Route::post('user/address/update/{id}','ProfileController@updateAddress')->name('address.update');
+        Route::get('user/changepasswordform','ProfileController@getChangePassForm')->name('changepasswordform');
+        Route::post('user/changepassword','ProfileController@changePassword')->name('changepassword');
 
     });
 });

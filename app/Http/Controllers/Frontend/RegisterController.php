@@ -81,7 +81,7 @@ class RegisterController extends Controller
             $user->birthdate=$input['birthdate'];
             if($user->save())
             {
-                return redirect()->route('frontend.login');
+                return redirect()->route('frontend.user.login');
             }
 
 

@@ -36,7 +36,9 @@
                     <textarea name="address" class="textarea" cols="10" rows="5" placeholder="Enter Address"></textarea>
                     <span style="color:red;">{{$errors->register->first('address') ?? ''}}</span>
                 </div>
-                
+                <div class="from-group">
+                    <a href="{{route('frontend.user.changepasswordform')}}" class="btn btn-primary">Change Password</a>
+                </div>
             </div>  
             <div class="col-6">
             <div class="form-group">

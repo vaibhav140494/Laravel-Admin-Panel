@@ -40,7 +40,7 @@ abstract class Controller extends BaseController
                 ->where('user_id',$this->uid)
                 ->where('cart.order_id',null)->get();
                 $this->wishlist= DB::table('wishlist')->leftjoin('products','wishlist.product_id','=','products.id')
-                ->select('wishlist.*','products.product_name','products.image','products.price')
+                ->select('wishlist.*','products.product_name','products.quantity','products.image','products.price')
                 ->where('user_id',$this->uid)->get();
             }
                 //for fetching featured category
