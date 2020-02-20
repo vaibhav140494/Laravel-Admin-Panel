@@ -42,7 +42,7 @@ class ProductRepository extends BaseRepository
                 config('module.products.table').'.specification',
                 config('module.products.table').'.created_at',
                 config('module.products.table').'.updated_at',
-            ]);
+            ])->where('is_active',1);
     }
 
     /**

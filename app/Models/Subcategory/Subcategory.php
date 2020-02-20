@@ -67,4 +67,9 @@ class Subcategory extends Model
     {
         parent::__construct($attributes);
     }
+
+    // public function products()
+    // {
+    //     return $this->hasMany('App\Models\Product\Product');
+    // }
 }

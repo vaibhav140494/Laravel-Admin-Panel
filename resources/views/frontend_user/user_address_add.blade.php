@@ -9,7 +9,7 @@
             <div class="col-sm-6 text-right">
                 <ul class="p_items">
                     <li><a href="{{url('/')}}">home</a></li>
-                    <li><span>Edit profile</span></li>
+                    <li><a href="{{route('frontend.register.edit',[\Auth::user()->id])}}">Edit Profile</a></li>
                     <li><span>Add Address</span></li>
                 </ul>					
             </div>	
@@ -30,7 +30,7 @@
                     <!-- <span style="color:red;">{{$errors->register->first('contact_person') ?? ''}}</span> -->
                 </div>
                 <div class="form-group">
-                    <input type="text" name="contact_person_no" placeholder="Enter Contact Person No" >
+                    <input type="number" name="contact_person_no" placeholder="Enter Contact Person No" >
                     <!-- <span style="color:red;">{{$errors->register->first('last_name') ?? ''}}</span> -->
                 </div>
                 <div class="form-group">
@@ -55,6 +55,7 @@
                 </div>
                 <div class="form-group">
                     <label class="label-control"> Make As default Address</label>
+                    <input type="checkbox" name="mk_default_address_chkbx" >
                 </div>
                 
             </div>  
@@ -150,7 +151,7 @@ $(document).ready(function(){
                 minlength:"please enter atleast 10 digits",
                 maxlength:"please enter only 10 digits"
             },
-                pincode:{
+            pincode:{
                     phonenocheck:"please enter only numeric value"
                 }
             

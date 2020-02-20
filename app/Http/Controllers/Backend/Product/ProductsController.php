@@ -172,7 +172,7 @@ class ProductsController extends Controller
                 ->where('variationmaster.product_id','=',$request['id'])
                 ->groupBy('variationmaster.id')
                 ->get();
-               // dd($var);
+            //    dd($var);
                 
         return view('backend.products.productvariation')->with([
             'data' => $var,
@@ -219,7 +219,7 @@ class ProductsController extends Controller
                     ->select('id')
                     ->where('product_name','=',$input['product_name'])
                     ->get();
-        //dd($product_id);
+        
         DB::table('variationmaster')->insert([
             'variation_name'=>$input['variation_name'],
             'product_id'=>$product_id[0]->id,
@@ -234,16 +234,20 @@ class ProductsController extends Controller
                      ])->get();
         $variation_values=$input['variation_value'] ;
         $qry = '';
+        
         foreach($variation_values as $value)
         {
-            $qry .= "($value, ".$variation_id[0]->id."),";
+            $qry .= "('$value', ".$variation_id[0]->id."),";
         }
+        
 
         if($qry!='')
         {
             $qry = substr($qry, 0, -1);
+            
             $finalQry = "INSERT INTO `variationvalues` (`variation_value`, `variation_id`) VALUES ".$qry;
             DB::unprepared($finalQry);
+            // dd($finalQry);
         }
         return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
     }

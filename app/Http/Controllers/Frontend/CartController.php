@@ -179,7 +179,7 @@ class CartController extends Controller
                    //dd($address);
         $checkout_prod = DB::table('cart')
                         ->join('products','products.id','=','cart.product_id')
-                        ->select('products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount')
+                        ->select('products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount','cart.total_amount as total')
                         ->where('cart.user_id','=',\Auth::user()->id)
                         ->get();
 

@@ -25,4 +25,9 @@ class variationMaster extends Model
     {
         parent::__construct($attributes);
     }
+
+    public function variationValues()
+    {
+        return $this->hasMany('App\Models\Product\variationValues','variation_id','id');
+    }
 }

@@ -13,6 +13,7 @@
 						<li><a href="#">home</a></li>
 						<li><a href="{{route('frontend.category.list')}}">{{$category->category_name}}</a></li>
 						<li><a href="{{route('frontend.subcategory.list',[$category->id])}}">{{$subcategory->subcategory_name}}</a></li>
+						<li><a href="{{route('frontend.products.list',[$subcategory->id,$category->id])}}">Products</a></li>
 						<li><span>{{$product->product_name}}</span></li>
 					</ul>					
 				</div>	
@@ -72,25 +73,26 @@
 							@endif
 						</div>
 						@if($product ->type==2)
-							<div class="pd_img_size fix">
-								<h4>size:</h4>
-								<a href="#">s</a>
-								<a href="#">m</a>
-								<a href="#">l</a>
-								<a href="#">xl</a>
-								<a href="#">xxl</a>
-							</div>
+							@foreach($product_variation as $pv)
+								<div class="pd_clr_qntty_dtls fix">
+
+									<h4>{{ $pv->variation_name }}</h4>
+									<ul>
+									@foreach($product_variation_values[$pv->id] as $pvvalues)
+										<li >{{$pvvalues->variation_value}}</li>
+									@endforeach
+									</ul>
+								</div>
+							@endforeach
 							@endif
 
 							<div class="pd_clr_qntty_dtls fix">
-							@if($product ->type==2)
-								<div class="pd_clr">
+								<!-- <div class="pd_clr">
 									<h4>color:</h4>
 									<a href="#" class="active" style="background: #ffac9a;">color 1</a>
 									<a href="#" style="background: #ddd;">color 2</a>
 									<a href="#" style="background: #000000;">color 3</a>
-								</div>
-							@endif
+								</div> -->
 							<div class="pd_qntty_area">
 								@if($product ->quantity > 0)
 									<h4>quantity:</h4>
@@ -105,7 +107,9 @@
 						<!-- Product Action -->
 						<div class="pd_btn fix">
 							@if($product ->quantity > 0)
-							<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn-product">add to cart</a>
+							<span class="outofstock_msg" >
+							</span>		
+								<a class="btn btn-default acc_btn cart-btn" name="{{$product->id}}"  href="javascript:void(0)" id="cart-btn-product">add to cart</a>
 							@else
 							<button class="btn btn-default acc_btn" disabled>out of stock</button>
 							@endif
@@ -341,13 +345,6 @@ $(document).ready(function(){
 								div+='<div class="mc-subtotal fix"><h4>Subtotal &#x20b9;<span id="cart-subtotal"> '+total+'</span></h4></div><div class="mc-button"><a href="#" class="checkout_btn">checkout</a></div>';
 
 								$('.mini-cart-wrapper').html(div);
-								else
-								{
-									$('.mc-subtotal').show();
-									$('.mc-button').show();
-									// console.log("hello");
-								}
-								
 
 							}
 							if(response['fail']=="fail")
@@ -360,26 +357,28 @@ $(document).ready(function(){
 	});	
   
 	$('#prod_qty').change(function(){
-		// alert("hello");
+		
 		var value=$(this).val();
-		var id=<?php echo $product ->id;?>;
+		var id=<?php echo $product->id;?>;
 		<?php 
 			if(isset($product))
 			{
-				$prod= $product ->quantity;
+				$prod= $product->quantity;
 		?>
+			
+
 		if(<?php echo $prod; ?> < value)
 		{
-			$('#cart-btn').html("product Out of stock");
-			$('#cart-btn').attr('type','button');
-			$('#cart-btn').css('cursor','not-allowed');
+			$('.acc_btn').hide();
+			$('.outofstock_msg').text('Product out of stock');
+			$('.outofstock_msg').show();
+			
 		}
 		else
 		{
-		$('#cart-btn').html("Add to Cart");
-			$('#cart-btn').removeAttr('type','button');
-		//  $('#cart-btn').attr('href');
-			$('#cart-btn').css('cursor','pointer');
+		$('.acc_btn').html("Add to Cart");
+		$('.acc_btn').show();
+			$('.outofstock_msg').hide();
 		}
 
 	 	<?php

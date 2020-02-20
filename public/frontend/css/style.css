@@ -383,7 +383,13 @@ input:focus, textarea:focus {
 
 
 /* -------- Header Css -------- */
-
+/* #header_area{
+position: fixed;
+    top: 0;
+    width: 100%;
+	z-index:100;
+	background-color: #fff;
+} */
 .header_top_area {
 	font-size: 14px;
 	background: #fff;
@@ -436,6 +442,7 @@ input:focus, textarea:focus {
 	color: #777;
 }
 .header_btm_area{
+	
 	padding: 15px 0;
 }
 
@@ -594,7 +601,12 @@ input:focus, textarea:focus {
 	display: inline-block;
 	transition:.5s;
 	margin-right: 10px;
-	
+}
+.user_profile_area{
+	position: relative;
+	display: inline-block;
+	transition:.5s;
+	margin-right: 10px;
 }
 .cart_icon,.wishlist_icon {
 	display: inline-block;
@@ -625,6 +637,8 @@ input:focus, textarea:focus {
 
 .mini-cart-wrapper,.mini-wishlist-wrapper{
 	width:250px;
+	height: 300px;
+	overflow-y: auto;
 	position: absolute;
 	top: 40px;
 	left: -135px;
@@ -1482,6 +1496,10 @@ input:focus, textarea:focus {
     left: auto;
     right: 0;
 }
+.rating{
+	color: #fec42d;
+
+}
 .product-grid .rating{
 	color: #fec42d;
 	cursor: pointer;
@@ -1501,7 +1519,7 @@ input:focus, textarea:focus {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -25px;
+    bottom: -30px;
     z-index: 1;
     transition: all 0.3s;
 }
@@ -3462,4 +3480,43 @@ input:focus, textarea:focus {
   
 .m-t-8 {
 	margin-top: -8px;
+}
+
+
+
+.slidecontainer {
+	width: 100%;
+  }
+  
+  .slider {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 25px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+  }
+  .slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 10px;
+	height: 25px;
+	background: #4CAF50;
+	cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+	width: 10px;
+	height: 25px;
+	background: #4CAF50;
+	cursor: pointer;
+  }
+.padding{
+	margin:20px 0;
+}
+.filter-div{
+	height: 500px;
+	overflow-y: scroll;
 }

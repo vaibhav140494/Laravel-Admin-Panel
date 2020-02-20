@@ -48,22 +48,21 @@
 								
 								@if (\Auth::user()!='')
 								
-								<li class="account_area"><a href="#"> My Orders</a></li>
-								<li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li>
-								<!-- <li>
-									<div class="cart_menu_area">
-										<div class="cart_icon">
+								<li class="account_area"><a href="{{route('frontend.view.order')}}"> My Orders</a></li>
+								<!-- <li class="account_area"><a href="{{route('frontend.logout')}}">Sign Out</a></li> -->
+								<li>
+									<div class="user_profile_area">
+										<div class="">
 											<span>Profile</span>
 										</div>
 										
-										<div class=" user-profile" style="visibility: hidden;">
+										<div class="user-profile" style="display:none;">
 											<div class="close-button">
 												<span>
-													<i class="fa fa-times-circle" aria-hidden="true" ></i>
+												<a href="" class="close-btn">	<i class="fa fa-times-circle " aria-hidden="true" ></i></a>
 												</span>
 											</div>
 											<div class="user-header">
-													
 												<h3>Welcome {{\Auth::user()->first_name}}</h3>
 											</div>
 											<div class="user_footer">
@@ -77,7 +76,7 @@
 										</div>											
 									</div>	 
 										
-								</li> -->
+								</li>
 
 
 								@else

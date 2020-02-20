@@ -150,7 +150,6 @@ class UserController extends Controller
     {
         $input =$req->except("_token");
         $rules = array(
-            'contact_person_no'=>'required',
             'city'=> 'required|string',
             'pincode'=>'required|Numeric',
             'state'=>'required|string',
@@ -178,15 +177,22 @@ class UserController extends Controller
             $multiple_addr->pincode = $req->input('pincode');
             $multiple_addr->user_id = $id;
             $multiple_addr->save();
+            // dd($multiple_addr);
             if($req->input('mk_default_address_admin')=='on')
             {
                 $user = User::find($id);
                 $user->default_address = $multiple_addr->id;
-                $user->save();
+                $ans=$user->save();
+                if($ans)
+                    {
+                        // /    Session::put('success_msg','Address Added Successfully');
+                        // dd("hello");
+                    }
                 // dd($user);
             }
-            // dd($multiple_addr);
-            return redirect()->route('admin.access.user.edit',[$id])->with('message','Address Updated Successfully');
+            // dd($multiple_addr); 
+            return new RedirectResponse(route('admin.access.user.edit',[$id]), ['flash_success' => " user address successfully Added"]);
+           
         }
     }
 
@@ -215,13 +221,13 @@ class UserController extends Controller
         {
             $msg="error";
         }
-        return redirect()->route('admin.access.user.edit',[$multiple_adder->user_id]);
+        return new RedirectResponse(route('admin.access.user.edit',[$multiple_adder->user_id]), ['flash_success' => " user address successfully updated"]);
+        // return redirect()->route('admin.access.user.edit',[$multiple_adder->user_id]);
     }
     public function deleteAddress(Request $req)
     {
         $id=$req->input('id');
         $uid=$req->input('uid');
-        $radio_id = $req->input('radio_val');
         $multiple_addr=MultipleAddress::find($id);
 
         $msg=$multiple_addr->delete(); 
@@ -232,8 +238,12 @@ class UserController extends Controller
             $address_data = MultipleAddress::where('user_id',$uid)->get();
             
             $user = User::find($uid);
-            $user->default_address=$radio_id;
-            $user->save();
+            // echo $radio_id;
+            if($req->input('radio_val') !=0){
+                $radio_id = $req->input('radio_val');
+                $user->default_address=$radio_id;
+                $user->save();
+            }
             $response['data'] = $address_data;
             $response['user'] = $user;            
         }

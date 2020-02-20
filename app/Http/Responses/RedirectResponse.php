@@ -14,12 +14,14 @@ class RedirectResponse implements Responsable
     {
         $this->route = $route;
         $this->message = $message;
+        // dd($this->route);
+        
     }
 
     public function toResponse($request)
     {
         return redirect()
             ->to($this->route)
-            ->with($this->message);
+            ->with($this->message); 
     }
 }

@@ -10,7 +10,6 @@
 @endsection
 @section('content')
     {{ Form::model($user, ['route' => ['admin.access.user.update', $user], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH']) }}
-        
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('labels.backend.access.users.edit') }}</h3>
@@ -260,6 +259,7 @@
 
                                         div+='<div class="form-group">{{ Form::label("Multiple_address","Multiple Address", ["class" => "col-lg-2 control-label required"]) }}<div class="address_display"><div class=" offset-md-3 col-md-1"><input type="radio" name="address" value="'+value.id+'" id="'+value.id+'"> </div><div class="col-md-6"><span>'+user.first_name+'</span> <span>'+user.last_name+'</span><p style="margin:0 auto;">'+value.address+'</p><p style="margin:0 auto;">'+value.pincode+'</p><p style="margin:0 auto;">'+value.city+'</p><p style="margin:0 auto;">'+value.state+'</p><p style="margin:0 auto;">'+value.country+'</p></div><div class="col-md-2"><span><a href="" style="color:#000;" id="address_edit" name="'+value.id+'"><i class="fa fa-pencil" style="font-size:18px;margin-right:10px;" ></i></a></span><span><a href="javascript:void(0)" id="address_delete" name="'+value.id+'" style="color:#000;"><i class="fa fa-trash" style="font-size:18px;margin-right:10px;"></i></a></span></div></div></div>';
                                     });
+                                    console.log(div);
                                     $('.address-container').html(div);
                                     $("#"+checkid).prop("checked", true);
 

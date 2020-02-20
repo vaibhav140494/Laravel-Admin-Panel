@@ -78,7 +78,7 @@
 										<td class="product-name">{{$product->product_name}}</td>
 										<td class="product-total">{{$product->quantity}}</td>
 										<td class="product-total">{{$product->price}}</td>
-										<td class="product-total"><span>{{($product->price)*($product->quantity)}}</span></td>
+										<td class="product-total"><span>{{$product->total}}</span></td>
 									</tr>
 									@endforeach	
 								</tbody>

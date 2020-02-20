@@ -157,18 +157,19 @@
 											<ul class="social">
 											
 												<li><a href="{{url('storage/products/'.$prod->image)}}" class="venobox" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-												@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
-												<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
-												@else
-												<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
-												@endif
-												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
-												<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
-												@else
-												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												@if($prod->quantity > 0)
+													@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+														<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
+													@else
+														<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+													@endif
+													@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+														<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
+													@else
+														<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+													@endif
 												@endif
 											</ul>
-											 <span class="product-new-label">Sale</span> 
 										</div>
 										
 										<ul class="rating">
@@ -176,7 +177,6 @@
 												@if($product_review[$i]->product_id==$prod->id)
 													@for($j=0;$j<$product_review[$i]->rating;$j++)
 													<li class="fa fa-star"></li>
-													
 													@endfor
 												@endif
 											@endfor
@@ -191,7 +191,13 @@
 												{{$prod->price}}
 												@endif
 											</div>
-											<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@if($prod->quantity > 0)
+												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+													<a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>
+												@else
+													<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+												@endif
+											@endif
 										</div>
 									</div>
 								</div>
@@ -257,7 +263,7 @@
 												<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
 											</a>
 											<ul class="social">
-												<li><a  class="venobox"href="{{url('storage/products/'.$prod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+												<li><a  class="venobox" href="{{url('storage/products/'.$prod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
 												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
 												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
 												<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
@@ -282,10 +288,13 @@
 												@else
 													{{$prod->price}}
 												@endif
-											
 												
 											</div>
-											<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+												<a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>
+											@else
+												<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+											@endif
 										</div>
 									</div>
 								</div><!-- End Col -->

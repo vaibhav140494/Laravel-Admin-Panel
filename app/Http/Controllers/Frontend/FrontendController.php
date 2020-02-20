@@ -35,38 +35,22 @@ class FrontendController extends Controller
         $all_subcategory = $this->final_data[1];
         $all_cart = $this->final_data[2];
         $category_featured = $this->final_data[3];
-        $all_products = $this->final_data[5];
         $wishlist = $this->final_data[4];
+        $all_products = $this->final_data[5];
+        $cart_item=$this->final_data[6];
+        $wished_prod=$this->final_data[7];
         $catarr = $this->catarr;
-         $product = Product::all();
+         $product = $all_products;
         $category = Category::all();
         $featured_prod = Product::findMany($catarr);
-        // dd($all_cart);
         $product_review = productReviews::all();
-        if(\Auth::user())
-        {
-            $wished_prod = DB::table('wishlist')
-                      ->select('product_id')
-                      ->where('user_id','=',\Auth::user()->id) 
-                      ->get()
-                      ->pluck('product_id')
-                      ->toArray();
-        }     
-        $cart_item='';
-        if(\Auth::user()){
-        $cart_item = DB::table('cart')
-        ->select('product_id')
-        ->where('user_id','=',\Auth::user()->id) 
-        ->get()
-        ->pluck('product_id')
-        ->toArray();
-        }
 
         //fetching featured Productss
         $featured_prod = DB::table('products')
         ->leftjoin('categories','products.category_id','=','categories.id')
         ->whereIn('categories.id',$catarr)
-        ->where('is_active',1)
+        ->where('products.is_active',1)
+        ->where('products.quantity','>',0)
         ->select('products.*')->get();
         $product_review = productReviews::selectRaw('avg(rating) as avg')->groupby('user_id')->get();
         

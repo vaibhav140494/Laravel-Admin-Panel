@@ -42,8 +42,11 @@ Route::get('/offer/check','offerController@offerValidation')->name('offer.ckeck'
 Route::get('/offer/remove','offerController@removeOffer')->name('offer.remove');
 ////Product controller routes
 Route::get('products/{id}/{cid}','ProductsController@getProd')->name('products.list');
+Route::post('products/{id}/{cid}','ProductsController@getProd')->name('products.sort.list');
 Route::get('product/details/{id}/{subid}/{cid}','ProductsController@detailProd')->name('product.details');
 Route::get('product/details/reviews/store','ProductsController@storeReview')->name('product.details.reviews.store');
+// Route::post('product/filters','ProductsController@filterProduct')->name('product.filter');
+
 ///cart controller route
 // Route::group(['middleware' => 'auth'], function () {
 
@@ -56,6 +59,8 @@ Route::get('/checkout','CartController@checkout')->name('checkout');
 
 //for place order
 Route::get('/placeorder','OrderController@placeOrder')->name('placeorder');
+Route::get('view/order','OrderController@viewOrder')->name('view.order');
+Route::get('view/order/details/{id}','OrderController@viewOrderDetails')->name('view.order.details');
 // });
 /*
  * These frontend controllers require the user to be logged in

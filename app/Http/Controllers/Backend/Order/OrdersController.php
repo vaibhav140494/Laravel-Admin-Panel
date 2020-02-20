@@ -39,6 +39,8 @@ class OrdersController extends Controller
     public function __construct(OrderRepository $repository)
     {
         $this->repository = $repository;
+        parent::__construct();
+        
     }
 
     /**
