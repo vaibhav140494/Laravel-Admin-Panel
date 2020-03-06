@@ -9,7 +9,7 @@
 
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
-							<li><a href="#">home</a></li>
+							<li><a href="{{route('frontend.index')}}">home</a></li>
 							<li><span>Wishlist</span></li>
 						</ul>					
 					</div>	

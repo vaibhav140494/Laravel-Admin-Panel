@@ -24,14 +24,15 @@
 				<div class="row">
 					<div class="contact_frm_area text-left col-lg-6 col-md-12 col-xs-12">
 						<h3>Get in Touch</h3>
-						<form action="#">
+						<form action="{{route('frontend.contact.store')}}" method="post">
+							@csrf
 							<div class="form-row">
-								<div class="form-group col-sm-6"><input type="text" class="form-control" placeholder="Name*" /></div>
-								<div class="form-group col-sm-6"><input type="text" class="form-control" placeholder="Email*" /></div>
+								<div class="form-group col-sm-6"><input type="text" class="form-control" placeholder="Name*" name="name" /></div>
+								<div class="form-group col-sm-6"><input type="text" class="form-control" placeholder="Email*" name="email"/></div>
 							</div>
 
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Subject" />
+								<input type="text" class="form-control" placeholder="Subject" name="subject" />
 							</div>
 				
 							<div class="form-group">

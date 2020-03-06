@@ -162,7 +162,7 @@
 													<li><a href="#">Contact Us</a></li>
 												</ul>
 											</li> -->
-											<li><a href="#">contact</a></li>
+											<li><a href="{{route('frontend.contact.index')}}">contact</a></li>
 											<li><a href="#">about</a></li>
 
 										</ul>
@@ -339,4 +339,32 @@
 			<!-- <button	 type="button" class="close text-center" data-dismiss="alert">x</button> -->
 			<strong> Product is removed from your Cart.</strong>
 		</div>
+		@if(session('changep'))
+		
+		<div class="alert alert-success text-center" id="success-alert-change-password" style="position:fixed;top:5%;z-index:10;left:0; right:0;display:block;">
+			<!-- <button	 type="button" class="close text-center" data-dismiss="alert">x</button> -->
+			<strong> Password has been changed</strong>
+		</div>
+		@endif
+		@if(session('order'))
+		
+		<div class="alert alert-success text-center" id="success-alert-order-placed" style="position:fixed;top:5%;z-index:10;left:0; right:0;display:block;">
+			<!-- <button	 type="button" class="close text-center" data-dismiss="alert">x</button> -->
+			<strong> Your order has been placed</strong>
+		</div>
+		@endif
+		@if(session('ticket_submit'))
+		
+		<div class="alert alert-success text-center" id="success-alert-ticket-submitted" style="position:fixed;top:5%;z-index:10;left:0; right:0;display:block;">
+			<!-- <button	 type="button" class="close text-center" data-dismiss="alert">x</button> -->
+			<strong> Your Query has been received</strong>
+		</div>
+		@endif
+		@if(session('contact_save'))
+		
+		<div class="alert alert-success text-center" id="success-alert-contact-saved" style="position:fixed;top:5%;z-index:10;left:0; right:0;display:block;">
+			<!-- <button	 type="button" class="close text-center" data-dismiss="alert">x</button> -->
+			<strong> Thank you for contacting us</strong>
+		</div>
+		@endif
 		<!--  End Header  -->

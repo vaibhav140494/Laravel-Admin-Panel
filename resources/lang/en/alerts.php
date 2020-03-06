@@ -60,29 +60,34 @@ return [
 	"updated" => "The Category was successfully updated.",
 	],
 	"products" => [
-		"created" => "The Product was successfully created.",
-		"deleted" => "The Product was successfully deleted.",
-		"updated" => "The Product was successfully updated.",
-		],
+	"created" => "The Product was successfully created.",
+	"deleted" => "The Product was successfully deleted.",
+	"updated" => "The Product was successfully updated.",
+	],
 	"subcategories" => [
 	"created" => "The SubCategory was successfully created.",
 	"deleted" => "The SubCategory was successfully deleted.",
 	"updated" => "The SubCategory was successfully updated.",
 	],
 	"offers" => [
-		"created" => "The Offer was successfully created.",
-		"deleted" => "The Offer was successfully deleted.",
-		"updated" => "The Offer was successfully updated.",
-		],
-		"orders" => [
-		"created" => "The Order was successfully created.",
-		"deleted" => "The Order was successfully deleted.",
-		"updated" => "The Order was successfully updated.",
-		],
-		"supporttickets" => [
-		"created" => "The SupportTicket was successfully created.",
-		"deleted" => "The SupportTicket was successfully deleted.",
-		"updated" => "The SupportTicket was successfully updated.",
-		],
+	"created" => "The Offer was successfully created.",
+	"deleted" => "The Offer was successfully deleted.",
+	"updated" => "The Offer was successfully updated.",
+	],
+	"orders" => [
+	"created" => "The Order was successfully created.",
+	"deleted" => "The Order was successfully deleted.",
+	"updated" => "The Order was successfully updated.",
+	],
+	"supporttickets" => [
+	"created" => "The SupportTicket was successfully created.",
+	"deleted" => "The SupportTicket was successfully deleted.",
+	"updated" => "The SupportTicket was successfully updated.",
+	],
+	"contacts" => [
+	"created" => "The Contact was successfully created.",
+	"deleted" => "The Contact was successfully deleted.",
+	"updated" => "The Contact was successfully updated.",
+	],
 	],
 ];

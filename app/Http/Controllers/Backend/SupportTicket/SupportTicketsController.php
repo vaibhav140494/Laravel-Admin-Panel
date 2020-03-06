@@ -80,7 +80,8 @@ class SupportTicketsController extends Controller
      * @return \App\Http\Responses\Backend\SupportTicket\EditResponse
      */
     public function edit(SupportTicket $supportticket, EditSupportTicketRequest $request)
-    {
+    {   
+        //dd($supportticket->id);
         return new EditResponse($supportticket);
     }
     /**
@@ -93,7 +94,8 @@ class SupportTicketsController extends Controller
     public function update(UpdateSupportTicketRequest $request, SupportTicket $supportticket)
     {
         //Input received from the request
-        $input = $request->except(['_token']);
+        $input = $request->except(['_token','first_name','topic','oid']);
+        //dd($input);
         //Update the model using repository update method
         $this->repository->update( $supportticket, $input );
         //return with successfull message

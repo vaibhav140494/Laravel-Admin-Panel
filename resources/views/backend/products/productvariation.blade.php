@@ -57,7 +57,7 @@
                            </a>
                        </td>
                        <td>
-                           <a href="{{ route('admin.products.productvariations.delete',[$d->id]) }}" class="btn btn-flat btn-default">
+                           <a href="{{ route('admin.products.productvariations.delete',[$d->id,$productid]) }}" class="btn btn-flat btn-default">
                            <i data-toggle="tooltip" data-placement="top" title="Delete" class="fa fa-trash"></i>
                            </a>
                        </td>

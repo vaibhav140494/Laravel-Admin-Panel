@@ -31,8 +31,9 @@ class CartController extends Controller
         else
         {
            if($req->ajax())
-            {
+            {   
                 $value = $req->input('value');
+                
                 if($value==null){
                     $value=1;
 
@@ -49,10 +50,10 @@ class CartController extends Controller
                         $cart1->gross_amount= $value * $productPrice->price;
                         $total=$cart1->gross_amount;
                         $tax =$total * $taxamt/100;
-                        $total +=$tax;
+                        $total_amount = $tax+$total;
                         $cart1->quantity = $value;
                         $cart1->gross_amount = $value * $cart1->gross_amount;
-                        $cart1->total_amount = $total;
+                        $cart1->total_amount = $total_amount;
                         // $cart1->total_amount = ($total_amount * $taxamt) /100;
                         // dd($cart1);
                         $cart1->save();
@@ -66,7 +67,7 @@ class CartController extends Controller
                     $product = Product::find($id);
                     $total = $value * $product->price;
                     $tax =$total * $taxamt/100;
-                    $total+=$tax;
+                    $total_amount=$tax+$total;
                     $cid=DB::table('cart')
                     ->select('cart_id')
                     ->where('user_id','=',\Auth::user()->id)
@@ -76,16 +77,16 @@ class CartController extends Controller
                     $cart->product_id = $product->id;
                     $cart->user_id = \Auth::user()->id;
                     $cart->gross_amount = $total;
-                    $cart->tax_amount = $taxamt;
+                    $cart->tax_amount = $tax;
                     $cart->quantity = $value;
-                    $cart->total_amount = $total;
+                    $cart->total_amount = $total_amount;
                     if($cid->count()>0)
                     {
                         $cart->cart_id=$cid[0]->cart_id;
                     }
                     else{
                         //dd('hello');
-                        $cart->cart_id= Str::random(15);
+                        $cart->cart_id=mt_rand(1000000000,9999999999);
                                          
                     }
                     $cart->save();
@@ -165,7 +166,8 @@ class CartController extends Controller
         //dd(\Auth::user()->first_name);
         //dd($request->input('subtotal'));
         //dd($discp);
-
+        $tax=Setting::select('cgst','sgst')->get()->first();
+        $taxamt=$tax->cgst + $tax->sgst;
         $all_category=$this->final_data[0];
         $all_subcategory=$this->final_data[1];
         $all_cart=$this->final_data[2];
@@ -180,14 +182,16 @@ class CartController extends Controller
         $checkout_prod = DB::table('cart')
                         ->join('products','products.id','=','cart.product_id')
                         ->select('products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount','cart.total_amount as total')
-                        ->where('cart.user_id','=',\Auth::user()->id)
-                        ->get();
+                        ->where([
+                            ['cart.user_id','=',\Auth::user()->id],
+                            ['cart.order_id','=',NULL]
+                            ])->get();
 
                         foreach($checkout_prod as $product)
                         {
                             $total+=($product->price) * ($product->quantity);
                         }
-                        $total+=$total*($checkout_prod[0]->tax_amount)/100;
+                        $total+=$total*($taxamt)/100;
                   if($checkout_prod[0]->offer_id)      
                  {
                      $offer = DB::table('offers')

@@ -84,8 +84,8 @@
 											<div class="col-sm-10">
 											<input type="text" id="offer" name="offer"/>
 											</div>
-											<div class="col-sm-2">
-											<button class="btn border-btn rmv_offer fa fa-minus-circle" id="remove-offer"></button>
+											<div class="col-sm-2" id="remove_offer" style="display:none">
+											<button class="btn  rmv_offer fa fa-times" data-toggle="tooltip" data-placement="top" title="remove offer" id="remove-offer"></button>
 											</div>
 											</div>
 											
@@ -191,7 +191,8 @@
 							$('#offer-invalid').text(success);
 							$("#offer-invalid").css("color", "green");
 							$("#discount").html(discount);
-							$("#discounted_price").html(discounted_price);	
+							$("#discounted_price").html(discounted_price);
+							$("#remove_offer").css("display","block");	
 							}
 						}
 					});
@@ -213,6 +214,7 @@
 					$("#offer-invalid").css("color", "red");
 					$("#discount").html('0');
 					$("#discounted_price").html(total);
+					$("#remove_offer").css("display","none");
 				}
 			}
 		});

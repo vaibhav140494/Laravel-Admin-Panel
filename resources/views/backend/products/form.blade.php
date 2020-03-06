@@ -49,7 +49,7 @@
     <div class="form-group">
          {{ Form::label('sku', trans('labels.backend.products.table.sku'), ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-        {{ Form::number('sku', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.sku'), 'required' => 'required']) }}
+        {{ Form::text('sku', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.sku'), 'required' => 'required']) }}
         </div>
     </div>
     <div class="form-group">
@@ -88,7 +88,7 @@
     <div class="form-group">
          {{ Form::label('specification',trans('labels.backend.products.table.specification'), ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-        {{ Form::text('specification', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.specification'), 'required' => 'required']) }}
+        {{ Form::textarea('specification', null, ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.specification'), 'required' => 'required']) }}
         </div>
     </div>
     <div class="form-group">

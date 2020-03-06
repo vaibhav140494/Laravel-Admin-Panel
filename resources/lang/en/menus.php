@@ -116,12 +116,12 @@ return [
 	"main" => "Categories",
 	],
 	"products" => [
-		"all" => "All Products",
-		"create" => "Create Product",
-		"edit" => "Edit Product",
-		"management" => "Product Management",
-		"main" => "Products",
-		],
+	"all" => "All Products",
+	"create" => "Create Product",
+	"edit" => "Edit Product",
+	"management" => "Product Management",
+	"main" => "Products",
+	],
 	"subcategories" => [
 	"all" => "All SubCategories",
 	"create" => "Create SubCategory",
@@ -129,7 +129,6 @@ return [
 	"management" => "SubCategory Management",
 	"main" => "SubCategories",
 	],
-	
 	"language-picker" => [
 	"language" => "Language",
 	"langs" => [
@@ -148,28 +147,34 @@ return [
 	"sv" => "Swedish",
 	"th" => "Thai",
 	],
-],
-	"offers" => [
-		"all" => "All Offers",
-		"create" => "Create Offer",
-		"edit" => "Edit Offer",
-		"management" => "Offer Management",
-		"main" => "Offers",
-		],
-		"orders" => [
-		"all" => "All Orders",
-		"create" => "Create Order",
-		"edit" => "Edit Order",
-		"management" => "Order Management",
-		"main" => "Orders",
-		],
-		"supporttickets" => [
-		"all" => "All SupportTickets",
-		"create" => "Create SupportTicket",
-		"edit" => "Edit SupportTicket",
-		"management" => "SupportTicket Management",
-		"main" => "SupportTickets",
-		],
 	],
-
+	"offers" => [
+	"all" => "All Offers",
+	"create" => "Create Offer",
+	"edit" => "Edit Offer",
+	"management" => "Offer Management",
+	"main" => "Offers",
+	],
+	"orders" => [
+	"all" => "All Orders",
+	"create" => "Create Order",
+	"edit" => "Edit Order",
+	"management" => "Order Management",
+	"main" => "Orders",
+	],
+	"supporttickets" => [
+	"all" => "All SupportTickets",
+	"create" => "Create SupportTicket",
+	"edit" => "Edit SupportTicket",
+	"management" => "SupportTicket Management",
+	"main" => "SupportTickets",
+	],
+	"contacts" => [
+	"all" => "All Contacts",
+	"create" => "Create Contact",
+	"edit" => "Edit Contact",
+	"management" => "Contact Management",
+	"main" => "Contacts",
+	],
+	],
 ];

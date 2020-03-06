@@ -27,11 +27,14 @@ class ProductRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        return $this->query()
+        //dd("hello");
+        $product = $this->query()
+                 ->leftjoin('categories','categories.id','=','products.category_id')
+                 ->leftjoin('subcategories','subcategories.id','=','products.subcategory_id')
             ->select([
                 config('module.products.table').'.id',
-                config('module.products.table').'.category_id',
-                config('module.products.table').'.subcategory_id',
+                'categories.category_name as category',
+                'subcategories.subcategory_name as subcategory',
                 config('module.products.table').'.sku',
                 config('module.products.table').'.product_name',
                 config('module.products.table').'.quantity',
@@ -42,7 +45,9 @@ class ProductRepository extends BaseRepository
                 config('module.products.table').'.specification',
                 config('module.products.table').'.created_at',
                 config('module.products.table').'.updated_at',
-            ])->where('is_active',1);
+            ])->where('products.is_active',1);
+            //dd($product);
+            return $product;
     }
 
     /**

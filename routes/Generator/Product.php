@@ -11,7 +11,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::post('products/get', 'ProductsTableController')->name('products.get');
         Route::get('products/ajax/getsubcategories','ProductsController@getSubCategories')->name('products.ajax.subcategrory');
         Route::get('products/productvariations/show/{id}','ProductsController@getProductVariations')->name('products.productvariations.show');
-        Route::get('products/productvariations/delete/{id}','ProductsController@deleteVariation')->name('products.productvariations.delete');
+        Route::get('products/productvariations/delete/{id}/{pid}','ProductsController@deleteVariation')->name('products.productvariations.delete');
         Route::get('products/productvariations/create/{id}','ProductsController@createVariation')->name('products.productvariations.create');
         Route::post('products/productvariations/create','ProductsController@storeVariation')->name('products.productvariations.store');
         Route::get('products/productvariations/edit/{vid}/{pid}','ProductsController@editVariation')->name('products.productvariations.edit');

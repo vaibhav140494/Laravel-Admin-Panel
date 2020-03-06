@@ -32,11 +32,11 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <input type="password" name="newpass" id="newpass" placeholder="Enter Old Password">
+                    <input type="password" name="newpass" id="newpass" placeholder="Enter new Password">
                     <span style="color:red;">{{$errors->chpass->first('newpass') ?? ''}}</span>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="conpass" id="conpass" placeholder="Enter Old Password">
+                    <input type="password" name="conpass" id="conpass" placeholder="Enter Confirm Password">
                     <span style="color:red;">{{$errors->chpass->first('conpass') ?? ''}}</span>
                 </div>
             </div>

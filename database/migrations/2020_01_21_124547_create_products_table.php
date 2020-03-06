@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->foreign('subcategory_id')
             ->references('id')->on('subcategories')
             ->onDelete('cascade');
-            $table->integer('sku');
+            $table->string('sku');
             $table->string('product_name',50);
             $table->integer('quantity');
             $table->integer('type')->default(1)->comment('1-simple and 2-congigurable');

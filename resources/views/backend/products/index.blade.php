@@ -5,7 +5,6 @@
 @section('page-header')
     <h1>{{ trans('labels.backend.products.management') }}</h1>
 @endsection
-
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
@@ -23,8 +22,8 @@
                         <tr>
                             <th>{{ trans('labels.backend.products.table.image') }}</th>
                             <th>{{ trans('labels.backend.products.table.id') }}</th>
-                            <th>{{ trans('labels.backend.products.table.category_id') }}</th>
-                            <th>{{ trans('labels.backend.products.table.subcategory_id') }}</th>
+                            <th>Category</th>
+                            <th>Sub Category</th>
                             <th>{{ trans('labels.backend.products.table.sku') }}</th>
                             <th>{{ trans('labels.backend.products.table.product_name') }}</th>
                             <th>{{ trans('labels.backend.products.table.quantity') }}</th>
@@ -86,12 +85,12 @@
                 columns: [
                     {data: 'image', name: '{{config('module.products.table')}}.image'},
                     {data: 'id', name: '{{config('module.products.table')}}.id'},
-                    {data: 'category_id', name: '{{config('module.products.table')}}.category_id'},
-                    {data: 'subcategory_id', name: '{{config('module.products.table')}}.subcategory_id'},
+                    {data: 'category', name: 'category'},
+                    {data: 'subcategory', name: 'subcategory'},
                     {data: 'sku', name: '{{config('module.products.table')}}.sku'},
                     {data: 'product_name', name: '{{config('module.products.table')}}.product_name'},
                     {data: 'quantity', name: '{{config('module.products.table')}}.quantity'},
-                    {data: 'type', name: '{{config('module.products.table')}}.type'},
+                    {data: 'type', name: '{{config('module. .table')}}.type'},
                     {data: 'price', name: '{{config('module.products.table')}}.price'},
                     {data: 'discouted_price', name: '{{config('module.products.table')}}.discouted_price'},
                     {data: 'specification', name: '{{config('module.products.table')}}.specification'},

@@ -24,7 +24,8 @@
 									<li><a href="#">About Us</a></li>
 									<li><a href="#">Privacy Policy</a></li>
 									<li><a href="#">Terms & Conditions</a></li>
-									<li><a href="#">Contact Us</a></li>
+									<li><a href="{{route('frontend.contact.index')}}">Contact Us</a></li>
+									<li><a href="{{route('frontend.support.index')}}">Support</a></li>
 								</ul>
 							</div>
 						</div> <!--  End Col -->
@@ -81,6 +82,18 @@
 				$("#success-alert-add-cart").hide();
 				$("#success-alert-remove-cart").hide();
 				
+				$("#success-alert-change-password").fadeTo(1000, 500).slideUp(500, function() {
+									$("#success-alert-change-password").slideUp(500);
+									});
+				$("#success-alert-order-placed").fadeTo(1000, 500).slideUp(500, function() {
+					$("#success-alert-order-placed").slideUp(500);
+					});				
+				$("#success-alert-ticket-submitted").fadeTo(1000, 500).slideUp(500, function() {
+					$("#success-alert-ticket-submitted").slideUp(500);
+					});
+				$("#success-alert-contact-saved").fadeTo(1000, 500).slideUp(500, function() {
+					$("#success-alert-contact-saved").slideUp(500);
+					});	
 				$(document).on('click','.user_profile_area',function(){
 					$('.user-profile').css('display','block');
 				});	
@@ -108,11 +121,11 @@
 								//var tag = res['tag'];
 								if(res.tag == 'add'){
 									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
-									$(el).replaceWith(tagstr);
+									$("[pid="+uid+"]").replaceWith(tagstr);
 								}
 								if(res.tag == 'remove'){
 									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
-									$(el).replaceWith(tagstr);
+									$("[pid="+uid+"]").replaceWith(tagstr);
 								}
 								 var wlist = res.wishlist;
 								 var count = wlist.length;
@@ -157,11 +170,11 @@
 								//var tag = res['tag'];
 								if(res.tag == 'remove'){
 									var tagstr='<a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+uid+'" class="remove-wishlist m-t-8 btn " id="'+uid+'"><i class="fa fa-minus-circle"></i></a>';
-									$(el).replaceWith(tagstr);
+									$("[pid="+uid+"]").replaceWith(tagstr);
 								}
 								if(res.tag == 'add'){
 									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
-									$(el).replaceWith(tagstr);
+									$("[pid="+uid+"]").replaceWith(tagstr);
 								}
 								 
 								 console.log(res.wishlist);

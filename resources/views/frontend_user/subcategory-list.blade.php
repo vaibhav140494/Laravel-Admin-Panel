@@ -28,10 +28,7 @@
 						<!-- Single blog -->
 						<div class="single_blog">
 							<div class="single_blog_img">
-								<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt=""></a>
-								<div class="blog_date text-center">
-									
-								</div>
+								<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt="" style="width:725px"></a>
 							</div>
 												
 							<div class="blog_content">
