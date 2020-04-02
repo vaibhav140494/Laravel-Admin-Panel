@@ -43,16 +43,11 @@
 								<p>
 									{{$categories['category_desc']}}
 								
-									<h4 class="post_title"><a href="#">{{$categories['category_name']}}</a> </h4>															
-									<p>
-										{{$categories['category_desc']}}
-									
-									</p>
 								</div>
 							</div>
-							@else
+							{{--@else
 								No category found!!
-							@endif
+							@endif --}}
 						<!-- End Single blog -->			
 
 					</div>

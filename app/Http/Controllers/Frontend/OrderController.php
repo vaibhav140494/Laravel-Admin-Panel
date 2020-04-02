@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function placeOrder(Request $req)
     {
         $input = $req->except('_token');
-        //dd($input);
+        // dd($req->all());
         $add_id = $input['address'];
         $inst = $input['instruction'];
         $gross=0;   

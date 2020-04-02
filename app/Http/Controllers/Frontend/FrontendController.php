@@ -50,11 +50,12 @@ class FrontendController extends Controller
         foreach($product as $p)
         {
         
+            
            $img = DB::table('productimages')
-                                  ->where('product_id',$p['id'])
+                                  ->where('product_id',$p->id)
                                   ->pluck('product_image')->toArray();
                                   //dd($img->product_image);
-            $p['other']=$img;                 
+            $p->other=$img;                 
         }
         foreach($featured_prod as $p)
         {
