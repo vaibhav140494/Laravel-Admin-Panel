@@ -29,21 +29,6 @@
 				<div class="row">
 					<div class="col-md-8 col-xs-12">
 						<!-- Single blog -->
-<<<<<<< HEAD
-							@if($categories)
-							<div class="single_blog">
-								<div class="single_blog_img">
-									<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt=""></a>
-									<div class="blog_date text-center">
-										
-									</div>
-								</div>
-													
-								<div class="blog_content">
-									<ul class="post-meta">
-										<li><i class="ti-eye"></i> <a href="#">{{$subcategory->count()}} Subcategories</a></li>
-									</ul>										
-=======
 						<div class="single_blog">
 							<div class="single_blog_img">
 								<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt="" style="width:725px"></a>
@@ -57,7 +42,6 @@
 								<h4 class="post_title"><a href="#">{{$categories['category_name']}}</a> </h4>															
 								<p>
 									{{$categories['category_desc']}}
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 								
 									<h4 class="post_title"><a href="#">{{$categories['category_name']}}</a> </h4>															
 									<p>

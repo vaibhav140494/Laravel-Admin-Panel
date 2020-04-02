@@ -71,15 +71,12 @@ Route::get('view/order','OrderController@viewOrder')->name('view.order');
 Route::get('view/order/details/{id}','OrderController@viewOrderDetails')->name('view.order.details');
 // });
 
-<<<<<<< HEAD
 // For Payment using paytm
 Route::get('/payment/{oid}','OrderController@order')->name('payment');
 Route::post('payment/status', 'OrderController@paymentCallback')->name('paytm.status');
 Route::get('/paytm/status','OrderController@statusCheck');
-=======
 //for PDF
 Route::get('pdf/{id}','OrderController@pdf')->name('download.pdf');
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

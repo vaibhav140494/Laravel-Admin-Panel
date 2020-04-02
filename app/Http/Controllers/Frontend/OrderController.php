@@ -114,13 +114,6 @@ class OrderController extends Controller
             $finalQry = "INSERT INTO `order_details` (`product_id`, `order_id`,`quntity`,`gross_amount`,`tax_amount`,`total_amount`) VALUES ".$qry;
             DB::unprepared($finalQry);
         }
-<<<<<<< HEAD
-        DB::table('cart')
-            ->where('user_id','=',\Auth::user()->id)
-            ->update(['order_id'=>$order_id[0]->id]);
-
-        return redirect()->route('frontend.payment',[$oid]);
-=======
        $cupdate = DB::table('cart')
             ->where([
                 ['user_id','=',\Auth::user()->id],
@@ -135,7 +128,6 @@ class OrderController extends Controller
                 'order'=>$order
             ]);
         }        
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
     }
     public function viewOrder()
     {

@@ -13,17 +13,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         //For product variations
      
         Route::get('products/ajax/getsubcategories','ProductsController@getSubCategories')->name('products.ajax.subcategrory');
-<<<<<<< HEAD
         
         Route::get('products/productvariations/show/{pid}','ProductsController@getProductVariations')->name('products.productvariations.show');
         Route::get('products/productvariations/delete/{id}','ProductsController@deleteVariation')->name('products.productvariations.delete');
      
         Route::get('products/productvariations/create/{pid}','ProductsController@createVariation')->name('products.productvariations.create');
-=======
-        Route::get('products/productvariations/show/{id}','ProductsController@getProductVariations')->name('products.productvariations.show');
-        Route::get('products/productvariations/delete/{id}/{pid}','ProductsController@deleteVariation')->name('products.productvariations.delete');
-        Route::get('products/productvariations/create/{id}','ProductsController@createVariation')->name('products.productvariations.create');
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
         Route::post('products/productvariations/create','ProductsController@storeVariation')->name('products.productvariations.store');
       
         Route::get('products/productvariations/edit/{vid}/{pid}','ProductsController@editVariation')->name('products.productvariations.edit');

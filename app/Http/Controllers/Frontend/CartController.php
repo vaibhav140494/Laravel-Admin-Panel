@@ -68,12 +68,7 @@ class CartController extends Controller
                     $product = Product::find($id);
                     $total = $value * $product->price;
                     $tax =$total * $taxamt/100;
-<<<<<<< HEAD
-                    $total+=$tax;
-                   
-=======
                     $total_amount=$tax+$total;
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
                     $cid=DB::table('cart')
                     ->select('cart_id')
                     ->where('user_id','=',\Auth::user()->id)
@@ -91,12 +86,8 @@ class CartController extends Controller
                         $cart->cart_id=$cid[0]->cart_id;
                     }
                     else{
-<<<<<<< HEAD
-                        $cart->cart_id= Str::random(15);
-=======
                         //dd('hello');
                         $cart->cart_id=mt_rand(1000000000,9999999999);
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
                                          
                     }
                     $cart->save();
@@ -193,16 +184,10 @@ class CartController extends Controller
         $checkout_prod = DB::table('cart')
                         ->join('products','products.id','=','cart.product_id')
                         ->select('products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount','cart.total_amount as total')
-<<<<<<< HEAD
-                        ->where('cart.user_id','=',\Auth::user()->id)
-                        ->get();
-        // dd($checkout_prod);
-=======
                         ->where([
                             ['cart.user_id','=',\Auth::user()->id],
                             ['cart.order_id','=',NULL]
                             ])->get();
->>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 
                         foreach($checkout_prod as $product)
                         {
