@@ -198,9 +198,13 @@ class ProfileController extends Controller
        else{
         $user = \Auth::user();
         $user->password = Hash::make($input['newpass']);
+        
         if($user->save())
-        {
-            return redirect()->route('frontend.index');
+        {   
+            $changep = "set";
+            return redirect()->route('frontend.index')->with([
+                'changep'=>$changep
+            ]);
         }
        }
     }

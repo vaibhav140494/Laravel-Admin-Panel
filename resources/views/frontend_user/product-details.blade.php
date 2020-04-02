@@ -233,11 +233,19 @@
 									<div class="product-image">
 										<a href="{{route('frontend.product.details',[$prd->id,$subcategory->id,$category->id])}}">
 											<img class="pic-1" src="{{url('storage/products/'.$prd->image)}}" alt="Product Image">
-											<img class="pic-2" src="{{url('storage/products/'.$prd->image)}}" alt="Product Image">
+											@if(isset($prd->other[0]))
+											<img class="pic-2" src="{{url('storage/productimages/'.$prd->other[0] )}}" alt="product image">
+											@else
+											<img class="pic-2" src=" {{url('storage/products/'.$prd->image)}}" alt="product image">
+											@endif
 										</a>
 										<ul class="social">
 											<li><a href="#" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-											<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
+											@if(\Auth::user() && (in_array($prd->id,$wished_prod)) )
+														<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prd->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
+													@else
+														<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prd->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+													@endif
 											<li><a href="#" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 										</ul>
 										<!-- <span class="product-new-label">Sale</span> -->

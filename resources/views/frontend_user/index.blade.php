@@ -147,14 +147,24 @@
 					</div>
 					
 					<div class="product_item">
+<<<<<<< HEAD
 						<div class="row row-flex filter-products">
 							@foreach($product as $prod)					
+=======
+						<div class="row">
+							@foreach($product as $prod)	
+										
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 								<div class="col-lg-3 col-md-4 col-sm-6 mix ">
 									<div class="product-grid">
 										<div class="product-image">
 											<a href="{{route('frontend.product.details',[$prod->id,$prod->subcategory_id,$prod->category_id])}}">
 												<img class="pic-1" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
-												<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
+												@if(isset($prod->other[0]))
+												<img class="pic-2" src="{{url('storage/productimages/'.$prod->other[0] )}}" alt="product image">
+												@else
+												<img class="pic-2" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
+												@endif
 											</a>
 											<ul class="social">
 											
@@ -260,21 +270,36 @@
 										<div class="product-image">
 											<a href="{{route('frontend.product.details',[$prod->id,$prod->subcategory_id,$prod->category_id])}}">
 												<img class="pic-1" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
-												<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
+												@if(isset($prod->other[0]))
+												<img class="pic-2" src="{{url('storage/productimages/'.$prod->other[0] )}}" alt="product image">
+												@else
+												<img class="pic-2" src=" {{url('storage/products/'.$prod->image)}}" alt="product image">
+												@endif
 											</a>
 											<ul class="social">
 												<li><a  class="venobox" href="{{url('storage/products/'.$prod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
+<<<<<<< HEAD
 												@if($prod->quantity > 0)
 													@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+=======
+												@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 														<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
 													@else
 														<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
 													@endif
+<<<<<<< HEAD
 													@if(\Auth::user() && (in_array($prod->id,$cart_item)))
 														<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
 													@else
 														<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
 													@endif
+=======
+												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+												<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
+												@else
+												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 												@endif
 											</ul>
 										</div>

@@ -9,16 +9,13 @@
     </h1>
 @endsection
 
+
 @section('content')
-    {{ Form::model($supporttickets, ['route' => ['admin.supporttickets.update', $supportticket], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-supportticket']) }}
+    {{ Form::model($supporttickets, ['route' => ['admin.supporttickets.update', $supporttickets[0]->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-supportticket']) }}
 
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('labels.backend.supporttickets.edit') }}</h3>
-
-                <div class="box-tools pull-right">
-                    @include('backend.supporttickets.partials.supporttickets-header-buttons')
-                </div><!--box-tools pull-right-->
             </div><!--box-header with-border-->
 
             <div class="box-body">

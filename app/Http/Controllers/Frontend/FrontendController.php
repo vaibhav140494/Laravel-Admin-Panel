@@ -46,7 +46,28 @@ class FrontendController extends Controller
         $category = Category::all();
         $featured_prod = Product::findMany($catarr);
         $product_review = productReviews::all();
-
+        $otherimg=array();
+        foreach($product as $p)
+        {
+        
+           $img = DB::table('productimages')
+                                  ->where('product_id',$p['id'])
+                                  ->pluck('product_image')->toArray();
+                                  //dd($img->product_image);
+            $p['other']=$img;                 
+        }
+        foreach($featured_prod as $p)
+        {
+        
+           $img = DB::table('productimages')
+                                  ->where('product_id',$p['id'])
+                                  ->pluck('product_image')->toArray();
+                                  //dd($img->product_image);
+            $p['other']=$img;                 
+        }
+    
+       // dd($product[0]);
+       // dd($product[0]->otherimg->product_image);
         //fetching featured Productss
         $featured_prod = DB::table('products')
         ->leftjoin('categories','products.category_id','=','categories.id')
@@ -66,7 +87,16 @@ class FrontendController extends Controller
         ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'))->get();
 
         $product_review = productReviews::selectRaw('avg(rating) as avg')->groupby('user_id')->get();
+        foreach($featured_prod as $p)
+        {
         
+           $img = DB::table('productimages')
+                                  ->where('product_id',$p->id)
+                                  ->pluck('product_image')->toArray();
+                                  //dd($img->product_image);
+            $p->other=$img;                 
+        }
+        //dd($featured_prod);
         //  fetching user Reviews  
 
         $product_review_random = DB::table('users')

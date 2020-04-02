@@ -62,7 +62,7 @@ $(document).ready(function(){
             var did=$(this).val();
             var el=this;
 
-            bootbox.confirm("Do you really want to delete record?", function(result) {
+            bootbox.confirm("Do you really want to delete image?", function(result) {
 
                 if(result){
                     $.ajax({

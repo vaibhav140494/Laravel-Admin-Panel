@@ -54,7 +54,10 @@
 
                                             <div class="login_password">
                                                 <label >Password</label>
-                                                <div class="input-area"><input type="password"  id="password" name="password" /></div>
+                                                <div class="input-area">
+                                                <input type="password"  id="password" name="password" >
+                                                <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                                </div>
                                                 <!-- <span  class="label label-danger" style="display:block;" id="password-err"></span> -->
                                             </div>
                                             <p class="remember_me" style="float:left; margin-right:90px;">
@@ -142,6 +145,16 @@
             } else {
                 return true;
             }
+        });
+        $(".toggle-password").click(function() {
+
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var input = $($(this).attr("toggle"));
+                if (input.attr("type") == "password") {
+                input.attr("type", "text");
+                } else {
+                input.attr("type", "password");
+                }
         });
         // $("#login-form").validate({
         //     rules:{

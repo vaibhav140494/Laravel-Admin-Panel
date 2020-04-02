@@ -24,21 +24,24 @@ return [
 	"table" => "categories",
 	],
 	"products" => [
-		"table" => "products",
-		"subcategories" => [
-		"table" => "subcategories",
-		],
-		],
+	"table" => "products",
+	"subcategories" => [
+	"table" => "subcategories",
+	],
+	],
 	"subcategories" => [
 	"table" => "subcategories",
 	],
 	"offers" => [
-		"table" => "offers",
-		],
-		"orders" => [
-		"table" => "orders",
-		],
-		"supporttickets" => [
-		"table" => "supporttickets",
-		],
+	"table" => "offers",
+	],
+	"orders" => [
+	"table" => "orders",
+	],
+	"supporttickets" => [
+	"table" => "supporttickets",
+	],
+	"contacts" => [
+	"table" => "contacts",
+	],
 ];

@@ -23,7 +23,9 @@
 
 	<!-- Checkout Page -->
 	<section class="checkout_page">
-	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<form action="{{route('frontend.placeorder')}}" method="post">
+	@csrf
+		<meta name="csrf-token" content="{{ csrf_token() }}">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
@@ -69,6 +71,7 @@
 										<th class="product-name">Product Name</th>
 										<th class="product-total">Quantity</th>
 										<th class="product-total">Price</th>
+										<th class="product-total">Tax Amount</th>
 										<th class="product-total">Total</th>
 									</tr>
 								</thead>
@@ -78,6 +81,7 @@
 										<td class="product-name">{{$product->product_name}}</td>
 										<td class="product-total">{{$product->quantity}}</td>
 										<td class="product-total">{{$product->price}}</td>
+										<td class="product-total">{{$product->tax_amount}}</td>
 										<td class="product-total"><span>{{$product->total}}</span></td>
 									</tr>
 									@endforeach	
@@ -85,20 +89,25 @@
 								<tfoot>
 									<tr>
 										<th>Total</th>
-										<td colspan="3"><span class="amount">{{$total}}</span></td>
+										<td colspan="4"><span class="amount">{{$total}}</span></td>
 									</tr>
 									<tr>
 									<th>Discount</th>
-									<td colspan="3"><span class="amount">{{$discount}}</span></td>
+									<td colspan="4"><span class="amount">{{$discount}}</span></td>
 									</tr>
 									<tr>
 									<th>Disconted Price</th>
-									<td colspan="3"><span class="amount">{{$discounted_price}}</span></td>
+									<td colspan="4"><span class="amount">{{$discounted_price}}</span></td>
 									</tr>
 								</tfoot>
 							</table>
 						</div>
-						
+						<div class="instruction_text">
+						<div class="title">
+                            <h3>Instructions</h3>
+                        </div>
+						​<textarea name="instruction" rows="8" cols="50"></textarea>
+						</div>
                         <div class="payment_method">           
 							<ul>
 								<li>
@@ -111,12 +120,13 @@
                         </div>
 						
                         <div class="qc-button">
-                            <a href="{{route('frontend.placeorder')}}" class="btn border-btn" tabindex="0">Place Order</a>
+                            <input type="submit" value="Place Order" class="btn border-btn" tabindex="0">
                         </div>
                     </div>
 					
                 </div>
             </div>
+			</form>
         </section>
 <script>
 $(document).ready(function(){

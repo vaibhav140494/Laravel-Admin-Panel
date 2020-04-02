@@ -27,18 +27,24 @@ class SupportTicketRepository extends BaseRepository
      */
     public function getForDataTable()
     {
-        return $this->query()
+        $support = $this->query()
+                ->leftjoin('users','users.id','=','supporttickets.user_id')
+                ->leftjoin('topics','topics.id','=','supporttickets.topic_id')
+                ->leftjoin('orders','orders.id','=','supporttickets.order_id')
             ->select([
                 config('module.supporttickets.table').'.id',
-                config('module.supporttickets.table').'.user_id',
-                config('module.supporttickets.table').'.topic_id',
+                DB::raw('CONCAT(users.first_name," ",users.last_name) as full_name'),
+                DB::raw('CONCAT(topics.topic) as topic'),
+                DB::raw('CONCAT(orders.order_id) as order_id'),
                 config('module.supporttickets.table').'.discription',
                 config('module.supporttickets.table').'.admin_comment',
                 config('module.supporttickets.table').'.status',
                 config('module.supporttickets.table').'.created_at',
                 config('module.supporttickets.table').'.updated_at',
             ]);
+            return $support;
     }
+
 
     /**
      * For Creating the respective model in storage

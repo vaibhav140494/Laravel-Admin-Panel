@@ -13,6 +13,7 @@
 						<ul class="p_items">
 							<li><a href="{{route('frontend.index')}}">home</a></li>
                             <li><a href="{{route('frontend.view.order')}}">Order </a></li>
+							<li><a href="{{route('frontend.download.pdf',[$order_details[0]->id])}}">Pdf</a></li>
                             <li><span>Order details</span></li>
 						</ul>					
 					</div>	
@@ -94,8 +95,8 @@
 						<div class="col-md-4 col-xs-12 cart-checkout-process text-right">
 							<div class="wrap">
 								<p><span>Subtotal &#x20b9;</span><span id="subtotal" >{{$total}}</span></p>
-								<p><span>Discount &#x20b9;</span><span id="discount" >0</span></p>
-								<h4><span>Grand total &#x20b9;</span><span id="discounted_price" >{{$total}}</span></h4>
+								<p><span>Discount &#x20b9;</span><span id="discount" >{{$discount}}</span></p>
+								<h4><span>Grand total &#x20b9;</span><span id="discounted_price" >{{$total-$discount}}</span></h4>
 								<a href="{{route('frontend.checkout')}}" class="btn border-btn cbtn">process to checkout</a>
 							</div>
 						</div>

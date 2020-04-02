@@ -11,6 +11,8 @@ use App\Models\Settings\Setting;
 use App\Models\Order\Order;
 use App\Models\Order\orderDetails;
 use DB;
+use PDF;
+use App\Notifications\PlaceOrder;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
@@ -21,22 +23,31 @@ class OrderController extends Controller
         parent::__construct();
     }
 
-    public function placeOrder()
+    public function placeOrder(Request $req)
     {
-    
-        $gross=0;
+        $input = $req->except('_token');
+        //dd($input);
+        $add_id = $input['address'];
+        $inst = $input['instruction'];
+        $gross=0;   
         $total=0;
+        $tax=Setting::select('cgst','sgst')->get()->first();
+        $taxamt=$tax->cgst + $tax->sgst;
         $ordered_prod = DB::table('cart')
             ->join('products','products.id','=','cart.product_id')
             ->select('products.id','products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount')
-            ->where('cart.user_id','=',\Auth::user()->id)
-            ->get();
+            ->where([
+                ['cart.user_id','=',\Auth::user()->id],
+                ['cart.order_id','=',NULL]
+                ])->get();
         foreach($ordered_prod as $product)
         {
             $gross+=($product->price) * ($product->quantity);
             // dd($total);                   
         }
-        $total=$gross+$gross * ($ordered_prod[0]->tax_amount)/100;
+        $tax=$gross * ($taxamt)/100;
+        $total=$gross+$tax;
+        //dd($ordered_prod[0]->offer_id);
         if($ordered_prod[0]->offer_id)      
         {
             $offer = DB::table('offers')
@@ -70,13 +81,15 @@ class OrderController extends Controller
         $discount=0;
         $total_amount=$total;
     }
-    $oid=Str::random(15);
+    $oid=mt_rand(1000000000,9999999999);
     $ord=DB::table('orders')->insert([
         'user_id'=>\Auth::user()->id,
         'offer_id'=>$ordered_prod[0]->offer_id,
         'order_id'=>$oid,
+        'address_id'=>$add_id,
+        'instructions'=>$inst,
         'gross_amount'=>$gross,
-        'tax_amount'=>$ordered_prod[0]->tax_amount,
+        'tax_amount'=>$tax,
         'total_amount'=>$total_amount,
         'discount'=>$discount,
         'status'=>'placed',
@@ -91,7 +104,7 @@ class OrderController extends Controller
         foreach($ordered_prod as $product)
         {
             $gamount=($product->price)*($product->quantity);
-            $total_amt=$gamount+$gamount * ($product->tax_amount)/100;
+            $total_amt=$gamount+$gamount * ($taxamt)/100;
             $qry .= "($product->id, ".$order_id[0]->id.",$product->quantity,$gamount,$product->tax_amount,$total_amt),";
         }
 
@@ -101,11 +114,28 @@ class OrderController extends Controller
             $finalQry = "INSERT INTO `order_details` (`product_id`, `order_id`,`quntity`,`gross_amount`,`tax_amount`,`total_amount`) VALUES ".$qry;
             DB::unprepared($finalQry);
         }
+<<<<<<< HEAD
         DB::table('cart')
             ->where('user_id','=',\Auth::user()->id)
             ->update(['order_id'=>$order_id[0]->id]);
 
         return redirect()->route('frontend.payment',[$oid]);
+=======
+       $cupdate = DB::table('cart')
+            ->where([
+                ['user_id','=',\Auth::user()->id],
+                ['cart.order_id','=',NULL]
+                ])->update(['order_id'=>$order_id[0]->id]);
+       // $user = \Auth::user();
+        //$user->notify(new PlaceOrder());        
+        if($cupdate)
+        {
+            $order="set";
+            return redirect()->route('frontend.index')->with([
+                'order'=>$order
+            ]);
+        }        
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
     }
     public function viewOrder()
     {
@@ -113,21 +143,19 @@ class OrderController extends Controller
         $all_subcategory = $this->final_data[1];
         $all_cart = $this->final_data[2];
         $category_featured = $this->final_data[3];
+        $wishlist=$this->final_data[4];
         $all_products = $this->final_data[5];
         $catarr = $this->catarr;
 
         $orders= DB::table('orders')
-        ->leftjoin('users','users.id','=','orders.user_id')
-        ->leftjoin('order_details','orders.id','=','order_details.order_id')
-        ->leftjoin('multiple_address','users.default_address','=','multiple_address.id')
-        ->select('orders.*',DB::raw('sum(order_details.total_amount) as total_amount'),DB::raw('sum(order_details.tax_amount) as tax_amount'),DB::raw('CONCAT(users.first_name," ",users.last_name) as user_name'),'users.phone_no','multiple_address.country','multiple_address.state','multiple_address.city','multiple_address.address','multiple_address.pincode')
+        ->select('orders.*')
         ->where('orders.user_id',\Auth::user()->id)->get();
         
         // dd($orders);
         
         
         // dd($order_details);
-        return view('frontend_user.view_order',compact('orders','all_category','all_subcategory','all_cart','category_featured','all_products'));
+        return view('frontend_user.view_order',compact('orders','wishlist','all_category','all_subcategory','all_cart','category_featured','all_products'));
     }
 
     public function viewOrderDetails($id)
@@ -136,6 +164,7 @@ class OrderController extends Controller
         $all_subcategory = $this->final_data[1];
         $all_cart = $this->final_data[2];
         $category_featured = $this->final_data[3];
+        $wishlist=$this->final_data[4];
         $all_products = $this->final_data[5];
         $catarr = $this->catarr;
 
@@ -146,8 +175,28 @@ class OrderController extends Controller
         ->select('orders.*','order_details.product_id','order_details.id as ordersdetails_id','order_details.quntity','order_details.gross_amount','order_details.tax_amount','products.price','order_details.total_amount','products.product_name','offers.offer_code')
         ->where('orders.id',$id)
         ->get();
-        // dd($order_details);
-        return view('frontend_user.view_order_details_user',compact('order_details','all_category','all_subcategory','all_cart','category_featured','all_products'));
+        $discount =$order_details[0]->discount; 
+         //dd($order_details);
+        return view('frontend_user.view_order_details_user',compact('order_details','discount','wishlist','all_category','all_subcategory','all_cart','category_featured','all_products'));
+    }
+    public function  pdf($id)
+    {
+        //dd($id);
+        $order_details=DB::table('orders')
+        ->leftjoin('multiple_address','multiple_address.id','=','orders.address_id')
+        ->leftjoin('order_details','orders.id','=','order_details.order_id')
+        ->leftjoin('products','products.id','=','order_details.product_id')
+        ->leftjoin('offers','orders.offer_id','=','offers.id')
+        ->select('orders.*','multiple_address.*','order_details.product_id','order_details.id as ordersdetails_id','order_details.quntity','order_details.gross_amount','order_details.tax_amount','products.price','order_details.total_amount','products.product_name','offers.offer_code')
+        ->where('orders.id',$id)
+        ->get();
+       // dd($order_details);
+       $discount =$order_details[0]->discount; 
+       $name = $order_details[0]->order_id;
+        if($id){
+            $pdf = PDF::loadView('frontend_user.invoice',compact('order_details','discount'));
+            return $pdf->download($name.'.pdf');
+        }
     }
 
 

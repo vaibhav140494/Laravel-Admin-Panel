@@ -69,7 +69,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 // }
 // });
 //Route::get('/wishlist/add/{pid}','Frontend\WishListController@add')->name('wishlist.add');
+<<<<<<< HEAD
 
 
 
 
+=======
+    
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f

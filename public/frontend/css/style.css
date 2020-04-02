@@ -750,7 +750,14 @@ position: fixed;
 .header-category-btn:hover{
 	color:#fff!important;
 }
-
+.field-icon {
+	float: right;
+	margin-left: -25px;
+	
+	position: relative;
+	margin-top: 23px;
+	z-index: 2;
+  }
 
 /* Menu CSS */
 
@@ -2965,7 +2972,10 @@ position: fixed;
 	height: 0;
 }
 .rmv_offer{
-	margin-top: 22px;
+	color:#EE5169;
+	border-radius: 25px; 	
+	background-color: #FFFFFF;
+	margin-top: 25px;
 }
 .cp_quantity_btn a {
 	float: left;

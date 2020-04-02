@@ -54,6 +54,7 @@ class ProductsController extends Controller
      */
     public function index(ManageProductRequest $request)
     {
+        
         return new ViewResponse('backend.products.index');
     }
     /**
@@ -201,10 +202,11 @@ class ProductsController extends Controller
     public function deleteVariation(Request  $request)
     {
         //dd($request['id']);
-        
+        $pid = $request['pid'];
         DB::table('variationmaster')->where('id','=',$request['id'])->delete();
-        return redirect()->back();
+        //return redirect()->back();
         //return view('backend.products.productvariation');
+        return new RedirectResponse(route('admin.products.productvariations.show',['id'=>$pid]), ['flash_success' => trans('variation is deleted')]);
     }
     public function createVariation(Request $request,$id)
     {
@@ -278,11 +280,11 @@ class ProductsController extends Controller
         // {
         //     $qry = substr($qry, 0, -1);
             
-        //     $finalQry = "INSERT INTO `variationvalues` (`variation_value`, `variation_id`) VALUES ".$qry;
-        //     DB::unprepared($finalQry);
-        //     // dd($finalQry);
-        // }
-        return redirect()->route('admin.products.productvariations.show',[$product_id]);
+            $finalQry = "INSERT INTO `variationvalues` (`variation_value`, `variation_id`) VALUES ".$qry;
+            DB::unprepared($finalQry);
+            // dd($finalQry);
+        //return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
+        return new RedirectResponse(route('admin.products.productvariations.show',['id'=>$product_id[0]->id]), ['flash_success' => trans('variation is created')]);
     }
     public function editVariation($vid,$pid)
     {
@@ -318,7 +320,9 @@ class ProductsController extends Controller
         $productVariations->variation_values_id = $var_values;
         $productVariations->save();
     
-        return redirect()->route('admin.products.productvariations.show',[$product_id]);
+        // return redirect()->route('admin.products.productvariations.show',[$product_id]);
+        return new RedirectResponse(route('admin.products.productvariations.show',['id'=>$product_id]), ['flash_success' => trans('variation is updated')]);
+
     }
 
     public function uploadProductImages(Request $request,$id)
@@ -339,12 +343,17 @@ class ProductsController extends Controller
         $input = $request->except(['_token']);
         $count=0;
         $imageName=array();
-        if($request->hasFile('images'))
+        if($input['images'])
         {
             foreach($input['images'] as $image)
             {
                 $name=time().$count.'.'.$image->getClientOriginalExtension();
-                $image->move(public_path('storage/productimages'), $name);
+                //dd($name);
+                $img=Image::make($image);
+                $img->fit(400,300);
+                $var=public_path('storage/productimages');
+                $path = $img->save($var."/".$name);
+                //$image->move(public_path('storage/productimages'), $name);
                 $imageName[]=$name;
                 $count++;
             }
@@ -359,7 +368,8 @@ class ProductsController extends Controller
                 'updated_at'=>Carbon::now()
             ]);
         }
-        return view('backend.products.index');
+       // return view('backend.products.index');
+        return new RedirectResponse(route('admin.products.index'), ['flash_success' => trans('products images are added')]);
     }
     public function productGalary($id)
     {

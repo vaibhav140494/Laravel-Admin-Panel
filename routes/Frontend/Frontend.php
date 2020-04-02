@@ -48,6 +48,13 @@ Route::get('product/details/{id}/{subid}/{cid}','ProductsController@detailProd')
 Route::get('product/details/reviews/store','ProductsController@storeReview')->name('product.details.reviews.store');
 // Route::post('product/filters','ProductsController@filterProduct')->name('product.filter');
 
+//support-controller routes
+Route::get('/support/index','SupportController@index')->name('support.index');
+Route::post('/support/ticket/store','SupportController@storeTicket')->name('support.ticket.store');
+
+//contact-controller routes
+Route::get('/contact/index','ContactController@index')->name('contact.index');
+Route::post('/contact/store','ContactController@storeContact')->name('contact.store');
 ///cart controller route
 // Route::group(['middleware' => 'auth'], function () {
 
@@ -59,15 +66,20 @@ Route::get('cart/remove','CartController@remove')->name('cart.remove');
 Route::get('/checkout','CartController@checkout')->name('checkout');
 
 //for place order
-Route::get('/placeorder','OrderController@placeOrder')->name('placeorder');
+Route::post('/placeorder','OrderController@placeOrder')->name('placeorder');
 Route::get('view/order','OrderController@viewOrder')->name('view.order');
 Route::get('view/order/details/{id}','OrderController@viewOrderDetails')->name('view.order.details');
 // });
 
+<<<<<<< HEAD
 // For Payment using paytm
 Route::get('/payment/{oid}','OrderController@order')->name('payment');
 Route::post('payment/status', 'OrderController@paymentCallback')->name('paytm.status');
 Route::get('/paytm/status','OrderController@statusCheck');
+=======
+//for PDF
+Route::get('pdf/{id}','OrderController@pdf')->name('download.pdf');
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

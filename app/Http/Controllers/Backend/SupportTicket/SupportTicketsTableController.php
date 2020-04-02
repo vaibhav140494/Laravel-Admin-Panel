@@ -36,6 +36,7 @@ class SupportTicketsTableController extends Controller
      */
     public function __invoke(ManageSupportTicketRequest $request)
     {
+        
         return Datatables::of($this->supportticket->getForDataTable())
             ->escapeColumns(['id'])
             ->addColumn('created_at', function ($supportticket) {

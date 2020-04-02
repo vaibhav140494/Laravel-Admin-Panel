@@ -15,6 +15,7 @@
         "anandsiddharth/laravel-paytm-wallet": "^1.0",
         "arcanedev/log-viewer": "^5.1",
         "beyondcode/laravel-self-diagnosis": "^1.2",
+        "carlos-meneses/laravel-mpdf": "^2.1",
         "creativeorange/gravatar": "~1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
         "doctrine/dbal": "^2.9",

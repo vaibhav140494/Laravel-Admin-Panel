@@ -23,3 +23,4 @@ require __DIR__.'/Subcategory.php';
 require __DIR__.'/Offer.php';
 require __DIR__.'/Order.php';
 require __DIR__.'/SupportTicket.php';
+require __DIR__.'/Contact.php';

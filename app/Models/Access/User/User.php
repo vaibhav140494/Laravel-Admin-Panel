@@ -108,4 +108,8 @@ class User extends Authenticatable
             'updated_at'  => $this->updated_at->toIso8601String(),
         ];
     }
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order\Order');
+    }
 }

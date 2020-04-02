@@ -173,7 +173,11 @@ return [
         
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+<<<<<<< HEAD
         Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
+=======
+        Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class,
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 
 
 
@@ -252,9 +256,14 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
+<<<<<<< HEAD
         'Image'        => Intervention\Image\Facades\Image::class,
         'PaytmWallet'  => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
 
+=======
+        'Image' => Intervention\Image\Facades\Image::class,
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
 
         /*
          * Third Party Aliases

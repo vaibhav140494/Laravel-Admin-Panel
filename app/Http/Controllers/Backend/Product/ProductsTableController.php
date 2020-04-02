@@ -36,6 +36,7 @@ class ProductsTableController extends Controller
      */
     public function __invoke(ManageProductRequest $request)
     {
+    
         return Datatables::of($this->product->getForDataTable())
             ->escapeColumns(['id'])
             ->addColumn('created_at', function ($product) {
@@ -49,7 +50,10 @@ class ProductsTableController extends Controller
             })
             ->addColumn('actions', function ($product) {
                 return $product->action_buttons;
-            })
+            })->filterColumn('Category', function ($query, $keyword) {
+				$sql = "categories.category_name like ?";
+				$query->whereRaw($sql, ["%{$keyword}%"]);
+			})
             ->make(true);
     }
 }

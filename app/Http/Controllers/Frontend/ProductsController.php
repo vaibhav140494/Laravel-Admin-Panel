@@ -250,8 +250,22 @@ class ProductsController extends Controller
         ->where('products.category_id',$cid)
         ->where('products.id','<>',$id)
         ->orderBy('rating','desc')->get()->keyBy('subcategory_id');
+<<<<<<< HEAD
 
         $avg=$product_review_avg = productReviews::where('product_id',$id)->get()->avg('rating');
+=======
+        foreach($related_products as $p)
+        {
+        
+           $img = DB::table('productimages')
+                                  ->where('product_id',$p->id)
+                                  ->pluck('product_image')->toArray();
+                                  //dd($img->product_image);
+            $p->other=$img;                 
+        }
+       // dd($related_products);
+        $avg=$product_review_avg=productReviews::where('product_id',$id)->get()->avg('rating');
+>>>>>>> b823c37b6da789adbaeca9d66584ed54e62fda6f
         
         return view('frontend_user.product-details',compact('product','users_product_reviews','category','subcategory','related_products','count_reviews','all_category','all_subcategory','all_cart','wished_prod','category_featured','all_products','wishlist','product_variation','product_variation_values'));
     }

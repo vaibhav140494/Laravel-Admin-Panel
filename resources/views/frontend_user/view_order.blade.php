@@ -60,37 +60,7 @@
 						</div>
 					</div>
 					
-					<div class="row">
-						<div class="col-md-8 col-xs-12 cart-actions cart-button-cuppon">
-							<div class="row">
-								<div class="col-sm-5">
-									<div class="cuppon-wrap">
-										<h4>Offer Code</h4>
-                                        <!-- <p>Enter your coupon code if you have</p> -->
-                                        <?php  $value='No offer Applied' ; ?>
-                                        
-                                        <input type="text" id="offer" name="offer" value="{{$value}}" disabled>
-											<h6 id='offer-invalid' style="margin-bottom:10px;"></h6>
-											<!-- <button class="btn border-btn" id="offer-btn">apply coupon</button> -->
-										
-									</div>
-                                </div>
-                                <div class="col-sm-7">
-									
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-md-4 col-xs-12 cart-checkout-process text-right">
-							<div class="wrap">
-								<p><span>Subtotal &#x20b9;</span><span id="subtotal" >{{$total}}</span></p>
-								<p><span>Discount &#x20b9;</span><span id="discount" >0</span></p>
-								<h4><span>Grand total &#x20b9;</span><span id="discounted_price" >{{$total}}</span></h4>
-								<a href="{{route('frontend.checkout')}}" class="btn border-btn cbtn">process to checkout</a>
-							</div>
-						</div>
-						
-					</div>
+					
 					@else
 					No Orders !!
 					@endif
