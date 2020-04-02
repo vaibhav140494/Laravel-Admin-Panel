@@ -20,6 +20,7 @@
     </div><!--form-group-->
     @endif
     <div class="form-group">
+   
         <!-- Create Your Field Label Here -->
         <!-- Look Below Example for reference -->
         {{ Form::label('name', trans('labels.backend.subcategories.table.name'), ['class' => 'col-lg-2 control-label required']) }}
@@ -46,7 +47,9 @@
         <!-- Create Your Field Label Here -->
         <!-- Look Below Example for reference -->
         {{ Form::label('active', trans('labels.backend.categories.table.active'), ['class' => 'col-lg-2 control-label required']) }}
-
+        @if(isset($subcategories))
+            <input type="hidden" name="subcategory_id" value="{{$subcategories->id}}">
+        @endif
         <div class="col-lg-10">
             <!-- Create Your Input Field Here -->
             <!-- Look Below Example for reference -->

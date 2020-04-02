@@ -108,12 +108,12 @@ class SubcategoriesController extends Controller
      * @param  EditSubcategoryRequestNamespace  $request
      * @return \App\Http\Responses\Backend\Subcategory\EditResponse
      */
-    public function edit(Subcategory $subcategory, EditSubcategoryRequest $request)
+    public function edit(Subcategory $subcategory, EditSubcategoryRequest $request,$id)
     {
         // dd($subcategory);
         // dd($request);
-        // $category=Category::find($id);    
-        // dd($cat);   
+        $subcategory=Subcategory::find($id);    
+
         return new EditResponse($subcategory);
     }
     // view('backend.subcategories.edit',compact('subcategories')
@@ -128,12 +128,15 @@ class SubcategoriesController extends Controller
     {
         //Input received from the request
         $input = $request->except(['_token']);
+        $id=$request->input('subcategory_id');
+        $subcategory=Subcategory::find($id);
+       
         //Update the model using repository update method
-        // dd($subcategory);
+        
         $this->repository->update( $subcategory, $input );
         //return with successfull message
-        return view('backend.subcategories.edit',compact('subcategories'));
-        // return new RedirectResponse(route('admin.subcategories.index',[$subcategory->id]), ['flash_success' => trans('alerts.backend.subcategories.updated')]);
+
+        return new RedirectResponse(route('admin.categories.id.get',[$subcategory->category_id]), ['flash_success' => trans('alerts.backend.subcategories.updated')]);
     }
     /**
      * Remove the specified resource from storage.
@@ -142,12 +145,14 @@ class SubcategoriesController extends Controller
      * @param  App\Models\Subcategory\Subcategory  $subcategory
      * @return \App\Http\Responses\RedirectResponse
      */
-    public function destroy(Subcategory $subcategory, DeleteSubcategoryRequest $request)
+    public function destroy(Subcategory $subcategory,$id, DeleteSubcategoryRequest $request)
     {
         //Calling the delete method on repository
+        $subcategory=Subcategory::find($id);
+        // dd($subcategory);
         $this->repository->delete($subcategory);
         //returning with successfull message
-        return new RedirectResponse(route('admin.subcategories.index'), ['flash_success' => trans('alerts.backend.subcategories.deleted')]);
+        return new RedirectResponse(route('admin.categories.id.get',[$subcategory->category_id]), ['flash_success' => trans('alerts.backend.subcategories.deleted')]);
     }
     
 }

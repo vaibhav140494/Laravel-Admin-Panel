@@ -25,32 +25,36 @@
                 <div class="form-group">
                 {{ Form::label('variation_name','Variation Name', ['class' => 'col-lg-2 control-label required']) }}
                     <div class="col-lg-10">
-                        {{ Form::text('variation_name',$vdetails[0]->variation_name , ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.product_name'), 'required' => 'required']) }}
+                        {{ Form::text('variation_name',$pdetails[0]->variation_name , ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.product_name'), 'required' => 'required']) }}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-10">
-                        {{ Form::hidden('variation_id',$vdetails[0]->id , ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.product_name'), 'required' => 'required']) }}
+                        {{ Form::hidden('variation_id',$pdetails[0]->variation_id , ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.product_name'), 'required' => 'required']) }}
+                        {{ Form::hidden('product_id',$pdetails[0]->product_id , ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.product_name')]) }}
+                        {{ Form::hidden('product_variation_id',$pdetails[0]->product_variation_id , ['class' => 'form-control box-size', 'placeholder' => trans('labels.backend.products.table.product_name')]) }}
                     </div>
                 </div>
                 <div class="form-group">
-                        {{ Form::label('variation_values','Variation Values', ['class' => 'col-lg-2 control-label required']) }}
-                    <div class="col-lg-9">
-                        <div class="input_fields_container">
-                            @foreach($values as $value)
-                            <div>
-                                <input type="text" name="variation_value[]" class="form-control box-size" value="{{$value->variation_value }}">
-                            </div><br>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="col-lg-1">
-                        <button class="btn btn-sm btn-primary add_more_button">Add</button>
+                    {{ Form::label('variation_values','Variation Values' , ['class' => 'col-lg-2 control-label required']) }}    
+                    <div class="col-lg-10">
+                            @if(isset($values))
+                                <select name="variation_value_id[]" id="variation_value_id" class="form-control box-size" multiple="multiple">
+                                @foreach($values as $vv)
+                                    <?php $var_value_array = json_decode($pdetails[0]->variation_values_id);?>
+                                    @if(in_array($vv->id,$var_value_array))
+                                        <option value="{{$vv->id}}" selected>{{$vv->variation_value}}</option>
+                                    @else
+                                        <option value="{{$vv->id}}">{{$vv->variation_value}}</option>
+                                    @endif
+                                @endforeach
+                                </select>
+                            @endif
                     </div>
                 </div>
                <div class="form-group">
                <div class="edit-form-btn">
-                        {{ link_to_route('admin.products.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-md']) }}
+                        {{ link_to_route('admin.products.productvariations.show', trans('buttons.general.cancel'), [$pdetails[0]->product_id], ['class' => 'btn btn-danger btn-md']) }}
                         {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-primary btn-md']) }}
                         <div class="clearfix"></div>
                 </div>

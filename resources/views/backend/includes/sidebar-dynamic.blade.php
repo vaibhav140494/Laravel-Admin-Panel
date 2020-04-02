@@ -13,6 +13,7 @@
             </li>
             <li class="header">{{ trans('menus.backend.sidebar.system') }}</li>
             {{ renderMenuItems(getMenuItems()) }}
+            <li class="  "><a href="{{route('admin.variation.show')}}"><i class="fa fa-gift"></i> <span>Variations</span></a></li>
         </ul><!-- /.sidebar-menu -->
     </section><!-- /.sidebar -->
 </aside>

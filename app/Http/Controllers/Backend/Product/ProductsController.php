@@ -7,6 +7,7 @@ use App\Models\Category\Category;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Product\variationMaster;
 use App\Models\Product\variationValues;
+use App\Models\Product\productsVariations;
 use App\Models\Product\productImages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -115,18 +116,18 @@ class ProductsController extends Controller
         //Input received from the request
         $input = $request->except(['_token']);
         //Update the model using repository update method
-        if ($request->hasFile('image')){
-            $imageName = time().'.'.$request->image->getClientOriginalExtension();
-            //dd($imageName);
-            $img=Image::make($request->image);
-            $img->fit(400,300);
-            $var=public_path('storage/products');
-            $path = $img->save($var."/".$imageName);
-        //$path = $request->image->move(public_path('storage/products'), $imageName);
-            
+        if($request->file('image')){
+            if ($request->hasFile('image')){
+                $imageName = time().'.'.$request->image->getClientOriginalExtension();
+                //dd($imageName);
+                $img=Image::make($request->image);
+                $img->fit(400,300);
+                $var=public_path('storage/products');
+                $path = $img->save($var."/".$imageName);
+            //$path = $request->image->move(public_path('storage/products'), $imageName);
+            }
+            $input['image']=$imageName; 
         }
-        
-          $input['image']=$imageName; 
         $this->repository->update( $product, $input );
         //return with successfull message
         return new RedirectResponse(route('admin.products.index'), ['flash_success' => trans('alerts.backend.products.updated')]);
@@ -159,25 +160,41 @@ class ProductsController extends Controller
     }
     public function getProductVariations(Request $request,$id)
     {
-        //dd($request['id']);
-        $pid=$request['id'];
+        
         $product_name = DB::table('products')
-                    ->select('product_name as pname')
-                    ->where('id','=',$request['id'])
-                    ->get();
-                    
-        $var = DB::table('variationmaster')
-                ->join('variationvalues', 'variationmaster.id', '=', 'variationvalues.variation_id')
-                ->select('variationmaster.variation_name as VariationName','variationmaster.id as id',DB::raw("(GROUP_CONCAT(variationvalues.variation_value SEPARATOR ',')) as `Variationvalues`"))
-                ->where('variationmaster.product_id','=',$request['id'])
-                ->groupBy('variationmaster.id')
-                ->get();
-            //    dd($var);
+            ->select('product_name as pname')
+            ->where('id','=',$id)
+            ->get();
                 
+        $product_variation_values=DB::table('productsvariations')
+        ->where('product_id',$id)->select('variation_id','variation_values_id')->get();
+        $varvalue_array=array();
+        $product_variations;
+        // dd($product_variation_values);
+        $all_variations=array();
+        $i=0;
+        if(isset($product_variation_values)){
+            
+            foreach($product_variation_values as $pv_value)
+            {
+                
+                $product_variations = DB::table('productsvariations')
+                ->leftjoin('variationmaster','variationmaster.id','=','productsvariations.variation_id')
+                ->leftjoin('variationvalues','variationmaster.id','=','variationvalues.variation_id')
+                ->where('productsvariations.product_id',$id);
+
+                $varvalue_array[$pv_value->variation_id] = $pv_value->variation_values_id;
+                $value = json_decode($varvalue_array[$pv_value->variation_id]);
+
+                $product_variations = $product_variations->whereIn('variationvalues.id',$value)
+                    ->select(\DB::raw('GROUP_CONCAT(variationvalues.variation_value) as variationvalues'),'variationmaster.variation_name','variationmaster.id')
+                    ->groupBy('productsvariations.variation_id')->get();
+                $all_variations[$i++]=$product_variations;
+            }
+        }
         return view('backend.products.productvariation')->with([
-            'data' => $var,
-            'name' => $product_name,
-            'productid'=>$pid
+            'productvariation'=>$all_variations,
+            'product_id' => $id
         ]);
     }
 
@@ -189,116 +206,119 @@ class ProductsController extends Controller
         return redirect()->back();
         //return view('backend.products.productvariation');
     }
-    public function createVariation(Request $request)
+    public function createVariation(Request $request,$id)
     {
-        $productdetails=DB::table('products')
-                    ->select('product_name','category_id','subcategory_id')
-                    ->where('id','=',$request['id'])
-                    ->get(); 
-                    //dd( $productdetails);
-        $subcategory_name=DB::table('subcategories') 
-                            ->select('subcategory_name')
-                            ->where('id','=',$productdetails[0]->subcategory_id)
-                            ->get();
-                       // dd($subcategory_name);
-        $category_name=DB::table('categories') 
-                            ->select('category_name')
-                            ->where('id','=',$productdetails[0]->category_id)
-                            ->get();
-        return view('backend.products.createVariation')->with([
-            'pname'=>$productdetails[0]->product_name,
-            'cname'=>$category_name[0]->category_name,
-            'sname'=>$subcategory_name[0]->subcategory_name
-        ]);
+        $request['id']=$id; 
+        //if($request['id'] !=null){
+            $productdetails=DB::table('products')
+                ->leftjoin('subcategories','subcategories.id','=','products.subcategory_id')
+                ->leftjoin('categories','categories.id','=','products.category_id')
+                ->select('product_name','products.id','products.category_id','subcategory_id','subcategory_name','category_name')
+                ->where('products.id','=',$request['id'])
+                ->get()->first(); 
+            
+            $variations = DB::table('variationmaster')
+            ->leftjoin('variationvalues','variationmaster.id','=','variationvalues.variation_id')
+            ->select('variationmaster.*',\DB::raw('GROUP_CONCAT(variationvalues.variation_value) as variationvalues'))
+            ->groupBy('variationvalues.variation_id')->get();
+            
+            return view('backend.products.createVariation')->with([
+                'productdetails'=> $productdetails,
+                'variations'=>$variations
+            ]);
+       // }
+        // else
+        // {
+        //     return view('backend.products.createVariation');
+        // }
     }
     public function storeVariation(Request $request)
     {
         $input = $request->except(['_token']);
+        $product_id = $input['product_id'];
+        $var_values = json_encode($input['variation_value_id']);
+        $productVariations = new productsVariations;
+        $productVariations->product_id = $input['product_id'];
+        $productVariations->variation_id = $input['variation_id'];
+        $productVariations->variation_values_id = $var_values;
+        // $productVariations->save();
+        $productVariations->save();
+        // dd(json_decode($var_values));
+        // dd($productVariations);
+        // $product_id=DB::table('products')
+        //             ->select('id')
+        //             ->where('product_name','=',$input['product_name'])
+        //             ->get();
         
-        $product_id=DB::table('products')
-                    ->select('id')
-                    ->where('product_name','=',$input['product_name'])
-                    ->get();
-        
-        DB::table('variationmaster')->insert([
-            'variation_name'=>$input['variation_name'],
-            'product_id'=>$product_id[0]->id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-        $variation_id=DB::table('variationmaster')
-                     ->select('id')
-                     ->where([
-                         ['product_id','=',$product_id[0]->id],
-                         ['variation_name','=',$input['variation_name']]
-                     ])->get();
-        $variation_values=$input['variation_value'] ;
-        $qry = '';
-        
-        foreach($variation_values as $value)
-        {
-            $qry .= "('$value', ".$variation_id[0]->id."),";
-        }
-        
+        // $variationmaster=new variationMaster;
+        // $variationmaster->variation_name=$input['variation_id'];
+        // $variationmaster->save();
+        // dd($variationmaster);
+        // DB::table('variationmaster')->insert([
+        //     'variation_name'=>$input['variation_name'],
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now()
+        // ]);
 
-        if($qry!='')
-        {
-            $qry = substr($qry, 0, -1);
+        // $variation_id=DB::table('variationmaster')
+        //              ->select('id')
+        //              ->where([
+        //                  ['product_id','=',$product_id[0]->id],
+        //                  ['variation_name','=',$input['variation_name']]
+        //              ])->get();
+        // $variation_values=$input['variation_value'] ;
+        // $qry = '';
+        
+        // foreach($variation_values as $value)
+        // {
+        //     $qry .= "('$value', ".$variation_id[0]->id."),";
+        // }
+
+        // if($qry!='')
+        // {
+        //     $qry = substr($qry, 0, -1);
             
-            $finalQry = "INSERT INTO `variationvalues` (`variation_value`, `variation_id`) VALUES ".$qry;
-            DB::unprepared($finalQry);
-            // dd($finalQry);
-        }
-        return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
+        //     $finalQry = "INSERT INTO `variationvalues` (`variation_value`, `variation_id`) VALUES ".$qry;
+        //     DB::unprepared($finalQry);
+        //     // dd($finalQry);
+        // }
+        return redirect()->route('admin.products.productvariations.show',[$product_id]);
     }
     public function editVariation($vid,$pid)
     {
-        //dd($pid);
+        // dd($pid);
         $product_details=DB::table('products')
-                    ->select('id','product_name')
-                    ->where('id','=',$pid)
-                    ->get();
-        //dd($product_name);
-        $variation_details=DB::table('variationmaster')
-                          ->select('id','variation_name')
-                          ->where('id','=',$vid)
-                          ->get();
-        $variation_values=DB::table('variationvalues')
-                            ->select('variation_value')
-                            ->where('variation_id','=',$vid)
-                            ->get();                  
-        //dd($variation_values);
+            ->leftjoin('productsvariations','productsvariations.product_id','products.id')
+            ->leftjoin('variationmaster','variationmaster.id','productsvariations.variation_id')
+            ->select('products.id as product_id','products.product_name','productsvariations.id as product_variation_id','variationmaster.id as variation_id','variationmaster.variation_name','variation_values_id')
+            ->where('products.id','=',$pid)
+            ->where('productsvariations.variation_id','=',$vid)
+            ->get();
+        
+        // $vararray=json_decode($product_details[0]->variation_values_id);
+        $variation_details=DB::table('variationvalues')
+            ->select('id','variation_value')
+            ->where('variation_id',$vid)
+            ->get();
+        $variation_values =variationValues::where('variation_id',$vid)->get();
             return view('backend.products.editVariation')->with([
                 'pdetails'=>$product_details,
-                'vdetails'=>$variation_details,
-                'values'=>$variation_values
+                'values'=>$variation_details
             ]);
     }
     public function updateVariation(Request $request)
     {
+
         $input = $request->except(['_token']);
-       // dd($input);
-        $product_id=DB::table('products')
-                    ->select('id')
-                    ->where('product_name','=',$input['product_name'])
-                    ->get();
-        DB::table('variationmaster')
-            ->where('id','=',$input['variation_id'])
-            ->update(['variation_name'=>$input['variation_name'],
-                      'updated_at' => Carbon::now()   
-                    ]);
-         DB::table('variationvalues')->where('variation_id','=',$input['variation_id'])->delete();   
-        $variation_values=$input['variation_value'] ;
-        foreach($variation_values as $value)
-            {
-                DB::table('variationvalues')->insert([
-                    'variation_value'=>$value,
-                    'variation_id'=>$input['variation_id'],
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
-            }     
-            return redirect()->route('admin.products.productvariations.show',['id'=>$product_id[0]->id]);
+        $product_id = $input['product_id'];
+        $var_values = json_encode($input['variation_value_id']);
+        $productVariations = productsVariations::find($input['product_variation_id']);
+        $productVariations->product_id = $input['product_id'];
+        $productVariations->variation_id = $input['variation_id'];
+        $productVariations->variation_values_id = $var_values;
+        $productVariations->save();
+    
+        return redirect()->route('admin.products.productvariations.show',[$product_id]);
     }
 
     public function uploadProductImages(Request $request,$id)
@@ -317,7 +337,6 @@ class ProductsController extends Controller
     public function storeProductImages(Request $request)
     {
         $input = $request->except(['_token']);
-        //dd($input);
         $count=0;
         $imageName=array();
         if($request->hasFile('images'))

@@ -1,5 +1,5 @@
 @include('frontend_user.header')
-<div id="page_item_area">
+		<div id="page_item_area">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6 text-left">
@@ -40,7 +40,7 @@
 						<div class="col-sm-9 col-xs-12 show_area">
 						<div class="short_by_inner">
 								<label>sort by:</label>
-								<select class="sort-select" name="sort-product">
+								<select class=" icheck sort-select" name="sort-product">
 									<option value="latest" selected>Latest products</option>
 									<option value="price-asc">Price low-high</option>
 									<option value="price-desc">Price high-low</option>
@@ -62,7 +62,7 @@
 									<h4>{{$category->category_name}}:</h4>
 									@foreach($all_subcategory[$category->id] as $allsub)
 									<div class="checkbox">
-									<a href="{{route('frontend.products.list',[$allsub->id,$category->id])}}">{{$allsub->subcategory_name}}</a>
+										<a href="{{route('frontend.products.list',[$allsub->id,$category->id])}}">{{$allsub->subcategory_name}}</a>
 									</div>
 									@endforeach
 								<!-- END FILTER BY CATEGORY -->
@@ -120,15 +120,18 @@
 										</a>
 									</div>
 									<div class="padding"></div>
-									@foreach($product_var as $pvariation)
-										<h4> By {{$pvariation->variation_name}} :</h4>
-										@foreach($pvariation->variationValues as $pvar_values )
-										<div class="checkbox">
-											<label><input type="checkbox" class="icheck"  name="{{$pvariation->variation_name}}" vid='{{$pvar_values->variation_value}}'>{{$pvar_values->variation_value}}</label>
-										</div>
-										@endforeach
-										<div class="padding"></div>
-									@endforeach	
+									<?php  $i=0;?>
+										@foreach($product_variations as $pvariation)
+											
+											<h4 class="var_name" > By {{$pvariation->variation_name}} :</h4>
+											@foreach($pvariation->variation_values as $pvar_values)
+												
+											<div class="checkbox" varid="{{$pvariation->variation_id}}">
+												<label><input type="checkbox" class="icheck"  vid="{{$pvar_values->id}}" name="{{$pvar_values->variation_value}}">{{$pvar_values->variation_value}}</label>
+											</div>
+											@endforeach
+											<div class="padding"></div>
+										@endforeach	
 									<h4>By Availbility:</h4>							 
 									<label><input type="checkbox" id="exclude_prod" class="icheck" > Exclude Out of stock Products</label>
 								<!-- END FILTER BY PRICE -->
@@ -145,6 +148,7 @@
 											<div class="col-lg-4 col-md-4 col-sm-6">
 												<div class="product-grid">
 													<div class="product-image">
+													
 														<a href="{{route('frontend.product.details',[$prod->id,$subcategory->id,$category->id])}}">
 															<img class="pic-1" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
 															<img class="pic-2" src="{{url('storage/products/'.$prod->image)}}" alt="product image">
@@ -187,6 +191,8 @@
 															@else
 																<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
 															@endif
+														@else
+														<a class="add-to-cart"> Out of Stocks</a>
 														@endif
 													</div>
 												</div>
@@ -208,134 +214,50 @@
 <script>
 	
 	$(document).ready(function(){
-		$(document).on('change','.sort-select',function(){
-			value= $('.sort-select :selected').val();
-			subid=<?php  echo $subcategory->id; ?>;
-			catid=<?php  echo $category->id; ?>;
-			url1='{{route("frontend.products.sort.list",[1,2])}}';
-			splitArr=url1.split('/');
-			splitArr=splitArr.reverse();
-			splitArr[0]=catid;
-			splitArr[1]=subid;
-			splitArr=splitArr.reverse();
-			url=splitArr.join('/');
-
-			$.ajax({
-				url:url,
-				method:'post',
-				dataType:'json',
-				data:{
-					"_token": "{{ csrf_token() }}",
-					"value":value,
-					"subid":subid,
-					},
-				success:function(data)
-				{
-					prod="";
-					product=data['data'];
-					if(product.length > 0){
-						$.each(product,function(k,v){
-
-							imgroute="{{url('storage/products/')}}";
-							route='{{route("frontend.cart.show")}}';
-							prodid=v.id;
-								aroute='{{route("frontend.product.details",[1,$subcategory->id,$category->id])}}';
-								aroute_arr=aroute.split('/');
-								aroute_arr = aroute_arr.reverse();
-								aroute_arr[2]=prodid;
-								aroute_arr=aroute_arr.reverse();
-								aroute_arr=aroute_arr.join('/');
-								aroute=aroute_arr;
-							imgroute +='/'+v.image;
-							prod+='<div class="col-lg-4 col-md-4 col-sm-6"><div class="product-grid"><div class="product-image"><a href="'+aroute+'"><img class="pic-1" src="'+imgroute+'" alt="product image"><img class="pic-2" src="'+imgroute+'" alt="product image"></a><ul class="social"><li><a class="venobox" href="'+imgroute+'" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>';
-							if(v.quantity>0){
-								if(data['wish '+v.id] ==true)
-								{
-									prod+='<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+v.id+'" class="remove-wishlist"><i class="fa fa-minus-circle"></i></a></li>';
-								}
-						
-								else
-								{
-									prod+='<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="'+v.id+'"><i class="fa fa-shopping-bag"></i></a></li>';
-								}
-								
-								if(data['cart '+v.id] ==true)
-								{
-									prod+='<li><a href="'+route+'"  prid="'+v.id+'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>';
-								}
-								else
-								{
-									prod+='<li class="a_replace"><a href="javascript:void(0)"  name="'+v.id+'" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>';
-								}
-								
-							}
-							prod+='</ul></div><ul class="rating">';
-							for(i=1;i<= v.rating;i++)
-							{
-								prod+='<li class="fa fa-star"></li> ';
-							}
-							prod+='</ul><div class="product-content"><h3 class="title"><a href="#">'+v.product_name+'</a></h3><div id="'+v.id+'"class="price">';
-							
-							if(v.discouted_price !=v.price){
-								prod+=v.discouted_price+'<span>'+v.price+'</span>';
-							}
-							else
-							{
-								prod+=v.price;
-							}
-							prod+='</div>';
-							if(v.quantity > 0){
-								if(data['cart '+v.id] ==true)
-								{
-									prod+='<a href="{{route('frontend.cart.show')}}"  prid="'+v.id+'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>';
-
-								}
-								else
-								{
-									prod+='<a class="add-to-cart cart-btn"  name="'+v.id+'" href="javascript:void(0)">+ Add To Cart</a>';		
-								}
-							}
-							prod+='</div></div></div>';
-							
-						});
-						$('.products_append').html(prod);
-
-					}
-					else
-					{
-						$('.products_append').html("Sorry No product found!!");
-					}
-					
-					
-				}
-			});
-
-		});
+		
 		$(document).on('click change','.icheck',function(){
-			 varname=[];
+			varname=[];
+			
 			var exclude=$('#exclude_prod:checked').val();
-				var rating=$(this).attr('rid');
-				if(rating !=null)
-				varname.push({name:'rating',value:rating});
-				// alert(rating);	
+			sortby_value= $('.sort-select :selected').val();
+			var rating=$(this).attr('rid');
+			if(rating !=null)
+			varname.push({name:'rating',value:rating});
+			varname.push({name:'sortby',value:sortby_value});
+			// alert(rating);
+			var varmaster=new Array();	
+			var varvalue=new Array();	
 			 if(exclude=="on")
 			 {
 				varname.push({name:"exclude",value:exclude});
 			 }
-			 if($(this).attr('btnid')=='range-btn')
-			 {
-				varname.push({name:'minRange',value:$('#minRange').val()});
-				varname.push({name:'maxRange',value:$('#maxRange').val()});
-				
-			 }
+			 //if($(this).attr('btnid')=='range-btn')
+			 //{
+				 if($('#maxRange').val()>0){
+				pricerange=[$('#minRange').val(),$('#maxRange').val()];
+				varname.push({name:'range', value:pricerange});
+				 }
+			 //}
+			 arr=new Array();
+			 vid=new Array();
             $.each($("input[vid]:checked"), function(){
-				vid =$(this).attr('vid');
+				// varmaster.push("varmaster_"+);
+				vid =[$(this).attr('vid')];
 				vname=$(this).attr('name');
+				varvalue.push("varvalue_"+vid+"_"+$(this).parents('.checkbox').attr('varid'));
+				$.each(varname,function(k,v){
+					if(varname[k].name ==vname)
+					{
+						arr=[varname[k].value,vid];
+						vid=arr;
+						// console.log(arr);
+					}			
+				});
 				varname.push({name:vname,value:vid});
             });
-			
+			// alert(varvalue);
+			console.log(varmaster);
 			console.log(varname);
-
 			subid=<?php  echo $subcategory->id; ?>;
 			catid=<?php  echo $category->id; ?>;
 			url1='{{route("frontend.products.sort.list",[1,2])}}';
@@ -345,7 +267,7 @@
 			splitArr[1]=subid;
 			splitArr=splitArr.reverse();
 			url=splitArr.join('/');
-
+			
 			$.ajax({
 			url:url,
 				dataType:'json',
@@ -353,6 +275,8 @@
 				data:{
 					"_token": "{{ csrf_token() }}",
 					'varname':varname,
+					'varmaster':varmaster,
+					'varvalue':varvalue
 				},
 				success:function(data)
 				{
@@ -364,13 +288,13 @@
 							imgroute="{{url('storage/products/')}}";
 							route='{{route("frontend.cart.show")}}';
 							prodid=v.id;
-								aroute='{{route("frontend.product.details",[1,$subcategory->id,$category->id])}}';
-								aroute_arr=aroute.split('/');
-								aroute_arr = aroute_arr.reverse();
-								aroute_arr[2]=prodid;
-								aroute_arr=aroute_arr.reverse();
-								aroute_arr=aroute_arr.join('/');
-								aroute=aroute_arr;
+							aroute='{{route("frontend.product.details",[1,$subcategory->id,$category->id])}}';
+							aroute_arr=aroute.split('/');
+							aroute_arr = aroute_arr.reverse();
+							aroute_arr[2]=prodid;
+							aroute_arr=aroute_arr.reverse();
+							aroute_arr=aroute_arr.join('/');
+							aroute=aroute_arr;
 							imgroute +='/'+v.image;
 							prod+='<div class="col-lg-4 col-md-4 col-sm-6"><div class="product-grid"><div class="product-image"><a href="'+aroute+'"><img class="pic-1" src="'+imgroute+'" alt="product image"><img class="pic-2" src="'+imgroute+'" alt="product image"></a><ul class="social"><li><a class="venobox" href="'+imgroute+'" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>';
 							if(v.quantity>0){
@@ -413,27 +337,27 @@
 								if(data['cart '+v.id] ==true)
 								{
 									prod+='<a href="{{route('frontend.cart.show')}}"  prid="'+v.id+'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>';
-
 								}
 								else
 								{
 									prod+='<a class="add-to-cart cart-btn"  name="'+v.id+'" href="javascript:void(0)">+ Add To Cart</a>';		
 								}
 							}
+							else
+							{
+								prod+='<a class="add-to-cart"> Out of Stocks</a>';
+							}
 							prod+='</div></div></div>';
 							
 						});
 						$('.products_append').html(prod);
-
 					}
 					else
 					{
 						$('.products_append').html("Sorry No product found!!");
 					}
-					
 				}
 			});
-
 		});
 	});
 </script>

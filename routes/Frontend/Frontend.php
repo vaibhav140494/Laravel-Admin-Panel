@@ -5,6 +5,7 @@
  * All route names are prefixed with 'frontend.'.
  */
 Route::get('/', 'FrontendController@index')->name('index');
+Route::post('/', 'FrontendController@index')->name('index.ajax');
 
 Route::post('/get/states', 'FrontendController@getStates')->name('get.states');
 Route::post('/get/cities', 'FrontendController@getCities')->name('get.cities');
@@ -62,6 +63,11 @@ Route::get('/placeorder','OrderController@placeOrder')->name('placeorder');
 Route::get('view/order','OrderController@viewOrder')->name('view.order');
 Route::get('view/order/details/{id}','OrderController@viewOrderDetails')->name('view.order.details');
 // });
+
+// For Payment using paytm
+Route::get('/payment/{oid}','OrderController@order')->name('payment');
+Route::post('payment/status', 'OrderController@paymentCallback')->name('paytm.status');
+Route::get('/paytm/status','OrderController@statusCheck');
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

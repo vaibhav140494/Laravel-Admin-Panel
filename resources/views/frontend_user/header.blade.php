@@ -253,7 +253,7 @@
 											<!-- Mini Wishlist Wrapper -->
 											
 											 <div class="mini-wishlist-wrapper">
-											 <div class="mc-pro-list fix">
+											 <div class="mc-pro-list fix wishlist_product">
 														@foreach($wishlist as $wproduct)
 															<div class="nowish mc-sin-pro fix" id="{{$wproduct->product_id}}">
 																<a href="#" class="mc-pro-image float-left"><img src="{{url('storage/products/'.$wproduct->image)}}" width="80" height="80" style="margin-top:10px;" alt="" /></a>

@@ -103,7 +103,7 @@
 							<ul>
 								<li>
 									<div class="custom-control custom-radio">
-										<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+										<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" required>
 										<label class="custom-control-label" for="customRadio2">Paytm</label>
 									</div>	
 								</li>

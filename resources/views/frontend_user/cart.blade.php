@@ -12,7 +12,7 @@
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
 							<li><a href="{{route('frontend.index')}}">home</a></li>
-							<li><a href="#">category</a></li>
+							<!-- <li><a href="#">category</a></li> -->
 							<li><span>Cart</span></li>
 						</ul>					
 					</div>	

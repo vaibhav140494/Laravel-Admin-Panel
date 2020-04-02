@@ -33,5 +33,8 @@
                 </div><!--form-group-->
             </div><!--box-body-->
         </div><!--box box-success -->
+        <script>
+            document.getElementById("product_img").removeAttribute('required');
+        </script>
     {{ Form::close() }}
 @endsection

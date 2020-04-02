@@ -6,14 +6,17 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6 text-left">
-					
-						<h3> Category : {{$categories['category_name']}}</h3>
+						@if($categories)
+							<h3> Category : {{$categories['category_name']}}</h3>
+						@endif
 					</div>		
 
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
 							<li><a href="{{route('frontend.index')}}">home</a></li>
-							<li><a href="{{route('frontend.category.list')}}">{{$categories['category_name']}}</a></li>
+							@if($categories)
+								<li><a href="{{route('frontend.category.list')}}">{{$categories['category_name']}}</a></li>
+							@endif
 							<li><span>Subcategories</span></li>
 						</ul>					
 					</div>	
@@ -26,72 +29,32 @@
 				<div class="row">
 					<div class="col-md-8 col-xs-12">
 						<!-- Single blog -->
-						<div class="single_blog">
-							<div class="single_blog_img">
-								<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt=""></a>
-								<div class="blog_date text-center">
+							@if($categories)
+							<div class="single_blog">
+								<div class="single_blog_img">
+									<a href="#"><img src=" {{url('storage/category/'.$categories['category_image'])}}" alt=""></a>
+									<div class="blog_date text-center">
+										
+									</div>
+								</div>
+													
+								<div class="blog_content">
+									<ul class="post-meta">
+										<li><i class="ti-eye"></i> <a href="#">{{$subcategory->count()}} Subcategories</a></li>
+									</ul>										
+								
+									<h4 class="post_title"><a href="#">{{$categories['category_name']}}</a> </h4>															
+									<p>
+										{{$categories['category_desc']}}
 									
+									</p>
 								</div>
 							</div>
-												
-							<div class="blog_content">
-								<ul class="post-meta">
-									<li><i class="ti-eye"></i> <a href="#">{{$subcategory->count()}} Subcategories</a></li>
-								</ul>										
-							
-								<h4 class="post_title"><a href="#">{{$categories['category_name']}}</a> </h4>															
-								<p>
-									{{$categories['category_desc']}}
-								
-								</p>
-							</div>
-						</div>
+							@else
+								No category found!!
+							@endif
 						<!-- End Single blog -->			
 
-						<!-- Single blog -->
-						<!-- <div class="single_blog">
-							<div class="single_blog_img">
-								<a href="#"><img src="{{url('frontend/img/blog/2-full.jpg')}}" alt=""></a>
-								<div class="blog_date text-center">
-									<div class="bd_day"> 25</div>
-									<div class="bd_month">Aug</div>
-								</div>
-							</div>
-												
-							<div class="blog_content">
-								<ul class="post-meta">
-									<li><i class="ti-user"></i> <a href="#">Admin</a></li>									
-									<li><i class="ti-comments"></i> <a href="#">2 comments</a></li>
-									<li><i class="ti-eye"></i> <a href="#">12 Views</a></li>
-								</ul>										
-							
-								<h4 class="post_title"><a href="#">Integer euismod dui non auctor</a> </h4>															
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipiscing 
-									elit. Praesent vel elit et lectus pulvinar dignissim.
-									Fusce mattis scelerisque elit, sed vulputate lectus suscipit sed. 
-									Cras viverra nisi nec nisi volutpat, nec suscipit elit euismod. 
-									Mauris convallis auctor tristique. 
-									Maecenas sit amet pulvinar turpis....
-								
-								</p>
-							</div>
-						</div> -->
-						<!-- End Single blog -->				
-					
-						<!-- <div class="blog_pagination pgntn_mrgntp fix">
-							<div class="pagination text-center">
-								<ul>
-									<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#" class="active">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-								</ul>
-							</div>
-						</div>	 -->
 					</div>
 				
 					<!-- Blog Sidebar -->

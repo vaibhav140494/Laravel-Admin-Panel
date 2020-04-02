@@ -24,7 +24,7 @@ class CreateOffersTable extends Migration
             $table->float('max_discount');
             $table->float('min_offer_amount');
             $table->boolean('is_active');
-            $table->date('start_date')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('start_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->date('end_date');
             $table->integer('no_of_counts');
             $table->timestamps();

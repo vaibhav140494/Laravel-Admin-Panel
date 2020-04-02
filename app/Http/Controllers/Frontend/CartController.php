@@ -39,7 +39,8 @@ class CartController extends Controller
                 }
                 $id=$req->input('id');
                 $cart1 = cart::where('product_id',$id)
-                ->where('user_id',\Auth::user()->id)->get()->first();
+                ->where('user_id',\Auth::user()->id)
+                ->where('order_id',null)->get()->first();
                 $productPrice=Product::select('price')->where('id',$id)
                 ->get()->first();
                 if($cart1)
@@ -67,11 +68,12 @@ class CartController extends Controller
                     $total = $value * $product->price;
                     $tax =$total * $taxamt/100;
                     $total+=$tax;
+                   
                     $cid=DB::table('cart')
                     ->select('cart_id')
                     ->where('user_id','=',\Auth::user()->id)
                     ->get();
-                    //dd($cid);
+                    
                     $cart = new cart;
                     $cart->product_id = $product->id;
                     $cart->user_id = \Auth::user()->id;
@@ -84,7 +86,6 @@ class CartController extends Controller
                         $cart->cart_id=$cid[0]->cart_id;
                     }
                     else{
-                        //dd('hello');
                         $cart->cart_id= Str::random(15);
                                          
                     }
@@ -173,15 +174,17 @@ class CartController extends Controller
         $wishlist=$this->final_data[4];
         $all_products=$this->final_data[5];
         $total=0;
+        
         $address = DB::table('multiple_address')
                     ->where('user_id','=',\Auth::user()->id)
                     ->get();
-                   //dd($address);
+                   
         $checkout_prod = DB::table('cart')
                         ->join('products','products.id','=','cart.product_id')
                         ->select('products.product_name','products.price','cart.quantity','cart.offer_id','cart.tax_amount','cart.total_amount as total')
                         ->where('cart.user_id','=',\Auth::user()->id)
                         ->get();
+        // dd($checkout_prod);
 
                         foreach($checkout_prod as $product)
                         {

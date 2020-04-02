@@ -1555,7 +1555,8 @@ position: fixed;
 .product-grid .add-to-cart{
     color: #000;
     font-size: 13px;
-    font-weight: 600;
+	font-weight: 600;
+	/* margin-top:20px; */
 }
 
 
@@ -3520,3 +3521,10 @@ position: fixed;
 	height: 500px;
 	overflow-y: scroll;
 }
+.row-flex {
+	display: flex;
+	flex-wrap: wrap;
+  }
+  /* [class*="col-"] {
+	height: 100%;
+  } */

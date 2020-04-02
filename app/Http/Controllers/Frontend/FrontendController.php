@@ -13,6 +13,8 @@ use App\Models\Product\Product;
 use App\Models\Product\productReviews;
 use App\Models\Subcategory\Subcategory;
 use App\Models\Access\User\User;
+use Illuminate\Http\Request;
+
 use DB;
 /**
  * Class FrontendController.
@@ -29,7 +31,7 @@ class FrontendController extends Controller
      * @return \Illuminate\View\View
      */
     
-    public function index()
+    public function index(Request $request)
     {
         $all_category = $this->final_data[0];
         $all_subcategory = $this->final_data[1];
@@ -48,10 +50,21 @@ class FrontendController extends Controller
         //fetching featured Productss
         $featured_prod = DB::table('products')
         ->leftjoin('categories','products.category_id','=','categories.id')
-        ->whereIn('categories.id',$catarr)
+        ->leftjoin('productreviews','products.id','=','productreviews.product_id')
+        ->groupBy('products.id');
+        if($request->ajax())
+        {
+            $cid=$request['id'];
+            $featured_prod=$featured_prod->where('categories.id',$cid)->where('products.is_active',1)
+            ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'))->get();
+            $response['data']=$featured_prod;
+            return json_encode($response);
+        }
+
+        $featured_prod=$featured_prod ->whereIn('categories.id',$catarr)
         ->where('products.is_active',1)
-        ->where('products.quantity','>',0)
-        ->select('products.*')->get();
+        ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'))->get();
+
         $product_review = productReviews::selectRaw('avg(rating) as avg')->groupby('user_id')->get();
         
         //  fetching user Reviews  
@@ -59,7 +72,10 @@ class FrontendController extends Controller
         $product_review_random = DB::table('users')
         ->join('productreviews','users.id','=','productreviews.user_id')
         ->select('users.first_name as fname' ,'users.last_name as lname','productreviews.*')
-        ->whereIn('rating',[5,4])->limit(3)->get()->random(3);
+        ->whereIn('rating',[5,4]);
+        $product_review_random = $product_review_random->inRandomOrder()->limit(3)->get();
+        // dd($product_review_random);
+
 
         return view('frontend_user.index', compact('category_featured','all_category','product','featured_prod','product_review','product_review_random','all_subcategory','all_cart','wished_prod','all_products','cart_item','wishlist','category'));
     }

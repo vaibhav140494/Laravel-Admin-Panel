@@ -52,7 +52,7 @@ class offerController extends Controller
                             echo json_encode($response);
                            }
                            else{
-                            $response['success']="offer applide";
+                            $response['success']="offer applied";
                             DB::table('cart')
                                 ->where('user_id','=',\Auth::user()->id)
                                 ->update(['offer_id'=>$offer[0]->id]);

@@ -33,18 +33,23 @@
                     <span style="color:red;">{{$errors->register->first('last_name') ?? ''}}</span>
                 </div>
                 <div class="form-group">
-                    <textarea name="address" class="textarea" cols="10" rows="5" placeholder="Enter Address"></textarea>
-                    <span style="color:red;">{{$errors->register->first('address') ?? ''}}</span>
-                </div>
-                <div class="from-group">
-                    <a href="{{route('frontend.user.changepasswordform')}}" class="btn btn-primary">Change Password</a>
-                </div>
-            </div>  
-            <div class="col-6">
-            <div class="form-group">
                     <input type="text" name="pincode" id="pincode" placeholder="Enter Pincode" value="{{  $user->pincode }}">
                     <span style="color:red;">{{$errors->register->first('pincode') ?? ''}}</span>
                 </div>
+                <!-- <div class="form-group">
+                    <input type="email" name="email" placeholder="enter Email" value="{{  $user->email }}" disabled>
+                    <span style="color:red;">{{$errors->register->first('email') ?? ''}}</span>
+                </div> -->
+                <!-- <div class="form-group">
+                    <textarea name="address" class="textarea" cols="10" rows="5" placeholder="Enter Address"></textarea>
+                    <span style="color:red;">{{$errors->register->first('address') ?? ''}}</span>
+                </div> -->
+                <!-- <div class="from-group">
+                    <a href="{{route('frontend.user.changepasswordform')}}" class="btn btn-primary">Change Password</a>
+                </div> -->
+            </div>  
+            <div class="col-6">
+                
                 <div class="form-group">
                     <input type="email" name="email" placeholder="enter Email" value="{{  $user->email }}" disabled>
                     <span style="color:red;">{{$errors->register->first('email') ?? ''}}</span>
@@ -95,11 +100,12 @@
     </div>
 
     <div class="container text-center">
-        
         <button class="btn btn-default acc_btn " type="submit" id="acc_Create"> 
             <span> <i class="fa fa-user btn_icon"></i> Edit Profile </span> 
         </button>
-   
+        <!-- <button class="btn btn-outline-danger" style="margin: -10px 10px ;"> -->
+            <a href="{{route('frontend.user.changepasswordform')}}"  style="margin: 10px 20px;">Change Password</a>
+        <!-- </button> -->
     </div>
 </form>
 @endif

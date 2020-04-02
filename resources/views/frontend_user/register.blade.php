@@ -66,8 +66,8 @@
             </div>
         </div>
     </div>
-    <div class="container">
-    <button class="btn btn-default acc_btn " type="submit" id="acc_Create"> 
+    <div class="container text-center">
+    <button class="btn btn-default acc_btn" type="submit" id="acc_Create"> 
         <span> <i class="fa fa-user btn_icon"></i> Create an account </span> 
     </button>
     <a class="login-link" href="{{route('frontend.user.login')}}"> 

@@ -50,6 +50,7 @@ abstract class Controller extends BaseController
                 $this->cart_item = DB::table('cart')
                 ->select('product_id')
                 ->where('user_id','=',$this->uid)
+                ->where('order_id',null)
                 ->get()
                 ->pluck('product_id')
                 ->toArray();
@@ -80,8 +81,11 @@ abstract class Controller extends BaseController
                 }
                 $category_featured = Category::findMany($this->catarr);
                 //Fetching all Products
-                $all_products = Product::where('is_active',1)
-                ->get();
+                $all_products = DB::table('products')
+                    ->where('is_active',1)
+                    ->leftjoin('productreviews','products.id','=','productreviews.product_id')
+                    ->groupBy('products.id')
+                    ->select('products.*',\DB::raw('avg(productreviews.rating) as rating'))->get();
                 // dd($all_products);
                 $this->final_data[0] = $this->cat;
                 $this->final_data[1] = $this->subcat;

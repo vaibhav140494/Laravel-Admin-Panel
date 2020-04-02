@@ -25,6 +25,7 @@
                 <div class="form-group">
                     {{-- Including Form blade file --}}
                     @include("backend.subcategories.form")
+                    
                     <div class="edit-form-btn">
                         {{ link_to_route('admin.categories.id.get', trans('buttons.general.cancel'), ['id'=>6], ['class' => 'btn btn-danger btn-md']) }}
                         {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-primary btn-md']) }}

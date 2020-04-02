@@ -68,7 +68,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row row-flex">
 				@if($category_featured->count()>0)
 					<?php $i=0; ?>
 					@foreach($category_featured as $cat)
@@ -124,7 +124,7 @@
 		<!-- Start product Area -->
 		<section id="product_area" class="section_padding">
 			<div class="container">		
-				<div class="row">
+				<div class="row row-flex">
 					<div class="col-md-12 text-center">
 						<div class="section_title">	
 							<span class="sub-title">Check Our All Products</span>
@@ -137,15 +137,17 @@
 				<div class="text-center">
 					<div class="product_filter">
 						<ul>
-							<li class=" active filter" data-filter="all">All</li>
-							<li class="filter" data-filter=".sale">Sale</li>
-							<li class="filter" data-filter=".bslr">Bestseller</li>
-							<li class="filter" data-filter=".ftrd">Featured</li>
+							<li class=" active filter"  data-filter="all">All</li>
+							@foreach($category_featured as $cat_fet)
+							<li class="filter"   id="{{$cat_fet->id}}"name=" {{$cat_fet->category_name}}" data-filter=".{{$cat_fet->category_name}}">{{$cat_fet->category_name}}</li>
+							@endforeach
+							<!-- <li class="filter" data-filter=".bslr">Bestseller</li>
+							<li class="filter" data-filter=".ftrd">Featured</li> -->
 						</ul>
 					</div>
 					
 					<div class="product_item">
-						<div class="row">
+						<div class="row row-flex filter-products">
 							@foreach($product as $prod)					
 								<div class="col-lg-3 col-md-4 col-sm-6 mix ">
 									<div class="product-grid">
@@ -171,15 +173,11 @@
 												@endif
 											</ul>
 										</div>
-										
 										<ul class="rating">
-											@for($i=0;$i<$product_review->count();$i++)
-												@if($product_review[$i]->product_id==$prod->id)
-													@for($j=0;$j<$product_review[$i]->rating;$j++)
-													<li class="fa fa-star"></li>
-													@endfor
-												@endif
-											@endfor
+											@for($i=1; $i <= $prod->rating;$i++)
+												<li class="fa fa-star"></li>
+											@endfor	
+											
 										</ul>
 										<div class="product-content">
 											<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
@@ -197,6 +195,8 @@
 												@else
 													<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
 												@endif
+											@else
+												<a class="add-to-cart"> Out of Stocks</a>
 											@endif
 										</div>
 									</div>
@@ -212,7 +212,7 @@
 		<!-- Special Offer Area -->
 		<div class="special_offer_area gray_section section_padding">
 			<div class="container">
-				<div class="row">
+				<div class="row row-flex">
 					<div class="col-md-6">
 						<div class="special_img_wrap text-center">						
 							<div class="special_img">
@@ -240,7 +240,7 @@
 		<!-- Start Featured product Area -->
 		<section id="featured_product" class="featured_product_area section_padding">
 			<div class="container">		
-				<div class="row">
+				<div class="row row-flex">
 					<div class="col-md-12 text-center">
 						<div class="section_title">	
 							<span class="sub-title">Check Our Featured Products</span>
@@ -264,20 +264,24 @@
 											</a>
 											<ul class="social">
 												<li><a  class="venobox" href="{{url('storage/products/'.$prod->image)}}" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>
-												<li><a href="#" data-tip="Add to Wishlist"><i class="ti-bag"></i></a></li>
-												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
-												<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
-												@else
-												<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+												@if($prod->quantity > 0)
+													@if(\Auth::user() && (in_array($prod->id,$wished_prod)) )
+														<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="{{$prod->id}}" class="remove-wishlist" ><i class="fa fa-minus-circle"></i></a></li>
+													@else
+														<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="{{$prod->id}}"><i class="fa fa-shopping-bag"></i></a></li>
+													@endif
+													@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+														<li><a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>
+													@else
+														<li class="a_replace"><a href="javascript:void(0)"  name="{{$prod->id}}" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>
+													@endif
 												@endif
 											</ul>
 										</div>
 										<ul class="rating">
-											<li class="fa fa-star"></li>
-											<li class="fa fa-star"></li>
-											<li class="fa fa-star"></li>
-											<li class="fa fa-star"></li>
-											<li class="fa fa-star"></li>
+										@for($i=1; $i <= $prod->rating;$i++)
+												<li class="fa fa-star"></li>
+											@endfor	
 										</ul>
 										<div class="product-content">
 											<h3 class="title"><a href="#">{{$prod->product_name}}</a></h3>
@@ -290,10 +294,14 @@
 												@endif
 												
 											</div>
-											@if(\Auth::user() && (in_array($prod->id,$cart_item)))
-												<a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>
+											@if($prod->quantity > 0)
+												@if(\Auth::user() && (in_array($prod->id,$cart_item)))
+													<a href="{{route('frontend.cart.show')}}"  prid="{{$prod->id}}" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>
+												@else
+													<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+												@endif
 											@else
-												<a class="add-to-cart cart-btn"  name="{{$prod->id}}" href="javascript:void(0)">+ Add To Cart</a>
+												<a class="add-to-cart"> Out of Stocks</a>
 											@endif
 										</div>
 									</div>
@@ -310,7 +318,7 @@
 		<!-- Testimonials Area -->
 		<section id="testimonials" class="testimonials_area" style="background: url( {{url('frontend/img/testimonial-bg.jpg')}}); background-size: cover; background-attachment: fixed;">
 			<div class="container">
-				<div class="row">
+				<div class="row row-flex">
 					<div class="col-md-8 center-block">
 						<div id="testimonial-slider" class="owl-carousel text-center">
 							@if(isset($product_review_random))
@@ -333,10 +341,7 @@
 													</div>
 													<h3 class="testimonial-title">
 													{{$p_review-> fname}}  {{$p_review-> lname}}
-													</h3>
-													
-													
-													
+													</h3>	
 												</div>
 											</div>
 										</div>
@@ -428,3 +433,92 @@
         <!--  End Process -->
 		
 	@include('frontend_user.footer')
+	<script>
+		$(document).ready(function(){
+			$('.filter').click(function(){
+				name=$(this).attr('name');
+				id=$(this).attr('id');
+				$.ajax({
+					url:'{{route("frontend.index.ajax")}}',
+					dataType:'json',
+					method:'post',
+					data:{
+						'_token':"{{ csrf_token() }}",
+						'id':id},
+					success:function(data)
+					{
+						product=data['data'];
+						prod="";
+						$.each(product,function(k,v){
+						imgroute= "{{url('storage/products/')}}";
+							prodid=v.id;
+							aroute='{{route("frontend.product.details",[1,2,3])}}';
+							aroute_arr=aroute.split('/');
+							aroute_arr = aroute_arr.reverse();
+							aroute_arr[2] = prodid;
+							aroute_arr=aroute_arr.reverse();
+							aroute_arr=aroute_arr.join('/');
+							aroute=aroute_arr;
+							imgroute +='/'+v.image;
+						
+							prod+='<div class="col-lg-3 col-md-4 col-sm-6 mix Electronics"><div class="product-grid"><div class="product-image"><a href="'+aroute+'"><img class="pic-1" src="'+imgroute+'" alt="product image"><img class="pic-2" src="'+imgroute+'" alt="product image"></a><ul class="social"><li><a class="venobox" href="'+imgroute+'" data-tip="Quick View"><i class="ti-zoom-in"></i></a></li>';
+							if(v.quantity>0){
+								if(data['wish '+v.id] ==true)
+								{
+									prod+='<li><a href="javascript:void(0)" data-tip="Remove from Wishlist" pid="'+v.id+'" class="remove-wishlist"><i class="fa fa-minus-circle"></i></a></li>';
+								}
+						
+								else
+								{
+									prod+='<li><a href="javascript:void(0)" data-tip="Add to Wishlist" class="add-wishlist" pid="'+v.id+'"><i class="fa fa-shopping-bag"></i></a></li>';
+								}
+								
+								if(data['cart '+v.id] ==true)
+								{
+									prod+='<li><a href="'+route+'"  prid="'+v.id+'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a></li>';
+								}
+								else
+								{
+									prod+='<li class="a_replace"><a href="javascript:void(0)"  name="'+v.id+'" class="cart-btn" data-tip="Add to Cart"><i class="ti-shopping-cart"></i></a></li>';
+								}
+								
+							}
+							prod+='</ul></div><ul class="rating">';
+							for(i=1;i<= v.rating;i++)
+							{
+								prod+='<li class="fa fa-star"></li> ';
+							}
+							prod+='</ul><div class="product-content"><h3 class="title"><a href="#">'+v.product_name+'</a></h3><div id="'+v.id+'"class="price">';
+							
+							if(v.discouted_price !=v.price){
+								prod+=v.discouted_price+'<span>'+v.price+'</span>';
+							}
+							else
+							{
+								prod+=v.price;
+							}
+							prod+='</div>';
+							if(v.quantity > 0){
+								if(data['cart '+v.id] ==true)
+								{
+									prod+='<a href="{{route('frontend.cart.show')}}"  prid="'+v.id+'" class="cart-btn" data-tip="view Cart"><i class="ti-shopping-cart"></i></a>';
+								}
+								else
+								{
+									prod+='<a class="add-to-cart cart-btn"  name="'+v.id+'" href="javascript:void(0)">+ Add To Cart</a>';		
+								}
+							}
+							else
+							{
+								prod+='<a class="add-to-cart"> Out of Stocks</a>';
+							}
+							prod+='</div></div></div>';
+							console.log('\n');
+						console.log(prod);
+						});
+						$('.filter-products').html(prod);
+					}
+				});
+			});
+		});
+		</script>

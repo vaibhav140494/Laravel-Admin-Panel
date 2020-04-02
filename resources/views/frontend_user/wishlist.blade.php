@@ -43,7 +43,7 @@
 								<td><p class="stock in-stock">{{$product->quantity}}</p></td>
 								<td><p class="cart-pro-price">{{$product->price}}</p></td>
 								<td><p class="cart-disc-price">{{$product->discouted_price}}</p></td>
-								<td><a href="#" class="btn border-btn">add to cart</a></td>
+								<td><a href="javascript:void(0)" class="btn border-btn cart-btn" name="{{$products->id}}">add to cart</a></td>
 								<td><a class="rmv" pId="{{$product->id}}"><i class="fa fa-trash"></i></a></td>
 							</tr>
 							@endforeach

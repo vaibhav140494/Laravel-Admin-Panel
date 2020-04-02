@@ -163,8 +163,6 @@
 									var tagstr='<a href="javascript:void(0)" data-tip="Add to Wishlist" pid="'+uid+'" class="add-wishlist m-t-8 btn"><i class="fa fa-shopping-bag"></i></a>';
 									$(el).replaceWith(tagstr);
 								}
-								 
-								 console.log(res.wishlist);
 								 var wlist = res.wishlist;
 								 var count = wlist.length;
 								 $('.wishlist_number').html(count);
@@ -173,7 +171,7 @@
 									route +='/'+value.image;
 									str += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.price+'</p><a class="pro-del remove-wish"" href="javascript:void(0)" pid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
 									});
-									$('.mc-pro-list').html(str);
+									$('.wishlist_product').html(str);
 								}
 								
 								 };
@@ -188,7 +186,7 @@
 					var pid=$(this).attr('name');
 					var a=this;
 					// $(this).attr('id',pid);
-					var subtotal=	$('.mc-subtotal').html();
+					var subtotal=$('.mc-subtotal').html();
 					
 					if(value==0)
 					{
@@ -348,12 +346,11 @@
 											route +='/'+value.image;
 											str += '<div class="mc-sin-pro fix"><a href="#" class="mc-pro-image float-left"><img src="'+route+'" width="80" height="80" style="margin-top:10px;" alt="" /></a><div class="mc-pro-details fix"><a href="#">'+value.product_name+'</a><p>'+value.price+'</p><a class="pro-del remove-wish"" href="javascript:void(0)" pid="'+value.product_id+'"><i class="fa fa-times-circle"></i></a></div></div>';
 											});
-											$('.mc-pro-list').html(str);
+											$('.wishlist_product').html(str);
 											$('.wishlist_number').html(count);
 											if(count==0)
 											{
-													
-											$('.mc-pro-list').append("<h5>NO PRODCUTS</h5>");							
+												$('.wishlist_product').append("<h5>NO PRODCUTS</h5>");							
 											}
 										if(!$("tr").hasClass("disp"))
 												{

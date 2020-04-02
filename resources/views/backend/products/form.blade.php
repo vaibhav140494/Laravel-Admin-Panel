@@ -29,7 +29,6 @@
     <div class="form-group">
          {{ Form::label('subcategory_id','Sub Categories' , ['class' => 'col-lg-2 control-label required']) }}    
         <div class="col-lg-10">
-        
                 @if(isset($products->id))
                 <select name="subcategory_id" id="subcategory_id" class="form-control box-size">
                         @foreach($subcategory_name as $subcategory)
@@ -94,9 +93,9 @@
     <div class="form-group">
          {{ Form::label('image',trans('labels.backend.products.table.image'), ['class' => 'col-lg-2 control-label']) }}    
          <div class="col-lg-10">
-            {{ Form::file('image', [ 'required' => 'required']) }}
+            {{ Form::file('image', [ 'required' => 'required' ,'id'=> 'product_img']) }}
                 @if( isset($products))
-            
+             
                 <div style="margin-top:20px;">
                     {{ Html::image('storage/products/'.$products->image, 'alt ', array('class' => 'css-class img-thumbnail', 'height' => '100px','width'=>'100px')) }}
                 </div>

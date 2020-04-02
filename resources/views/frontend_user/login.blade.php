@@ -10,7 +10,7 @@
 
 					<div class="col-sm-6 text-right">
 						<ul class="p_items">
-							<li><a href="{{url('frontend_user.index')}}">home</a></li>
+							<li><a href="{{route('frontend.index')}}">home</a></li>
 							<li><span>Login</span></li>
 						</ul>					
 					</div>	

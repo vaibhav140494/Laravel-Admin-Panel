@@ -13,9 +13,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
         Route::post('subcategories/store','SubcategoriesController@store')->name('subcategories.store');
         Route::get('subcategories/edit','SubcategoriesController@edit')->name('subcategories.edit');
         Route::patch('subcategories/update','SubcategoriesController@update')->name('subcategories.update');
-        Route::get('subcategories/destory','SubcategoriesController@destroy')->name('subcategories.destroy');
+        Route::get('subcategories/destory/{id}','SubcategoriesController@destroy')->name('subcategories.destroy');
         Route::get('subcategories/{id}/create','SubcategoriesController@create')->name('categories.id.create');
-        Route::get('subcategories/edit/{id}','SubcategoriesController@edit')->name('categories.id.edit');
+        Route::get('subcategories/edit/{id}','SubcategoriesController@edit')->name('subcategories.id.edit');
 
     });
     

@@ -36,7 +36,7 @@ class SubcategoriesTableController extends Controller
      */
     public function __invoke(ManageSubcategoryRequest $request,$id)
     {
-        return Datatables::of($this->subcategory->getForDataTable($id))
+        $ans= Datatables::of($this->subcategory->getForDataTable($id))
             ->escapeColumns(['id'])
             ->addColumn('subcategory_name', function ($subcategory) {
                 return $subcategory->subcategory_name;
@@ -54,8 +54,18 @@ class SubcategoriesTableController extends Controller
                 return Carbon::parse($subcategory->created_at)->toDateString();
             })
             ->addColumn('actions', function ($subcategory) {
-                return $subcategory->action_buttons;
+                $route=url("admin/subcategories/edit/".$subcategory->id);
+                $route_delete=route('admin.subcategories.destroy',$subcategory->id);
+                $buttons = '<a href="'.$route.'" class="btn btn-flat btn-default">
+                <i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-pencil"></i>
+                </a> <a href="'.$route_delete.'" class="btn btn-flat btn-default">
+                <i data-toggle="tooltip" data-placement="top" title="Delete" class="fa fa-trash"></i>
+                </a>';
+                // return $subcategory->action_buttons;
+                return $buttons;
             })
             ->make(true);
+            // dd($this->subcategory);
+            return $ans;
     }
 }

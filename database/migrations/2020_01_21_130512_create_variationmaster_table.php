@@ -20,7 +20,7 @@ class CreateVariationmasterTable extends Migration
             ->references('id')->on('products')
             ->onDelete('cascade');
             $table->string('variation_name',50);
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
